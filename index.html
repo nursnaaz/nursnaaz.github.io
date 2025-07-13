@@ -1,0 +1,132 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nursnaaz's Machine Learning Tutorials - Explore interactive guides on transformer attention mechanisms and more.">
+    <meta name="keywords" content="machine learning, transformers, attention mechanism, QKV, multi-head attention, tutorials">
+    <meta name="author" content="Nursnaaz">
+    <title>Nursnaaz's Machine Learning Tutorials</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <div class="nav-brand">Nursnaaz's ML Tutorials</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+                <li><a href="SelfAttention.html">QKV Attention</a></li>
+                <li><a href="MutiHeadInteractive.html">Multi-Head Attention</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="container">
+        <section class="hero">
+            <h1>Welcome to Nursnaaz's Machine Learning Tutorials</h1>
+            <p>Explore interactive guides to understand complex ML concepts like transformer attention mechanisms.</p>
+            <p id="article-count">Currently featuring <span id="num-articles"></span> articles.</p>
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search tutorials..." aria-label="Search tutorials">
+                <button onclick="searchArticles()" aria-label="Search">🔍</button>
+            </div>
+        </section>
+        <section class="featured">
+            <h2>Featured Tutorial</h2>
+            <div id="featured-card" class="card">
+                <h3 id="featured-title"></h3>
+                <p id="featured-description"></p>
+                <a id="featured-link" href="#" class="card-link">Read Tutorial</a>
+            </div>
+        </section>
+        <section class="articles">
+            <h2>All Tutorials</h2>
+            <div class="card-grid" id="article-grid">
+                <div class="card" data-title="QKV Attention Mechanism" data-description="Learn how the QKV attention mechanism works in transformers with a step-by-step interactive guide.">
+                    <h3>QKV Attention Mechanism</h3>
+                    <p>Learn how the QKV attention mechanism works in transformers with a step-by-step interactive guide.</p>
+                    <a href="SelfAttention.html" class="card-link">Read Tutorial</a>
+                </div>
+                <div class="card" data-title="Multi-Head Attention Mechanism" data-description="Dive into the power of multi-head attention in transformers with detailed calculations.">
+                    <h3>Multi-Head Attention Mechanism</h3>
+                    <p>Dive into the power of multi-head attention in transformers with detailed calculations.</p>
+                    <a href="MutiHeadInteractive.html" class="card-link">Read Tutorial</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Created by <a href="https://github.com/nursnaaz" target="_blank" aria-label="Visit Nursnaaz's GitHub profile">Nursnaaz</a> | Hosted on GitHub Pages</p>
+    </footer>
+    <script>
+        // Dynamic article count
+        const articleGrid = document.getElementById('article-grid');
+        const articles = articleGrid.querySelectorAll('.card');
+        document.getElementById('num-articles').textContent = articles.length;
+
+        // Featured article selection
+        function setFeaturedArticle() {
+            const randomIndex = Math.floor(Math.random() * articles.length);
+            const featured = articles[randomIndex];
+            document.getElementById('featured-title').textContent = featured.querySelector('h3').textContent;
+            document.getElementById('featured-description').textContent = featured.querySelector('p').textContent;
+            document.getElementById('featured-link').href = featured.querySelector('.card-link').href;
+        }
+        setFeaturedArticle();
+
+        // Search functionality
+        function searchArticles() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            articles.forEach(card => {
+                const title = card.getAttribute('data-title').toLowerCase();
+                const description = card.getAttribute('data-description').toLowerCase();
+                card.style.display = (query === '' || title.includes(query) || description.includes(query)) ? 'block' : 'none';
+            });
+        }
+
+        // Trigger search on input
+        document.getElementById('search-input').addEventListener('input', searchArticles);
+
+        // Fade-in animation for hero
+        document.querySelector('.hero').classList.add('fade-in');
+    </script>
+</body>
+</html>
