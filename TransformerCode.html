@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complete Transformer Architecture Deep Dive</title>
@@ -601,6 +602,13 @@
                     <p><strong>Attention Mechanism:</strong> \( \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V \)</p>
                     <p>Where \( Q \) (query), \( K \) (key), and \( V \) (value) are vector representations, and \( d_k \) is the dimension of the keys.</p>
                 </div>
+
+                <div class="section" id="architecture" role="tabpanel">
+                    <h2>🏗️ Model Architecture</h2>
+                    <p>The core of the Transformer is the attention mechanism, defined as:</p>
+                    <p>\[ \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V \]</p>
+                    <p>Where \( Q \) (query), \( K \) (key), and \( V \) (value) are vector representations, and \( d_k \) is the dimension of the keys.</p>
+                </div>
             </div>
 
             <div class="info-box">
@@ -756,6 +764,7 @@
                     <div class="demo-output" id="tokenize-output">Tokenized output will appear here...</div>
                     
                     <script>
+                        
                         function simulateTokenization() {
                             const input = document.getElementById('tokenize-input').value.toLowerCase();
                             const vocab = {"<PAD>": 0, "<START>": 1, "<END>": 2, "<UNK>": 3, 
