@@ -2024,41 +2024,41 @@ if __name__ == "__main__":
                 Total params: 152,836 (597.02 KB)
                 Trainable params: 152,836 (597.02 KB)
                 Non-trainable params: 0 (0.00 B)
-                </pre>>
-
-
-
-                <div class="info-box">
-                    <h3>🔑 Running Instructions</h3>
-                    <ul style="margin-top: 15px;">
-                        <li>Install dependencies: <code>pip install tensorflow numpy</code></li>
-                        <li>Save code to a .py file</li>
-                        <li>Run the script to train and test</li>
-                        <li>Tune hyperparameters for better performance</li>
-                    </ul>
-                </div>
+                </pre>
             </div>
-    
-        </div>
-        </div>
-        </div>
+        </div>>
         
-        
-        <script>
-            document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    document.querySelectorAll('.nav-tab').forEach(t => {
-                        t.classList.remove('active');
-                        t.setAttribute('aria-selected', 'false');
-                    });
-                    tab.classList.add('active');
-                    tab.setAttribute('aria-selected', 'true');
-                    document.querySelectorAll('.section').forEach(section => {
-                        section.classList.remove('active');
-                    });
-                    document.getElementById(tab.dataset.section).classList.add('active');
-                });
+        <div class="info-box">
+            <h3>🔑 Running Instructions</h3>
+            <ul style="margin-top: 15px;">
+                <li>Install dependencies: <code>pip install tensorflow numpy</code></li>
+                <li>Save code to a .py file</li>
+                <li>Run the script to train and test</li>
+                <li>Tune hyperparameters for better performance</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.nav-tab').forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
             });
-        </script>
-    </body>
-    </html>
+            tab.classList.add('active');
+            tab.setAttribute('aria-selected', 'true');
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(tab.dataset.section).classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>
+
+
+
