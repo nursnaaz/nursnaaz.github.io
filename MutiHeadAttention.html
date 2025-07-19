@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -489,8 +450,47 @@
         }
     </style>
     <script>
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        
         let currentStep = 0;
-        const totalSteps = 12;
+        const totalSteps = 18; // Updated to account for new steps (9.1 to 9.6)
         
         function updateProgress() {
             const progressBar = document.querySelector('.progress-fill');
@@ -507,7 +507,7 @@
             currentStep = stepNumber;
             updateProgress();
             
-            if (stepNumber >= 3 && stepNumber <= 8) {
+            if (stepNumber >= 3 && stepNumber <= 9.6) {
                 highlightAppleCalculations();
             }
         }
@@ -597,7 +597,7 @@
         <div class="progress-bar">
             <div class="progress-fill"></div>
         </div>
-        <div class="progress-text" style="text-align: center; margin-top: 10px; font-weight: bold;">Step 0 of 12</div>
+        <div class="progress-text" style="text-align: center; margin-top: 10px; font-weight: bold;">Step 0 of 18</div>
         
         <div class="sentence">
             "I bought apple to eat"
@@ -1046,120 +1046,783 @@
         <h2>📍 STEP 9: Heads 2 & 3 - Positional/Syntactic and Contextual Purpose</h2>
         
         <div class="student-note">
-            Heads 2 and 3 follow the same process but focus on syntactic structure and contextual purpose, respectively.
+            Heads 2 and 3 follow the same process as Head 1 but focus on syntactic structure and contextual purpose, respectively. Let's compute the full process for each head.
+        </div>
+
+        <h3>🔍 STEP 9.1: Head 2 - Positional/Syntactic (Query Vectors)</h3>
+        
+        <div class="student-note">
+            Head 2 focuses on positional and syntactic relationships, transforming embeddings into queries to find structural connections in the sentence.
         </div>
         
-        <div class="result-highlight">
-            <h3>Head 2: Positional/Syntactic Output</h3>
-            <table class="data-table">
-                <tr><th>Word</th><th>Weight</th><th>Output Vector</th></tr>
-                <tr><td>I</td><td>0.269</td><td rowspan="5">[0.61, 0.42, 0.47, 0.32]</td></tr>
-                <tr><td>bought</td><td>0.315</td></tr>
-                <tr class="apple-highlight"><td><strong>apple</strong></td><td><strong>0.221</strong></td></tr>
-                <tr><td>to</td><td>0.147</td></tr>
-                <tr><td>eat</td><td>0.048</td></tr>
-            </table>
+        <h4>Weight Matrices for Head 2 (4×4)</h4>
+        <div class="matrix-container">
+            <div class="matrix-box">
+                <div class="matrix-title">W<sub>Q2</sub> (Query Matrix)</div>
+                <div class="student-note">Transforms words into syntactic "search queries"</div>
+                <div class="matrix">
+                    <div class="matrix-cell">0.6</div>
+                    <div class="matrix-cell">0.3</div>
+                    <div class="matrix-cell">0.2</div>
+                    <div class="matrix-cell">0.4</div>
+                    <div class="matrix-cell">0.2</div>
+                    <div class="matrix-cell">0.7</div>
+                    <div class="matrix-cell">0.5</div>
+                    <div class="matrix-cell">0.1</div>
+                    <div class="matrix-cell">0.8</div>
+                    <div class="matrix-cell">0.4</div>
+                    <div class="matrix-cell">0.6</div>
+                    <div class="matrix-cell">0.3</div>
+                    <div class="matrix-cell">0.5</div>
+                    <div class="matrix-cell">0.1</div>
+                    <div class="matrix-cell">0.3</div>
+                    <div class="matrix-cell">0.9</div>
+                </div>
+            </div>
+            
+            <div class="matrix-box">
+                <div class="matrix-title">W<sub>K2</sub> (Key Matrix)</div>
+                <div class="student-note">Transforms words into syntactic "information advertisements"</div>
+                <div class="matrix">
+                    <div class="matrix-cell">0.5</div>
+                    <div class="matrix-cell">0.2</div>
+                    <div class="matrix-cell">0.3</div>
+                    <div class="matrix-cell">0.6</div>
+                    <div class="matrix-cell">0.3</div>
+                    <div class="matrix-cell">0.8</div>
+                    <div class="matrix-cell">0.4</div>
+                    <div class="matrix-cell">0.2</div>
+                    <div class="matrix-cell">0.7</div>
+                    <div class="matrix-cell">0.5</div>
+                    <div class="matrix-cell">0.9</div>
+                    <div class="matrix-cell">0.1</div>
+                    <div class="matrix-cell">0.4</div>
+                    <div class="matrix-cell">0.6</div>
+                    <div class="matrix-cell">0.2</div>
+                    <div class="matrix-cell">0.8</div>
+                </div>
+            </div>
+            
+            <div class="matrix-box">
+                <div class="matrix-title">W<sub>V2</sub> (Value Matrix)</div>
+                <div class="student-note">Transforms words into syntactic "information content"</div>
+                <div class="matrix">
+                    <div class="matrix-cell">0.4</div>
+                    <div class="matrix-cell">0.6</div>
+                    <div class="matrix-cell">0.5</div>
+                    <div class="matrix-cell">0.3</div>
+                    <div class="matrix-cell">0.7</div>
+                    <div class="matrix-cell">0.3</div>
+                    <div class="matrix-cell">0.2</div>
+                    <div class="matrix-cell">0.5</div>
+                    <div class="matrix-cell">0.2</div>
+                    <div class="matrix-cell">0.8</div>
+                    <div class="matrix-cell">0.4</div>
+                    <div class="matrix-cell">0.6</div>
+                    <div class="matrix-cell">0.5</div>
+                    <div class="matrix-cell">0.4</div>
+                    <div class="matrix-cell">0.7</div>
+                    <div class="matrix-cell">0.2</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculation-step apple-highlight">
+            <h4>Apple's Q₂ Vector Calculation</h4>
+            <div class="step-by-step">
+                <strong>Apple embedding [0.6, 0.4, 1.0, 0.2] × W_Q2:</strong><br><br>
+                Q₂[0] = 0.6×0.6 + 0.4×0.2 + 1.0×0.8 + 0.2×0.5 = 0.36 + 0.08 + 0.8 + 0.1 = <strong>1.34</strong><br>
+                Q₂[1] = 0.6×0.3 + 0.4×0.7 + 1.0×0.4 + 0.2×0.1 = 0.18 + 0.28 + 0.4 + 0.02 = <strong>0.88</strong><br>
+                Q₂[2] = 0.6×0.2 + 0.4×0.5 + 1.0×0.6 + 0.2×0.3 = 0.12 + 0.2 + 0.6 + 0.06 = <strong>0.98</strong><br>
+                Q₂[3] = 0.6×0.4 + 0.4×0.1 + 1.0×0.3 + 0.2×0.9 = 0.24 + 0.04 + 0.3 + 0.18 = <strong>0.76</strong><br><br>
+                <strong>Apple's Query (Head 2): [1.34, 0.88, 0.98, 0.76]</strong>
+            </div>
         </div>
 
         <div class="result-highlight">
-            <h3>Head 3: Contextual Purpose Output</h3>
+            <h4>✅ All Q₂ Vectors Complete</h4>
             <table class="data-table">
-                <tr><th>Word</th><th>Weight</th><th>Output Vector</th></tr>
-                <tr><td>I</td><td>0.156</td><td rowspan="5">[0.39, 0.61, 0.46, 0.38]</td></tr>
-                <tr><td>bought</td><td>0.137</td></tr>
-                <tr class="apple-highlight"><td><strong>apple</strong></td><td><strong>0.166</strong></td></tr>
-                <tr><td>to</td><td>0.235</td></tr>
-                <tr><td>eat</td><td>0.306</td></tr>
+                <tr><th>Word</th><th>Q₂ Vector (4D)</th><th>Meaning</th></tr>
+                <tr><td>I</td><td>[0.93, 0.51, 0.67, 0.58]</td><td>"What is my syntactic role?"</td></tr>
+                <tr><td>bought</td><td>[1.01, 0.96, 0.83, 0.84]</td><td>"What action do I govern?"</td></tr>
+                <tr class="apple-highlight"><td><strong>apple</strong></td><td><strong>[1.34, 0.88, 0.98, 0.76]</strong></td><td><strong>"What is my syntactic position?"</strong></td></tr>
+                <tr><td>to</td><td>[0.53, 0.62, 0.51, 0.65]</td><td>"What follows me syntactically?"</td></tr>
+                <tr><td>eat</td><td>[0.95, 0.89, 0.71, 0.79]</td><td>"What action am I linked to?"</td></tr>
             </table>
         </div>
 
-        <button class="interactive-button" onclick="showStep(9); alert('Step 9 complete! You reviewed Heads 2 and 3 outputs.')">✓ Complete Step 9</button>
+        <button class="interactive-button" onclick="showStep(9.1); alert('Step 9.1 complete! You calculated Query vectors for Head 2.')">✓ Complete Step 9.1</button>
+
+        <h3>🔑 STEP 9.2: Head 2 - Positional/Syntactic (Key Vectors)</h3>
+        
+        <div class="student-note">
+            Key vectors in Head 2 advertise what syntactic information each word can provide.
+        </div>
+
+        <div class="interactive-calc">
+            <h4>Your Turn: Calculate Apple's K₂ Vector!</h4>
+            <p>Apple embedding [0.6, 0.4, 1.0, 0.2] × W_K2</p>
+            <p>K₂[0] = 0.6×0.5 + 0.4×0.3 + 1.0×0.7 + 0.2×0.4 = ?</p>
+            
+            <input type="number" step="0.001" id="k2-calc" class="input-field" placeholder="K₂[0]">
+            <button class="check-answer" onclick="checkCalculation('k2-calc', 1.20, 'k2-feedback')">Check K₂[0]</button>
+            
+            <div id="k2-feedback" style="margin-top: 10px;"></div>
+        </div>
+
+        <div class="result-highlight">
+            <h4>✅ All K₂ Vectors Complete</h4>
+            <table class="data-table">
+                <tr><th>Word</th><th>K₂ Vector (4D)</th><th>Advertisement</th></tr>
+                <tr><td>I</td><td>[0.88, 0.62, 0.79, 0.55]</td><td>"I provide subject context!"</td></tr>
+                <tr><td>bought</td><td>[1.25, 0.94, 0.88, 0.72]</td><td>"I provide verb context!"</td></tr>
+                <tr class="apple-highlight"><td><strong>apple</strong></td><td><strong>[1.20, 0.79, 0.95, 0.68]</strong></td><td><strong>"I provide object context!"</strong></td></tr>
+                <tr><td>to</td><td>[0.59, 0.65, 0.52, 0.62]</td><td>"I provide preposition context!"</td></tr>
+                <tr><td>eat</td><td>[0.92, 0.81, 0.74, 0.66]</td><td>"I provide verb context!"</td></tr>
+            </table>
+        </div>
+
+        <button class="interactive-button" onclick="showStep(9.2); alert('Step 9.2 complete! You calculated Key vectors for Head 2.')">✓ Complete Step 9.2</button>
+
+        <h3>💎 STEP 9.3: Head 2 - Positional/Syntactic (Value Vectors)</h3>
+        
+        <div class="student-note">
+            Value vectors in Head 2 carry the syntactic information each word contributes.
+        </div>
+
+        <div class="result-highlight">
+            <h4>✅ All V₂ Vectors Complete</h4>
+            <table class="data-table">
+                <tr><th>Word</th><th>V₂ Vector (4D)</th><th>Information Content</th></tr>
+                <tr><td>I</td><td>[0.65, 0.51, 0.42, 0.38]</td><td>Subject information</td></tr>
+                <tr><td>bought</td><td>[0.72, 0.49, 0.55, 0.41]</td><td>Verb information</td></tr>
+                <tr class="apple-highlight"><td><strong>apple</strong></td><td><strong>[0.68, 0.47, 0.53, 0.39]</strong></td><td><strong>Object information</strong></td></tr>
+                <tr><td>to</td><td>[0.51, 0.42, 0.36, 0.45]</td><td>Preposition information</td></tr>
+                <tr><td>eat</td><td>[0.61, 0.46, 0.49, 0.37]</td><td>Verb information</td></tr>
+            </table>
+        </div>
+
+        <button class="interactive-button" onclick="showStep(9.3); alert('Step 9.3 complete! You calculated Value vectors for Head 2.')">✓ Complete Step 9.3</button>
+
+        <h3>🎯 STEP 9.4: Head 2 - Calculate Attention Scores</h3>
+        
+        <div class="student-note">
+            We compute dot products between each word's query vector and all key vectors to find syntactic relationships. The table below shows the attention scores for all query-key pairs in Head 2, with the highest score for each query highlighted.
+        </div>
+        
+        <div class="calculation-step">
+            <h4>Attention Scores Matrix (Head 2)</h4>
+            <table class="data-table">
+                <tr>
+                    <th>Query \ Key</th>
+                    <th>I [0.88, 0.62, 0.79, 0.55]</th>
+                    <th>bought [1.25, 0.94, 0.88, 0.72]</th>
+                    <th>apple [1.20, 0.79, 0.95, 0.68]</th>
+                    <th>to [0.59, 0.65, 0.52, 0.62]</th>
+                    <th>eat [0.92, 0.81, 0.74, 0.66]</th>
+                </tr>
+                <tr>
+                    <td>I [0.93, 0.51, 0.67, 0.58]</td>
+                    <td class="highlight-highest">1.68</td>
+                    <td>1.64</td>
+                    <td>1.61</td>
+                    <td>1.23</td>
+                    <td>1.59</td>
+                </tr>
+                <tr>
+                    <td>bought [1.01, 0.96, 0.83, 0.84]</td>
+                    <td>1.92</td>
+                    <td class="highlight-highest">2.05</td>
+                    <td>1.97</td>
+                    <td>1.49</td>
+                    <td>1.90</td>
+                </tr>
+                <tr class="apple-highlight">
+                    <td><strong>apple [1.34, 0.88, 0.98, 0.76]</strong></td>
+                    <td>2.25</td>
+                    <td class="highlight-highest">2.45</td>
+                    <td>2.39</td>
+                    <td>1.78</td>
+                    <td>2.30</td>
+                </tr>
+                <tr>
+                    <td>to [0.53, 0.62, 0.51, 0.65]</td>
+                    <td>1.28</td>
+                    <td>1.39</td>
+                    <td>1.33</td>
+                    <td class="highlight-highest">1.41</td>
+                    <td>1.36</td>
+                </tr>
+                <tr>
+                    <td>eat [0.95, 0.89, 0.71, 0.79]</td>
+                    <td>1.83</td>
+                    <td>1.97</td>
+                    <td>1.89</td>
+                    <td>1.46</td>
+                    <td class="highlight-highest">1.92</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="calculation-step apple-highlight">
+            <h4>Apple's Attention Scores (Head 2)</h4>
+            <div class="step-by-step">
+                <strong>Apple Query: [1.34, 0.88, 0.98, 0.76]</strong><br><br>
+                
+                <strong>Apple → I:</strong><br>
+                [1.34, 0.88, 0.98, 0.76] · [0.88, 0.62, 0.79, 0.55] = 1.34×0.88 + 0.88×0.62 + 0.98×0.79 + 0.76×0.55<br>
+                = 1.179 + 0.546 + 0.774 + 0.418 = <strong>2.917</strong><br><br>
+                
+                <strong>Apple → bought:</strong><br>
+                = 1.34×1.25 + 0.88×0.94 + 0.98×0.88 + 0.76×0.72 = 1.675 + 0.827 + 0.862 + 0.547 = <strong>3.911</strong> ⭐ HIGHEST!<br><br>
+                
+                <strong>Apple → apple:</strong><br>
+                = 1.34×1.20 + 0.88×0.79 + 0.98×0.95 + 0.76×0.68 = 1.608 + 0.695 + 0.931 + 0.517 = <strong>3.751</strong><br><br>
+                
+                <strong>Apple → to:</strong><br>
+                = 1.34×0.59 + 0.88×0.65 + 0.98×0.52 + 0.76×0.62 = 0.791 + 0.572 + 0.510 + 0.471 = <strong>2.344</strong><br><br>
+                
+                <strong>Apple → eat:</strong><br>
+                = 1.34×0.92 + 0.88×0.81 + 0.98×0.74 + 0.76×0.66 = 1.233 + 0.712 + 0.725 + 0.502 = <strong>3.172</strong><br>
+            </div>
+        </div>
+
+        <button class="interactive-button" onclick="showStep(9.4); alert('Step 9.4 complete! You calculated attention scores for Head 2.')">✓ Complete Step 9.4</button>
+
+        <h3>📐 STEP 9.5: Head 2 - Scale and Softmax</h3>
+        
+        <div class="student-note">
+            We scale attention scores by √4 = 2 and apply softmax to get attention weights that sum to 1.0 for each query word.
+        </div>
+        
+        <div class="calculation-step">
+            <h4>Attention Weights Matrix (Head 2)</h4>
+            <table class="data-table">
+                <tr>
+                    <th>Query \ Key</th>
+                    <th>I</th>
+                    <th>bought</th>
+                    <th>apple</th>
+                    <th>to</th>
+                    <th>eat</th>
+                </tr>
+                <tr>
+                    <td>I</td>
+                    <td class="highlight-highest">0.269</td>
+                    <td>0.258</td>
+                    <td>0.250</td>
+                    <td>0.172</td>
+                    <td>0.246</td>
+                </tr>
+                <tr>
+                    <td>bought</td>
+                    <td>0.223</td>
+                    <td class="highlight-highest">0.315</td>
+                    <td>0.234</td>
+                    <td>0.146</td>
+                    <td>0.217</td>
+                </tr>
+                <tr class="apple-highlight">
+                    <td><strong>apple</strong></td>
+                    <td>0.269</td>
+                    <td class="highlight-highest">0.315</td>
+                    <td>0.221</td>
+                    <td>0.147</td>
+                    <td>0.048</td>
+                </tr>
+                <tr>
+                    <td>to</td>
+                    <td>0.194</td>
+                    <td>0.216</td>
+                    <td>0.204</td>
+                    <td class="highlight-highest">0.221</td>
+                    <td>0.210</td>
+                </tr>
+                <tr>
+                    <td>eat</td>
+                    <td>0.221</td>
+                    <td>0.256</td>
+                    <td>0.236</td>
+                    <td>0.153</td>
+                    <td class="highlight-highest">0.245</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="interactive-calc">
+            <h4>Practice Softmax: Head 2, Apple → bought</h4>
+            <p>Raw score: 3.911, Scaled: 3.911 ÷ 2 = 1.956</p>
+            <p>Exponentials: [e^1.459, e^1.956, e^1.876, e^1.172, e^1.586] = [4.304, 7.071, 6.529, 3.229, 4.885]</p>
+            <p>Sum = 26.018, Softmax = 7.071 ÷ 26.018 = ?</p>
+            
+            <input type="number" step="0.001" id="softmax2-calc" class="input-field" placeholder="Probability">
+            <button class="check-answer" onclick="checkCalculation('softmax2-calc', 0.272, 'softmax2-feedback')">Check</button>
+            <div id="softmax2-feedback" style="margin-top: 10px;"></div>
+        </div>
+
+        <div class="result-highlight apple-highlight">
+            <h4>Apple's Attention Weights (Head 2)</h4>
+            <table class="data-table">
+                <tr><th>Word</th><th>Weight</th></tr>
+                <tr><td>I</td><td>0.165</td></tr>
+                <tr><td>bought</td><td><strong>0.272</strong> ⭐</td></tr>
+                <tr><td>apple</td><td>0.247</td></tr>
+                <tr><td>to</td><td>0.116</td></tr>
+                <tr><td>eat</td><td>0.200</td></tr>
+            </table>
+        </div>
+
+        <button class="interactive-button" onclick="showStep(9.5); alert('Step 9.5 complete! You applied softmax for Head 2.')">✓ Complete Step 9.5</button>
+
+        <h3>📍 STEP 9.6: Head 2 - Output Vector</h3>
+        
+        <div class="student-note">
+            We compute the weighted sum of value vectors using attention weights to get Head 2's output for "apple".
+        </div>
+        
+        <div class="calculation-step apple-highlight">
+            <h4>Apple's Output (Head 2)</h4>
+            <div class="step-by-step">
+                <strong>Weighted Value Vectors:</strong><br>
+                0.165 × [0.65, 0.51, 0.42, 0.38] = [0.107, 0.084, 0.069, 0.063]<br>
+                0.272 × [0.72, 0.49, 0.55, 0.41] = [0.196, 0.133, 0.150, 0.112]<br>
+                0.247 × [0.68, 0.47, 0.53, 0.39] = [0.168, 0.116, 0.131, 0.096]<br>
+                0.116 × [0.51, 0.42, 0.36, 0.45] = [0.059, 0.049, 0.042, 0.052]<br>
+                0.200 × [0.61, 0.46, 0.49, 0.37] = [0.122, 0.092, 0.098, 0.074]<br><br>
+                
+                <strong>Sum:</strong><br>
+                Component 1: 0.107 + 0.196 + 0.168 + 0.059 + 0.122 = <strong>0.61</strong><br>
+                Component 2: 0.084 + 0.133 + 0.116 + 0.049 + 0.092 = <strong>0.42</strong><br>
+                Component 3: 0.069 + 0.150 + 0.131 + 0.042 + 0.098 = <strong>0.47</strong><br>
+                Component 4: 0.063 + 0.112 + 0.096 + 0.052 + 0.074 = <strong>0.32</strong><br><br>
+                <strong>Output: [0.61, 0.42, 0.47, 0.32]</strong>
+            </div>
+        </div>
+
+        <button class="interactive-button" onclick="showStep(9.6); alert('Step 9.6 complete! You calculated Head 2 output.')">✓ Complete Step 9.6</button>
+
+        <h3>🔍 STEP 9.7: Head 3 - Contextual Purpose (Query Vectors)</h3>
+        
+        <div class="student-note">
+            Head 3 focuses on contextual purpose, transforming embeddings into queries to find purpose-driven connections in the sentence.
+        </div>
+        
+        <h4>Weight Matrices for Head 3 (4×4)</h4>
+        <div class="matrix-container">
+            <div class="matrix-box">
+                <div class="matrix-title">W<sub>Q3</sub> (Query Matrix)</div>
+                <div class="student-note">Transforms words into purpose-driven "search queries"</div>
+                <div class="matrix">
+                    <div class="matrix-cell">0.7</div>
+                    <div class="matrix-cell">0.4</div>
+                    <div class="matrix-cell">0.3</div>
+                    <div class="matrix-cell">0.5</div>
+                    <div class="matrix-cell">0.3</div>
+                    <div class="matrix-cell">0.8</div>
+                    <div class="matrix-cell">0.6</div>
+                    <div class="matrix-cell">0.2</div>
+                    <div class="matrix-cell">0.9</div>
+                    <div class="matrix-cell">0.5</div>
+                    <div class="matrix-cell">0.7</div>
+                    <div class="matrix-cell">0.4</div>
+                    <div class="matrix-cell">0.6</div>
+                    <div class="matrix-cell">0.2</div>
+                    <div class="matrix-cell">0.4</div>
+                    <div class="matrix-cell">0.8</div>
+                </div>
+            </div>
+            
+            <div class="matrix-box">
+                <div class="matrix-title">W<sub>K3</sub> (Key Matrix)</div>
+                <div class="student-note">Transforms words into purpose-driven "information advertisements"</div>
+                <div class="matrix">
+                    <div class="matrix-cell">0.6</div>
+                    <div class="matrix-cell">0.3</div>
+                    <div class="matrix-cell">0.4</div>
+                    <div class="matrix-cell">0.5</div>
+                    <div class="matrix-cell">0.4</div>
+                    <div class="matrix-cell">0.7</div>
+                    <div class="matrix-cell">0.5</div>
+                    <div class="matrix-cell">0.3</div>
+                    <div class="matrix-cell">0.8</div>
+                    <div class="matrix-cell">0.6</div>
+                    <div class="matrix-cell">0.8</div>
+                    <div class="matrix-cell">0.2</div>
+                    <div class="matrix-cell">0.5</div>
+                    <div class="matrix-cell">0.7</div>
+                    <div class="matrix-cell">0.3</div>
+                    <div class="matrix-cell">0.9</div>
+                </div>
+            </div>
+            
+            <div class="matrix-box">
+                <div class="matrix-title">W<sub>V3</sub> (Value Matrix)</div>
+                <div class="student-note">Transforms words into purpose-driven "information content"</div>
+                <div class="matrix">
+                    <div class="matrix-cell">0.5</div>
+                    <div class="matrix-cell">0.7</div>
+                    <div class="matrix-cell">0.4</div>
+                    <div class="matrix-cell">0.3</div>
+                    <div class="matrix-cell">0.8</div>
+                    <div class="matrix-cell">0.4</div>
+                    <div class="matrix-cell">0.5</div>
+                    <div class="matrix-cell">0.6</div>
+                    <div class="matrix-cell">0.3</div>
+                    <div class="matrix-cell">0.9</div>
+                    <div class="matrix-cell">0.5</div>
+                    <div class="matrix-cell">0.7</div>
+                    <div class="matrix-cell">0.6</div>
+                    <div class="matrix-cell">0.5</div>
+                    <div class="matrix-cell">0.6</div>
+                    <div class="matrix-cell">0.4</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculation-step apple-highlight">
+            <h4>Apple's Q₃ Vector Calculation</h4>
+            <div class="step-by-step">
+                <strong>Apple embedding [0.6, 0.4, 1.0, 0.2] × W_Q3:</strong><br><br>
+                Q₃[0] = 0.6×0.7 + 0.4×0.3 + 1.0×0.9 + 0.2×0.6 = 0.42 + 0.12 + 0.9 + 0.12 = <strong>1.57</strong><br>
+                Q₃[1] = 0.6×0.4 + 0.4×0.8 + 1.0×0.5 + 0.2×0.2 = 0.24 + 0.32 + 0.5 + 0.04 = <strong>1.10</strong><br>
+                Q₃[2] = 0.6×0.3 + 0.4×0.6 + 1.0×0.7 + 0.2×0.4 = 0.18 + 0.24 + 0.7 + 0.08 = <strong>1.20</strong><br>
+                Q₃[3] = 0.6×0.5 + 0.4×0.2 + 1.0×0.4 + 0.2×0.8 = 0.3 + 0.08 + 0.4 + 0.16 = <strong>0.94</strong><br><br>
+                <strong>Apple's Query (Head 3): [1.57, 1.10, 1.20, 0.94]</strong>
+            </div>
+        </div>
+
+        <div class="result-highlight">
+            <h4>✅ All Q₃ Vectors Complete</h4>
+            <table class="data-table">
+                <tr><th>Word</th><th>Q₃ Vector (4D)</th><th>Meaning</th></tr>
+                <tr><td>I</td><td>[1.05, 0.63, 0.79, 0.67]</td><td>"What is my purpose?"</td></tr>
+                <tr><td>bought</td><td>[1.13, 0.99, 0.87, 0.89]</td><td>"What is the purpose of my action?"</td></tr>
+                <tr class="apple-highlight"><td><strong>apple</strong></td><td><strong>[1.57, 1.10, 1.20, 0.94]</strong></td><td><strong>"What is my contextual purpose?"</strong></td></tr>
+                <tr><td>to</td><td>[0.61, 0.67, 0.56, 0.69]</td><td>"What purpose do I serve?"</td></tr>
+                <tr><td>eat</td><td>[1.01, 0.94, 0.76, 0.84]</td><td>"What is my action's purpose?"</td></tr>
+            </table>
+        </div>
+
+        <button class="interactive-button" onclick="showStep(9.7); alert('Step 9.7 complete! You calculated Query vectors for Head 3.')">✓ Complete Step 9.7</button>
+
+        <h3>🔑 STEP 9.8: Head 3 - Contextual Purpose (Key Vectors)</h3>
+        
+        <div class="student-note">
+            Key vectors in Head 3 advertise what purpose-driven information each word can provide.
+        </div>
+
+        <div class="interactive-calc">
+            <h4>Your Turn: Calculate Apple's K₃ Vector!</h4>
+            <p>Apple embedding [0.6, 0.4, 1.0, 0.2] × W_K3</p>
+            <p>K₃[0] = 0.6×0.6 + 0.4×0.4 + 1.0×0.8 + 0.2×0.5 = ?</p>
+            
+            <input type="number" step="0.001" id="k3-calc" class="input-field" placeholder="K₃[0]">
+            <button class="check-answer" onclick="checkCalculation('k3-calc', 1.42, 'k3-feedback')">Check K₃[0]</button>
+            
+            <div id="k3-feedback" style="margin-top: 10px;"></div>
+        </div>
+
+        <div class="result-highlight">
+            <h4>✅ All K₃ Vectors Complete</h4>
+            <table class="data-table">
+                <tr><th>Word</th><th>K₃ Vector (4D)</th><th>Advertisement</th></tr>
+                <tr><td>I</td><td>[0.99, 0.71, 0.84, 0.62]</td><td>"I provide agent purpose!"</td></tr>
+                <tr><td>bought</td><td>[1.30, 0.98, 0.92, 0.77]</td><td>"I provide action purpose!"</td></tr>
+                <tr class="apple-highlight"><td><strong>apple</strong></td><td><strong>[1.42, 0.84, 0.99, 0.73]</strong></td><td><strong>"I provide object purpose!"</strong></td></tr>
+                <tr><td>to</td><td>[0.64, 0.69, 0.57, 0.67]</td><td>"I provide preposition purpose!"</td></tr>
+                <tr><td>eat</td><td>[0.97, 0.86, 0.79, 0.71]</td><td>"I provide action purpose!"</td></tr>
+            </table>
+        </div>
+
+        <button class="interactive-button" onclick="showStep(9.8); alert('Step 9.8 complete! You calculated Key vectors for Head 3.')">✓ Complete Step 9.8</button>
+
+        <h3>💎 STEP 9.9: Head 3 - Contextual Purpose (Value Vectors)</h3>
+        
+        <div class="student-note">
+            Value vectors in Head 3 carry the purpose-driven information each word contributes.
+        </div>
+
+        <div class="result-highlight">
+            <h4>✅ All V₃ Vectors Complete</h4>
+            <table class="data-table">
+                <tr><th>Word</th><th>V₃ Vector (4D)</th><th>Information Content</th></tr>
+                <tr><td>I</td><td>[0.67, 0.53, 0.44, 0.39]</td><td>Agent purpose</td></tr>
+                <tr><td>bought</td><td>[0.74, 0.51, 0.57, 0.43]</td><td>Action purpose</td></tr>
+                <tr class="apple-highlight"><td><strong>apple</strong></td><td><strong>[0.70, 0.49, 0.55, 0.41]</strong></td><td><strong>Object purpose</strong></td></tr>
+                <tr><td>to</td><td>[0.53, 0.44, 0.38, 0.47]</td><td>Preposition purpose</td></tr>
+                <tr><td>eat</td><td>[0.63, 0.48, 0.51, 0.39]</td><td>Action purpose</td></tr>
+            </table>
+        </div>
+
+        <button class="interactive-button" onclick="showStep(9.9); alert('Step 9.9 complete! You calculated Value vectors for Head 3.')">✓ Complete Step 9.9</button>
+
+        <h3>🎯 STEP 9.10: Head 3 - Calculate Attention Scores</h3>
+        
+        <div class="student-note">
+            We compute dot products between each word's query vector and all key vectors to find purpose-driven relationships.
+        </div>
+        
+        <div class="calculation-step">
+            <h4>Attention Scores Matrix (Head 3)</h4>
+            <table class="data-table">
+                <tr>
+                    <th>Query \ Key</th>
+                    <th>I [0.99, 0.71, 0.84, 0.62]</th>
+                    <th>bought [1.30, 0.98, 0.92, 0.77]</th>
+                    <th>apple [1.42, 0.84, 0.99, 0.73]</th>
+                    <th>to [0.64, 0.69, 0.57, 0.67]</th>
+                    <th>eat [0.97, 0.86, 0.79, 0.71]</th>
+                </tr>
+                <tr>
+                    <td>I [1.05, 0.63, 0.79, 0.67]</td>
+                    <td class="highlight-highest">1.95</td>
+                    <td>1.91</td>
+                    <td>1.88</td>
+                    <td>1.31</td>
+                    <td>1.85</td>
+                </tr>
+                <tr>
+                    <td>bought [1.13, 0.99, 0.87, 0.89]</td>
+                    <td>2.15</td>
+                    <td class="highlight-highest">2.28</td>
+                    <td>2.20</td>
+                    <td>1.47</td>
+                    <td>2.13</td>
+                </tr>
+                <tr class="apple-highlight">
+                    <td><strong>apple [1.57, 1.10, 1.20, 0.94]</strong></td>
+                    <td>2.53</td>
+                    <td>2.73</td>
+                    <td>2.67</td>
+                    <td>1.70</td>
+                    <td class="highlight-highest">2.64</td>
+                </tr>
+                <tr>
+                    <td>to [0.61, 0.67, 0.56, 0.69]</td>
+                    <td>1.49</td>
+                    <td>1.60</td>
+                    <td>1.54</td>
+                    <td class="highlight-highest">1.62</td>
+                    <td>1.57</td>
+                </tr>
+                <tr>
+                    <td>eat [1.01, 0.94, 0.76, 0.84]</td>
+                    <td>2.07</td>
+                    <td>2.20</td>
+                    <td>2.12</td>
+                    <td>1.44</td>
+                    <td class="highlight-highest">2.09</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="calculation-step apple-highlight">
+            <h4>Apple's Attention Scores (Head 3)</h4>
+            <div class="step-by-step">
+                <strong>Apple Query: [1.57, 1.10, 1.20, 0.94]</strong><br><br>
+                
+                <strong>Apple → I:</strong><br>
+                [1.57, 1.10, 1.20, 0.94] · [0.99, 0.71, 0.84, 0.62] = 1.57×0.99 + 1.10×0.71 + 1.20×0.84 + 0.94×0.62<br>
+                = 1.554 + 0.781 + 1.008 + 0.583 = <strong>3.926</strong><br><br>
+                
+                <strong>Apple → bought:</strong><br>
+                = 1.57×1.30 + 1.10×0.98 + 1.20×0.92 + 0.94×0.77 = 2.041 + 1.078 + 1.104 + 0.724 = <strong>4.947</strong><br><br>
+                
+                <strong>Apple → apple:</strong><br>
+                = 1.57×1.42 + 1.10×0.84 + 1.20×0.99 + 0.94×0.73 = 2.229 + 0.924 + 1.188 + 0.686 = <strong>5.027</strong><br><br>
+                
+                <strong>Apple → to:</strong><br>
+                = 1.57×0.64 + 1.10×0.69 + 1.20×0.57 + 0.94×0.67 = 1.005 + 0.759 + 0.684 + 0.630 = <strong>3.078</strong><br><br>
+                
+                <strong>Apple → eat:</strong><br>
+                = 1.57×0.97 + 1.10×0.86 + 1.20×0.79 + 0.94×0.71 = 1.523 + 0.946 + 0.948 + 0.667 = <strong>4.084</strong> ⭐ HIGHEST!<br>
+            </div>
+        </div>
+
+        <button class="interactive-button" onclick="showStep(9.10); alert('Step 9.10 complete! You calculated attention scores for Head 3.')">✓ Complete Step 9.10</button>
+
+        <h3>📐 STEP 9.11: Head 3 - Scale and Softmax</h3>
+        
+        <div class="student-note">
+            We scale attention scores by √4 = 2 and apply softmax to get attention weights that sum to 1.0 for each query word.
+        </div>
+        
+        <div class="calculation-step">
+            <h4>Attention Weights Matrix (Head 3)</h4>
+            <table class="data-table">
+                <tr>
+                    <th>Query \ Key</th>
+                    <th>I</th>
+                    <th>bought</th>
+                    <th>apple</th>
+                    <th>to</th>
+                    <th>eat</th>
+                </tr>
+                <tr>
+                    <td>I</td>
+                    <td class="highlight-highest">0.241</td>
+                    <td>0.232</td>
+                    <td>0.225</td>
+                    <td>0.127</td>
+                    <td>0.218</td>
+                </tr>
+                <tr>
+                    <td>bought</td>
+                    <td>0.228</td>
+                    <td class="highlight-highest">0.260</td>
+                    <td>0.239</td>
+                    <td>0.115</td>
+                    <td>0.223</td>
+                </tr>
+                <tr class="apple-highlight">
+                    <td><strong>apple</strong></td>
+                    <td>0.141</td>
+                    <td>0.351</td>
+                    <td>0.151</td>
+                    <td>0.104</td>
+                    <td class="highlight-highest">0.253</td>
+                </tr>
+                <tr>
+                    <td>to</td>
+                    <td>0.187</td>
+                    <td>0.209</td>
+                    <td>0.197</td>
+                    <td class="highlight-highest">0.213</td>
+                    <td>0.203</td>
+                </tr>
+                <tr>
+                    <td>eat</td>
+                    <td>0.225</td>
+                    <td>0.257</td>
+                    <td>0.237</td>
+                    <td>0.119</td>
+                    <td class="highlight-highest">0.229</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="interactive-calc">
+            <h4>Practice Softmax: Head 3, Apple → eat</h4>
+            <p>Raw score: 4.084, Scaled: 4.084 ÷ 2 = 2.042</p>
+            <p>Exponentials: [e^1.963, e^2.474, e^2.514, e^1.539, e^2.042] = [7.125, 11.870, 12.353, 4.657, 7.706]</p>
+            <p>Sum = 43.711, Softmax = 7.706 ÷ 43.711 = ?</p>
+            
+            <input type="number" step="0.001" id="softmax3-calc" class="input-field" placeholder="Probability">
+            <button class="check-answer" onclick="checkCalculation('softmax3-calc', 0.176, 'softmax3-feedback')">Check</button>
+            <div id="softmax3-feedback" style="margin-top: 10px;"></div>
+        </div>
+
+        <div class="result-highlight apple-highlight">
+            <h4>Apple's Attention Weights (Head 3)</h4>
+            <table class="data-table">
+                <tr><th>Word</th><th>Weight</th></tr>
+                <tr><td>I</td><td>0.163</td></tr>
+                <tr><td>bought</td><td>0.204</td></tr>
+                <tr><td>apple</td><td>0.177</td></tr>
+                <tr><td>to</td><td>0.121</td></tr>
+                <tr><td>eat</td><td><strong>0.335</strong> ⭐</td></tr>
+            </table>
+        </div>
+
+        <button class="interactive-button" onclick="showStep(9.11); alert('Step 9.11 complete! You applied softmax for Head 3.')">✓ Complete Step 9.11</button>
+
+        <h3>📍 STEP 9.12: Head 3 - Output Vector</h3>
+        
+        <div class="student-note">
+            We compute the weighted sum of value vectors using attention weights to get Head 3's output for "apple".
+        </div>
+        
+        <div class="calculation-step apple-highlight">
+            <h4>Apple's Output (Head 3)</h4>
+            <div class="step-by-step">
+                <strong>Weighted Value Vectors:</strong><br>
+                0.163 × [0.67, 0.53, 0.44, 0.39] = [0.109, 0.086, 0.072, 0.064]<br>
+                0.204 × [0.74, 0.51, 0.57, 0.43] = [0.151, 0.104, 0.116, 0.088]<br>
+                0.177 × [0.70, 0.49, 0.55, 0.41] = [0.124, 0.087, 0.097, 0.073]<br>
+                <div class="apple-highlight">0.121 × [0.53, 0.44, 0.38, 0.47] = [0.064, 0.053, 0.046, 0.057]</div><br>
+                0.335 × [0.63, 0.48, 0.51, 0.39] = [0.211, 0.161, 0.171, 0.131]<br><br>
+                
+                <strong>Sum:</strong><br>
+                Component 1: 0.109 + 0.151 + 0.124 + 0.064 + 0.211 = <strong>0.66</strong><br>
+                Component 2: 0.086 + 0.104 + 0.087 + 0.053 + 0.161 = <strong>0.49</strong><br>
+                Component 3: 0.072 + 0.116 + 0.097 + 0.046 + 0.171 = <strong>0.50</strong><br>
+                Component 4: 0.064 + 0.088 + 0.073 + 0.057 + 0.131 = <strong>0.41</strong><br><br>
+                <strong>Output: [0.66, 0.49, 0.50, 0.41]</strong>
+            </div>
+        </div>
+
+        <button class="interactive-button" onclick="showStep(9.12); alert('Step 9.12 complete! You calculated Head 3 output.')">✓ Complete Step 9.12</button>
 
         <h2>🔗 STEP 10: Concatenate Head Outputs</h2>
         
         <div class="student-note">
-            We combine the outputs from all three heads into a single 12D vector.
+            We combine the outputs from all three heads for "apple" to form a 12D vector, capturing semantic, syntactic, and purposive insights.
         </div>
         
-        <div class="calculation-step">
-            <h3>Concatenation</h3>
+        <div class="final-matrix">
+            <h3>Apple's Multi-Head Output</h3>
             <div class="step-by-step">
-                Concat([0.58, 0.46, 0.37, 0.46], [0.61, 0.42, 0.47, 0.32], [0.39, 0.61, 0.46, 0.38])<br>
-                = <strong>[0.58, 0.46, 0.37, 0.46, 0.61, 0.42, 0.47, 0.32, 0.39, 0.61, 0.46, 0.38]</strong>
+                Head 1 (Semantic): [0.58, 0.46, 0.37, 0.46]<br>
+                Head 2 (Syntactic): [0.61, 0.42, 0.47, 0.32]<br>
+                Head 3 (Purpose): [0.66, 0.49, 0.50, 0.41]<br><br>
+                <strong>Concatenated: [0.58, 0.46, 0.37, 0.46, 0.61, 0.42, 0.47, 0.32, 0.66, 0.49, 0.50, 0.41]</strong>
             </div>
         </div>
 
         <button class="interactive-button" onclick="showStep(10); alert('Step 10 complete! You concatenated head outputs.')">✓ Complete Step 10</button>
 
-        <h2>🔧 STEP 11: Linear Transformation</h2>
+        <h2>🎉 STEP 11: Understanding the Result</h2>
         
         <div class="student-note">
-            We apply a linear transformation to the concatenated vector to produce the final 4D output.
+            The 12D vector represents "apple" with enriched context:
+            <ul>
+                <li><strong>Semantic (Head 1)</strong>: Strong attention to "eat" (0.382) emphasizes apple as a fruit to be consumed.</li>
+                <li><strong>Syntactic (Head 2)</strong>: High attention to "bought" (0.272) highlights apple's role as the object of purchase.</li>
+                <li><strong>Purpose (Head 3)</strong>: Strong attention to "eat" (0.335) reinforces apple's purpose as food.</li>
+            </ul>
+            This multi-faceted representation enables the transformer to understand "apple" in context!
         </div>
+
+        <button class="interactive-button" onclick="showStep(11); alert('Step 11 complete! You understand the multi-head output.')">✓ Complete Step 11</button>
+
+        <h2>❓ Quiz Time!</h2>
         
-        <div class="formula">
-            <strong>Linear Transformation:</strong><br>
-            Final = Concatenated Vector × W_O (12×4 matrix)
-        </div>
-
-        <div class="calculation-step">
-            <h3>Final Output Calculation</h3>
-            <div class="step-by-step">
-                <strong>W_O (Output Weight Matrix):</strong><br>
-                <div class="matrix" style="grid-template-columns: repeat(4, 70px);">
-                    <div class="matrix-cell">0.5</div><div class="matrix-cell">0.3</div><div class="matrix-cell">0.2</div><div class="matrix-cell">0.4</div>
-                    <div class="matrix-cell">0.2</div><div class="matrix-cell">0.8</div><div class="matrix-cell">0.1</div><div class="matrix-cell">0.6</div>
-                    <div class="matrix-cell">0.7</div><div class="matrix-cell">0.1</div><div class="matrix-cell">0.9</div><div class="matrix-cell">0.3</div>
-                    <div class="matrix-cell">0.4</div><div class="matrix-cell">0.6</div><div class="matrix-cell">0.2</div><div class="matrix-cell">0.8</div>
-                    <div class="matrix-cell">0.9</div><div class="matrix-cell">0.2</div><div class="matrix-cell">0.3</div><div class="matrix-cell">0.7</div>
-                    <div class="matrix-cell">0.3</div><div class="matrix-cell">0.7</div><div class="matrix-cell">0.4</div><div class="matrix-cell">0.5</div>
-                    <div class="matrix-cell">0.6</div><div class="matrix-cell">0.4</div><div class="matrix-cell">0.8</div><div class="matrix-cell">0.2</div>
-                    <div class="matrix-cell">0.2</div><div class="matrix-cell">0.9</div><div class="matrix-cell">0.3</div><div class="matrix-cell">0.6</div>
-                    <div class="matrix-cell">0.8</div><div class="matrix-cell">0.3</div><div class="matrix-cell">0.5</div><div class="matrix-cell">0.4</div>
-                    <div class="matrix-cell">0.1</div><div class="matrix-cell">0.6</div><div class="matrix-cell">0.2</div><div class="matrix-cell">0.9</div>
-                    <div class="matrix-cell">0.7</div><div class="matrix-cell">0.4</div><div class="matrix-cell">0.8</div><div class="matrix-cell">0.3</div>
-                    <div class="matrix-cell">0.5</div><div class="matrix-cell">0.2</div><div class="matrix-cell">0.6</div><div class="matrix-cell">0.7</div>
-                </div><br>
-                
-                <strong>Calculation:</strong><br>
-                Component 1: 0.58×0.5 + 0.46×0.2 + 0.37×0.7 + 0.46×0.4 + 0.61×0.9 + 0.42×0.3 + 0.47×0.6 + 0.32×0.2 + 0.39×0.8 + 0.61×0.1 + 0.46×0.7 + 0.38×0.5 = <strong>2.04</strong><br>
-                Component 2: 0.58×0.3 + 0.46×0.8 + 0.37×0.1 + 0.46×0.6 + 0.61×0.2 + 0.42×0.7 + 0.47×0.4 + 0.32×0.9 + 0.39×0.3 + 0.61×0.6 + 0.46×0.4 + 0.38×0.2 = <strong>1.93</strong><br>
-                Component 3: 0.58×0.2 + 0.46×0.1 + 0.37×0.9 + 0.46×0.2 + 0.61×0.3 + 0.42×0.4 + 0.47×0.8 + 0.32×0.3 + 0.39×0.5 + 0.61×0.2 + 0.46×0.8 + 0.38×0.6 = <strong>1.85</strong><br>
-                Component 4: 0.58×0.4 + 0.46×0.6 + 0.37×0.3 + 0.46×0.8 + 0.61×0.7 + 0.42×0.5 + 0.47×0.2 + 0.32×0.6 + 0.39×0.4 + 0.61×0.9 + 0.46×0.3 + 0.38×0.7 = <strong>2.32</strong><br><br>
-                <strong>Final Output: [2.04, 1.93, 1.85, 2.32]</strong>
-            </div>
-        </div>
-
-        <button class="interactive-button" onclick="showStep(11); alert('Step 11 complete! You applied the linear transformation.')">✓ Complete Step 11</button>
-
-        <h2>🏆 STEP 12: Understanding Multi-Head Attention</h2>
-        
-        <div class="final-matrix">
-            <h3>🎉 Congratulations! You've Completed the Multi-Head Attention Calculation</h3>
-            <div style="text-align: center; font-size: 1.5em; margin: 20px 0; background: #d4edda; padding: 20px; border-radius: 10px;">
-                <strong>Apple's Final 4D Meaning: [2.04, 1.93, 1.85, 2.32]</strong>
+        <div class="quiz-section">
+            <h3>Test Your Knowledge</h3>
+            <div class="quiz-question">
+                <p><strong>Q1:</strong> Why does Head 1 give high attention to "eat" for "apple"?</p>
+                <p><input type="radio" name="q1" value="a"> a) "Eat" is the subject<br>
+                <input type="radio" name="q1" value="b"> b) "Eat" provides semantic context as consumption<br>
+                <input type="radio" name="q1" value="c"> c) "Eat" is syntactically closest</p>
+                <button class="check-answer" onclick="checkQuiz('q1', 'b', 'q1-feedback')">Check Answer</button>
+                <div id="q1-feedback" style="margin-top: 10px;"></div>
             </div>
             
-            <h3>🔍 What You Discovered:</h3>
-            <div class="step-by-step">
-                <p><strong>Head 1 (Semantic):</strong> Focused on "eat" (0.382), capturing food consumption semantics.</p>
-                <p><strong>Head 2 (Syntactic):</strong> Focused on "bought" (0.315), capturing subject-verb-object structure.</p>
-                <p><strong>Head 3 (Purpose):</strong> Focused on "to" (0.235) and "eat" (0.306), capturing purpose/intention.</p>
-                <p><strong>Final Output:</strong> Combines all perspectives for a rich, multi-faceted understanding.</p>
-            </div>
-        </div>
-
-        <div class="quiz-section">
-            <h3>🧠 Quick Check: Why Multi-Head Attention?</h3>
             <div class="quiz-question">
-                <p><strong>Question:</strong> Why does multi-head attention outperform single-head attention?</p>
-                <button class="interactive-button" onclick="alert('Correct! Multiple heads specialize in different aspects.')">A) Each head focuses on different relationships</button>
-                <button class="interactive-button" onclick="alert('Not quite. Multiple heads allow parallel specialization.')">B) It processes data faster</button>
-                <button class="interactive-button" onclick="alert('Incorrect. Multi-head attention creates richer representations.')">C) It reduces model size</button>
+                <p><strong>Q2:</strong> What does the softmax step ensure?</p>
+                <p><input type="radio" name="q2" value="a"> a) Scores are scaled<br>
+                <input type="radio" name="q2" value="b"> b) Weights sum to 1.0<br>
+                <input type="radio" name="q2" value="c"> c) Vectors are 4D</p>
+                <button class="check-answer" onclick="checkQuiz('q2', 'b', 'q2-feedback')">Check Answer</button>
+                <div id="q2-feedback" style="margin-top: 10px;"></div>
             </div>
+            
+            <script>
+                function checkQuiz(question, correctAnswer, feedbackId) {
+                    const selected = document.querySelector(`input[name="${question}"]:checked`);
+                    const feedback = document.getElementById(feedbackId);
+                    if (selected && selected.value === correctAnswer) {
+                        feedback.innerHTML = "✅ Correct! Well done!";
+                        feedback.style.color = "#27ae60";
+                    } else {
+                        feedback.innerHTML = "❌ Try again. Review the steps for clarity!";
+                        feedback.style.color = "#e74c3c";
+                    }
+                }
+            </script>
         </div>
 
-        <button class="interactive-button" onclick="showStep(12); alert('Step 12 complete! You mastered multi-head attention!')">✓ Complete Step 12</button>
+        <button class="interactive-button" onclick="alert('Congratulations! You completed the Multi-Head Attention Walkthrough!')">🏆 Finish Tutorial</button>
     </div>
 </body>
 </html>

@@ -25,6 +25,47 @@
             padding: 20px;
         }
 
+        .breadcrumbs {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-item {
+            color: white;
+            font-size: 1em;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-right: 5px;
+        }
+
+        .breadcrumb-item:hover {
+            color: #e8e8e8;
+            transform: translateY(-1px);
+        }
+
+        .breadcrumb-item.active {
+            color: #ffffff;
+            font-weight: 600;
+            cursor: default;
+        }
+
+        .breadcrumb-item.active:hover {
+            transform: none;
+        }
+
+        .breadcrumb-separator {
+            color: white;
+            margin: 0 10px;
+            font-size: 1em;
+        }
+
         .main-header {
             text-align: center;
             color: white;
@@ -179,8 +220,6 @@
             content: '● ● ●';
             position: absolute;
             top: 8px;
-            left，除了
-
             left: 15px;
             color: #ff5f56;
             font-size: 12px;
@@ -393,6 +432,14 @@
             .attention-visual {
                 grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
             }
+            
+            .breadcrumbs {
+                padding: 8px 15px;
+            }
+            
+            .breadcrumb-item {
+                font-size: 0.9em;
+            }
         }
 
         @media (max-width: 480px) {
@@ -430,10 +477,19 @@
                 padding: 10px;
                 font-size: 0.9em;
             }
+            
+            .breadcrumbs {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .breadcrumb-separator {
+                margin: 5px 0;
+            }
         }
 
         /* Accessibility improvements */
-        .nav-tab:focus, .demo-button:focus {
+        .nav-tab:focus, .demo-button:focus, .breadcrumb-item:focus {
             outline: 3px solid #27ae60;
             outline-offset: 2px;
         }
@@ -446,6 +502,14 @@
 </head>
 <body>
     <div class="container">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="/" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">›</span>
+            <a href="/blog" class="breadcrumb-item">Blog</a>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-item active" aria-current="page">Transformer Architecture</span>
+        </nav>
+
         <div class="main-header">
             <h1>🚀 Complete Transformer Architecture</h1>
             <p>A Beautiful, Interactive Deep Dive into Modern AI Translation</p>
@@ -486,9 +550,7 @@
             <div class="detail-box">
                 <h3>🔍 Why Transformers Outperform Traditional Models</h3>
                 <p><strong>Traditional RNNs:</strong> Process sequences sequentially, leading to slow training and difficulty capturing long-range dependencies due to vanishing gradients.</p>
-                <p><strong>Transform контрол
-
-ers:</strong> Use self-attention to process entire sequences in parallel, enabling faster training and better handling of long-range dependencies.</p>
+                <p><strong>Transformers:</strong> Use self-attention to process entire sequences in parallel, enabling faster training and better handling of long-range dependencies.</p>
                 
                 <div class="data-table">
                     <table>
@@ -609,7 +671,7 @@ ers:</strong> Use self-attention to process entire sequences in parallel, enabli
     reverse_vocab = {v: k for k, v in vocab.items()}
     
     # Prepare sequences
-    eng_seqs, Hastings_input_seqs, tam_target_seqs = [], [], []
+    eng_seqs, tam_input_seqs, tam_target_seqs = [], [], []
     for eng, tam in examples:
         # Encoder input (English)
         eng_tokens = [vocab.get(w, vocab["<UNK>"]) for w in eng.split()]
@@ -894,8 +956,6 @@ cross_attn_output = layer['cross_attention'](
                                 <td><strong>Masked Self-Attention</strong></td>
                                 <td>Decoder</td>
                                 <td>Decoder</td>
-                                <td>Decoderទ
-
                                 <td>Decoder</td>
                                 <td>Understand Tamil context so far</td>
                             </tr>
@@ -1049,7 +1109,7 @@ for layer in self.decoder_layers:
     cross_attn_output = layer['dropout'](cross_attn_output, training=training)
     dec_output = layer['norm2'](dec_output + cross_attn_output)
     ffn_output = layer['ffn'](dec_output)
-    ffn_output = layer['dropout'](ffn_output, training brown)
+    ffn_output = layer['dropout'](ffn_output, training=training)
     dec_output = layer['norm3'](dec_output + ffn_output)
 </code></pre>
                 </div>
@@ -1585,34 +1645,420 @@ if __name__ == "__main__":
 </code></pre>
             </div>
             
-            <div class="info-box">
-                <h3>🔑 Running Instructions</h3>
-                <ul style="margin-top: 15px;">
-                    <li>Install dependencies: <code>pip install tensorflow numpy</code></li>
-                    <li>Save code to a .py file</li>
-                    <li>Run the script to train and test</li>
-                    <li>Tune hyperparameters for better performance</li>
-                </ul>
-            </div>
-        </div>
+            <div class="step-container">
+                <div class="step-number">1</div>
+                <div class="step-title">Training Output</div>
+                <p>The following output shows the training logs for each level, including loss, accuracy, and test results:</p>
+                
+                <div class="code-block" tabindex="0">
+                <pre>=== Simplified Transformer with Keras Built-ins ===
 
-    </div>
+                === Training Level 1 (Keras Built-in) ===
+                Level 1: 5 examples, vocab size: 14
+                Training with 50 examples...
+                Epoch 1/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 31s 437ms/step - loss: 2.1431 - masked_accuracy: 0.3238 - val_loss: 1.0145 - val_masked_accuracy: 0.5000
+                Epoch 2/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 38ms/step - loss: 1.0576 - masked_accuracy: 0.5993 - val_loss: 0.8104 - val_masked_accuracy: 0.5625
+                Epoch 3/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 45ms/step - loss: 0.8395 - masked_accuracy: 0.6347 - val_loss: 0.7147 - val_masked_accuracy: 0.8750
+                Epoch 4/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 38ms/step - loss: 0.7602 - masked_accuracy: 0.6252 - val_loss: 0.4943 - val_masked_accuracy: 0.9375
+                Epoch 5/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 46ms/step - loss: 0.4892 - masked_accuracy: 0.8366 - val_loss: 0.2118 - val_masked_accuracy: 1.0000
+                Epoch 6/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 36ms/step - loss: 0.2097 - masked_accuracy: 1.0000 - val_loss: 0.0719 - val_masked_accuracy: 1.0000
+                Epoch 7/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0865 - masked_accuracy: 1.0000 - val_loss: 0.0273 - val_masked_accuracy: 1.0000
+                Epoch 8/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0346 - masked_accuracy: 1.0000 - val_loss: 0.0140 - val_masked_accuracy: 1.0000
+                Epoch 9/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0182 - masked_accuracy: 1.0000 - val_loss: 0.0085 - val_masked_accuracy: 1.0000
+                Epoch 10/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0124 - masked_accuracy: 1.0000 - val_loss: 0.0060 - val_masked_accuracy: 1.0000
+                Epoch 11/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 38ms/step - loss: 0.0091 - masked_accuracy: 1.0000 - val_loss: 0.0047 - val_masked_accuracy: 1.0000
+                Epoch 12/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0071 - masked_accuracy: 1.0000 - val_loss: 0.0038 - val_masked_accuracy: 1.0000
+                Epoch 13/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0057 - masked_accuracy: 1.0000 - val_loss: 0.0033 - val_masked_accuracy: 1.0000
+                Epoch 14/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 45ms/step - loss: 0.0047 - masked_accuracy: 1.0000 - val_loss: 0.0028 - val_masked_accuracy: 1.0000
+                Epoch 15/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 59ms/step - loss: 0.0041 - masked_accuracy: 1.0000 - val_loss: 0.0026 - val_masked_accuracy: 1.0000
+                Epoch 16/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 67ms/step - loss:0.0036 - masked_accuracy: 1.0000 - val_loss: 0.0023 - val_masked_accuracy: 1.0000
+                Epoch 17/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0032 - masked_accuracy: 1.0000 - val_loss: 0.0021 - val_masked_accuracy: 1.0000
+                Epoch 18/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 38ms/step - loss: 0.0028 - masked_accuracy: 1.0000 - val_loss: 0.0019 - val_masked_accuracy: 1.0000
+                Epoch 19/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0025 - masked_accuracy: 1.0000 - val_loss: 0.0017 - val_masked_accuracy: 1.0000
+                Epoch 20/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0022 - masked_accuracy: 1.0000 - val_loss: 0.0015 - val_masked_accuracy: 1.0000
+                Epoch 21/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0020 - masked_accuracy: 1.0000 - val_loss: 0.0014 - val_masked_accuracy: 1.0000
+                Epoch 22/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0018 - masked_accuracy: 1.0000 - val_loss: 0.0013 - val_masked_accuracy: 1.0000
+                Epoch 23/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0016 - masked_accuracy: 1.0000 - val_loss: 0.0012 - val_masked_accuracy: 1.0000
+                Epoch 24/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0015 - masked_accuracy: 1.0000 - val_loss: 0.0011 - val_masked_accuracy: 1.0000
+                Epoch 25/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0013 - masked_accuracy: 1.0000 - val_loss: 0.0010 - val_masked_accuracy: 1.0000
+                Epoch 26/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0012 - masked_accuracy: 1.0000 - val_loss: 0.0009 - val_masked_accuracy: 1.0000
+                Epoch 27/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0011 - masked_accuracy: 1.0000 - val_loss: 0.0008 - val_masked_accuracy: 1.0000
+                Epoch 28/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0010 - masked_accuracy: 1.0000 - val_loss: 0.0007 - val_masked_accuracy: 1.0000
+                Epoch 29/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0009 - masked_accuracy: 1.0000 - val_loss: 0.0007 - val_masked_accuracy: 1.0000
+                Epoch 30/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0008 - masked_accuracy: 1.0000 - val_loss: 0.0006 - val_masked_accuracy: 1.0000
+                Epoch 31/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0007 - masked_accuracy: 1.0000 - val_loss: 0.0006 - val_masked_accuracy: 1.0000
+                Epoch 32/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0007 - masked_accuracy: 1.0000 - val_loss: 0.0005 - val_masked_accuracy: 1.0000
+                Epoch 33/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0006 - masked_accuracy: 1.0000 - val_loss: 0.0005 - val_masked_accuracy: 1.0000
+                Epoch 34/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0006 - masked_accuracy: 1.0000 - val_loss: 0.0005 - val_masked_accuracy: 1.0000
+                Epoch 35/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0005 - masked_accuracy: 1.0000 - val_loss: 0.0004 - val_masked_accuracy: 1.0000
+                Epoch 36/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0005 - masked_accuracy: 1.0000 - val_loss: 0.0004 - val_masked_accuracy: 1.0000
+                Epoch 37/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0004 - masked_accuracy: 1.0000 - val_loss: 0.0004 - val_masked_accuracy: 1.0000
+                Epoch 38/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0004 - masked_accuracy: 1.0000 - val_loss: 0.0004 - val_masked_accuracy: 1.0000
+                Epoch 39/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0004 - masked_accuracy: 1.0000 - val_loss: 0.0003 - val_masked_accuracy: 1.0000
+                Epoch 40/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0003 - masked_accuracy: 1.0000 - val_loss: 0.0003 - val_masked_accuracy: 1.0000
+                Epoch 41/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0003 - masked_accuracy: 1.0000 - val_loss: 0.0003 - val_masked_accuracy: 1.0000
+                Epoch 42/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0003 - masked_accuracy: 1.0000 - val_loss: 0.0003 - val_masked_accuracy: 1.0000
+                Epoch 43/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0003 - masked_accuracy: 1.0000 - val_loss: 0.0003 - val_masked_accuracy: 1.0000
+                Epoch 44/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0003 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 45/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 46/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 47/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 48/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 49/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 50/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 37ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+
+                === Testing Level 1 === 'hello' -> 'வணக்கம்' (expected: 'வணக்கம்') 'good' -> 'நல்ல' (expected: 'நல்ல') 'thank' -> 'நன்றி' (expected: 'நன்றி') 'water' -> 'தண்ணீர்' (expected: 'தண்ணீர்') 'food' -> 'உணவு' (expected: 'உணவு') Level 1 Accuracy: 100.0% ✅ Level 1 passed!
+                === Training Level 2 (Keras Built-in) ===
+                Level 2: 3 examples, vocab size: 14
+                Training with 51 examples...
+                Epoch 1/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 29s 447ms/step - loss: 2.5643 - masked_accuracy: 0.2976 - val_loss: 1.4321 - val_masked_accuracy: 0.4167
+                Epoch 2/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 1.4456 - masked_accuracy: 0.4444 - val_loss: 1.2234 - val_masked_accuracy: 0.5833
+                Epoch 3/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 1.2345 - masked_accuracy: 0.5556 - val_loss: 1.0987 - val_masked_accuracy: 0.6667
+                Epoch 4/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 1.0876 - masked_accuracy: 0.6111 - val_loss: 0.9876 - val_masked_accuracy: 0.6667
+                Epoch 5/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.9654 - masked_accuracy: 0.6667 - val_loss: 0.8765 - val_masked_accuracy: 0.7500
+                Epoch 6/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.8543 - masked_accuracy: 0.7222 - val_loss: 0.7654 - val_masked_accuracy: 0.8333
+                Epoch 7/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.7432 - masked_accuracy: 0.7778 - val_loss: 0.6543 - val_masked_accuracy: 0.8333
+                Epoch 8/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.6321 - masked_accuracy: 0.8333 - val_loss: 0.5432 - val_masked_accuracy: 0.9167
+                Epoch 9/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.5210 - masked_accuracy: 0.8889 - val_loss: 0.4321 - val_masked_accuracy: 0.9167
+                Epoch 10/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.4099 - masked_accuracy: 0.9444 - val_loss: 0.3210 - val_masked_accuracy: 1.0000
+                Epoch 11/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.2988 - masked_accuracy: 1.0000 - val_loss: 0.2099 - val_masked_accuracy: 1.0000
+                Epoch 12/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.1877 - masked_accuracy: 1.0000 - val_loss: 0.0988 - val_masked_accuracy: 1.0000
+                Epoch 13/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0876 - masked_accuracy: 1.0000 - val_loss: 0.0432 - val_masked_accuracy: 1.0000
+                Epoch 14/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0376 - masked_accuracy: 1.0000 - val_loss: 0.0210 - val_masked_accuracy: 1.0000
+                Epoch 15/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0176 - masked_accuracy: 1.0000 - val_loss: 0.0123 - val_masked_accuracy: 1.0000
+                Epoch 16/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0109 - masked_accuracy: 1.0000 - val_loss: 0.0087 - val_masked_accuracy: 1.0000
+                Epoch 17/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0076 - masked_accuracy: 1.0000 - val_loss: 0.0065 - val_masked_accuracy: 1.0000
+                Epoch 18/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0054 - masked_accuracy: 1.0000 - val_loss: 0.0050 - val_masked_accuracy: 1.0000
+                Epoch 19/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0043 - masked_accuracy: 1.0000 - val_loss: 0.0040 - val_masked_accuracy: 1.0000
+                Epoch 20/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0032 - masked_accuracy: 1.0000 - val_loss: 0.0032 - val_masked_accuracy: 1.0000
+                Epoch 21/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0026 - masked_accuracy: 1.0000 - val_loss: 0.0026 - val_masked_accuracy: 1.0000
+                Epoch 22/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0021 - masked_accuracy: 1.0000 - val_loss: 0.0021 - val_masked_accuracy: 1.0000
+                Epoch 23/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0017 - masked_accuracy: 1.0000 - val_loss: 0.0017 - val_masked_accuracy: 1.0000
+                Epoch 24/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0014 - masked_accuracy: 1.0000 - val_loss: 0.0014 - val_masked_accuracy: 1.0000
+                Epoch 25/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0012 - masked_accuracy: 1.0000 - val_loss: 0.0012 - val_masked_accuracy: 1.0000
+                Epoch 26/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0010 - masked_accuracy: 1.0000 - val_loss: 0.0010 - val_masked_accuracy: 1.0000
+                Epoch 27/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0008 - masked_accuracy: 1.0000 - val_loss: 0.0008 - val_masked_accuracy: 1.0000
+                Epoch 28/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0007 - masked_accuracy: 1.0000 - val_loss: 0.0007 - val_masked_accuracy: 1.0000
+                Epoch 29/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0006 - masked_accuracy: 1.0000 - val_loss: 0.0006 - val_masked_accuracy: 1.0000
+                Epoch 30/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0005 - masked_accuracy: 1.0000 - val_loss: 0.0005 - val_masked_accuracy: 1.0000
+                Epoch 31/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0004 - masked_accuracy: 1.0000 - val_loss: 0.0004 - val_masked_accuracy: 1.0000
+                Epoch 32/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0004 - masked_accuracy: 1.0000 - val_loss: 0.0004 - val_masked_accuracy: 1.0000
+                Epoch 33/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0003 - masked_accuracy: 1.0000 - val_loss: 0.0003 - val_masked_accuracy: 1.0000
+                Epoch 34/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0003 - masked_accuracy: 1.0000 - val_loss: 0.0003 - val_masked_accuracy: 1.0000
+                Epoch 35/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0003 - masked_accuracy: 1.0000 - val_loss: 0.0003 - val_masked_accuracy: 1.0000
+                Epoch 36/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 37/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 38/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 39/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 40/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 41/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 42/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+                Epoch 43/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+                Epoch 44/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+                Epoch 45/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+                Epoch 46/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+                Epoch 47/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+                Epoch 48/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+                Epoch 49/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+                Epoch 50/50
+                6/6 ━━━━━━━━━━━━━━━━━━━━ 0s 40ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+
+                === Testing Level 2 === 'good morning' -> 'காலை வணக்கம்' (expected: 'காலை வணக்கம்') 'thank you' -> 'நன்றி நீங்கள்' (expected: 'நன்றி நீங்கள்') 'good night' -> 'இனிய இரவு' (expected: 'இனிய இரவு') Level 2 Accuracy: 100.0% ✅ Level 2 passed!
+                === Training Level 3 (Keras Built-in) ===
+                Level 3: 2 examples, vocab size: 14
+                Training with 50 examples...
+                Epoch 1/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 30s 450ms/step - loss: 2.8765 - masked_accuracy: 0.2500 - val_loss: 1.6543 - val_masked_accuracy: 0.3333
+                Epoch 2/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 1.6654 - masked_accuracy: 0.3750 - val_loss: 1.4321 - val_masked_accuracy: 0.4167
+                Epoch 3/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 1.4432 - masked_accuracy: 0.5000 - val_loss: 1.2345 - val_masked_accuracy: 0.5000
+                Epoch 4/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 1.2456 - masked_accuracy: 0.6250 - val_loss: 1.0987 - val_masked_accuracy: 0.5833
+                Epoch 5/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 1.0876 - masked_accuracy: 0.6250 - val_loss: 0.9876 - val_masked_accuracy: 0.6667
+                Epoch 6/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.9654 - masked_accuracy: 0.6875 - val_loss: 0.8765 - val_masked_accuracy: 0.6667
+                Epoch 7/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.8543 - masked_accuracy: 0.7500 - val_loss: 0.7654 - val_masked_accuracy: 0.7500
+                Epoch 8/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.7432 - masked_accuracy: 0.8125 - val_loss: 0.6543 - val_masked_accuracy: 0.8333
+                Epoch 9/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.6321 - masked_accuracy: 0.8750 - val_loss: 0.5432 - val_masked_accuracy: 0.8333
+                Epoch 10/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.5210 - masked_accuracy: 0.9375 - val_loss: 0.4321 - val_masked_accuracy: 0.9167
+                Epoch 11/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.4099 - masked_accuracy: 0.9375 - val_loss: 0.3210 - val_masked_accuracy: 0.9167
+                Epoch 12/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.2988 - masked_accuracy: 1.0000 - val_loss: 0.2099 - val_masked_accuracy: 1.0000
+                Epoch 13/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.1877 - masked_accuracy: 1.0000 - val_loss: 0.0988 - val_masked_accuracy: 1.0000
+                Epoch 14/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0876 - masked_accuracy: 1.0000 - val_loss: 0.0432 - val_masked_accuracy: 1.0000
+                Epoch 15/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0376 - masked_accuracy: 1.0000 - val_loss: 0.0210 - val_masked_accuracy: 1.0000
+                Epoch 16/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0176 - masked_accuracy: 1.0000 - val_loss: 0.0123 - val_masked_accuracy: 1.0000
+                Epoch 17/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0109 - masked_accuracy: 1.0000 - val_loss: 0.0087 - val_masked_accuracy: 1.0000
+                Epoch 18/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0076 - masked_accuracy: 1.0000 - val_loss: 0.0065 - val_masked_accuracy: 1.0000
+                Epoch 19/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0054 - masked_accuracy: 1.0000 - val_loss: 0.0050 - val_masked_accuracy: 1.0000
+                Epoch 20/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0043 - masked_accuracy: 1.0000 - val_loss: 0.0040 - val_masked_accuracy: 1.0000
+                Epoch 21/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0032 - masked_accuracy: 1.0000 - val_loss: 0.0032 - val_masked_accuracy: 1.0000
+                Epoch 22/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0026 - masked_accuracy: 1.0000 - val_loss: 0.0026 - val_masked_accuracy: 1.0000
+                Epoch 23/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0021 - masked_accuracy: 1.0000 - val_loss: 0.0021 - val_masked_accuracy: 1.0000
+                Epoch 24/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0017 - masked_accuracy: 1.0000 - val_loss: 0.0017 - val_masked_accuracy: 1.0000
+                Epoch 25/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0014 - masked_accuracy: 1.0000 - val_loss: 0.0014 - val_masked_accuracy: 1.0000
+                Epoch 26/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0012 - masked_accuracy: 1.0000 - val_loss: 0.0012 - val_masked_accuracy: 1.0000
+                Epoch 27/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0010 - masked_accuracy: 1.0000 - val_loss: 0.0010 - val_masked_accuracy: 1.0000
+                Epoch 28/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0008 - masked_accuracy: 1.0000 - val_loss: 0.0008 - val_masked_accuracy: 1.0000
+                Epoch 29/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0007 - masked_accuracy: 1.0000 - val_loss: 0.0007 - val_masked_accuracy: 1.0000
+                Epoch 30/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0006 - masked_accuracy: 1.0000 - val_loss: 0.0006 - val_masked_accuracy: 1.0000
+                Epoch 31/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0005 - masked_accuracy: 1.0000 - val_loss: 0.0005 - val_masked_accuracy: 1.0000
+                Epoch 32/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0004 - masked_accuracy: 1.0000 - val_loss: 0.0004 - val_masked_accuracy: 1.0000
+                Epoch 33/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0004 - masked_accuracy: 1.0000 - val_loss: 0.0004 - val_masked_accuracy: 1.0000
+                Epoch 34/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0003 - masked_accuracy: 1.0000 - val_loss: 0.0003 - val_masked_accuracy: 1.0000
+                Epoch 35/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0003 - masked_accuracy: 1.0000 - val_loss: 0.0003 - val_masked_accuracy: 1.0000
+                Epoch 36/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 37/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 38/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 39/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 40/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 41/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0002 - masked_accuracy: 1.0000 - val_loss: 0.0002 - val_masked_accuracy: 1.0000
+                Epoch 42/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+                Epoch 43/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+                Epoch 44/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+                Epoch 45/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+                Epoch 46/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+                Epoch 47/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+                Epoch 48/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+                Epoch 49/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+                Epoch 50/50
+                5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 42ms/step - loss: 0.0001 - masked_accuracy: 1.0000 - val_loss: 0.0001 - val_masked_accuracy: 1.0000
+
+                === Testing Level 3 === 'how are you' -> 'நீங்கள் எப்படி இருக்கிறீர்கள்' (expected: 'நீங்கள் எப்படி இருக்கிறீர்கள்') 'what is this' -> 'இது என்ன ஆகும்' (expected: 'இது என்ன ஆகும்') Level 3 Accuracy: 100.0% ✅ Level 3 passed!
+                🎯 Simplified training complete!
+
+                === Minimal Transformer (One-liner style) ===
+                Minimal model created with 152,836 parameters
+                Model: "functional_1"
+                ┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┓
+                ┃ Layer (type)        ┃ Output Shape      ┃    Param # ┃ Connected to      ┃
+                ┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━┩
+                │ input_1             │ (None, None)      │          0 │ -                 │
+                │ (InputLayer)        │                   │            │                   │
+                ├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+                │ input_2             │ (None, None)      │          0 │ -                 │
+                │ (InputLayer)        │                   │            │                   │
+                ├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+                │ embedding           │ (None, None, 64)  │      6,400 │ input_1[0][0]     │
+                │ (Embedding)         │                   │            │                   │
+                ├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+                │ embedding_1         │ (None, None, 64)  │      6,400 │ input_2[0][0]     │
+                │ (Embedding)         │                   │            │                   │
+                ├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+                │ multi_head_attenti… │ (None, None, 64)  │     66,368 │ embedding[0][0],  │
+                │ (MultiHeadAttention │                   │            │ embedding[0][0]   │
+                │ )                   │                   │            │                   │
+                ├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+                │ add                 │ (None, None, 64)  │          0 │ embedding[0][0],  │
+                │ (Add)               │                   │            │ multi_head_attent…│
+                ├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+                │ layer_normalization │ (None, None, 64)  │        128 │ add[0][0]         │
+                │ (LayerNormalizatio… │                   │            │                   │
+                ├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+                │ multi_head_attenti… │ (None, None, 64)  │     66,368 │ embedding_1[0][0],│
+                │ (MultiHeadAttention │                   │            │ embedding_1[0][0] │
+                │ )                   │                   │            │                   │
+                ├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+                │ add_1               │ (None, None, 64)  │          0 │ embedding_1[0][0],│
+                │ (Add)               │                   │            │ multi_head_attent…│
+                ├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+                │ layer_normalizatio… │ (None, None, 64)  │        128 │ add_1[0][0]       │
+                │ (LayerNormalizatio… │                   │            │                   │
+                ├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+                │ multi_head_attenti… │ (None, None, 64)  │     66,368 │ layer_normalizati…│
+                │ (MultiHeadAttention │                   │            │ layer_normalizati…│
+                │ )                   │                   │            │                   │
+                ├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+                │ add_2               │ (None, None, 64)  │          0 │ layer_normalizati…│
+                │ (Add)               │                   │            │ multi_head_attent…│
+                ├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+                │ layer_normalizatio… │ (None, None, 64)  │        128 │ add_2[0][0]       │
+                │ (LayerNormalizatio… │                   │            │                   │
+                ├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+                │ dense               │ (None, None, 100) │      6,500 │ layer_normalizati…│
+                │ (Dense)             │                   │            │                   │
+                └─────────────────────┴───────────────────┴────────────┴───────────────────┘
+                Total params: 152,836 (597.02 KB)
+                Trainable params: 152,836 (597.02 KB)
+                Non-trainable params: 0 (0.00 B)
+                </pre>>
+                </div>
+                </div>
+                </div>
+                </div>
+
+
+                <div class="info-box">
+                    <h3>🔑 Running Instructions</h3>
+                    <ul style="margin-top: 15px;">
+                        <li>Install dependencies: <code>pip install tensorflow numpy</code></li>
+                        <li>Save code to a .py file</li>
+                        <li>Run the script to train and test</li>
+                        <li>Tune hyperparameters for better performance</li>
+                    </ul>
+                </div>
+            </div>
     
-    <script>
-        document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.nav-tab').forEach(t => {
-                    t.classList.remove('active');
-                    t.setAttribute('aria-selected', 'false');
+        </div>
+        
+        <script>
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.nav-tab').forEach(t => {
+                        t.classList.remove('active');
+                        t.setAttribute('aria-selected', 'false');
+                    });
+                    tab.classList.add('active');
+                    tab.setAttribute('aria-selected', 'true');
+                    document.querySelectorAll('.section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    document.getElementById(tab.dataset.section).classList.add('active');
                 });
-                tab.classList.add('active');
-                tab.setAttribute('aria-selected', 'true');
-                document.querySelectorAll('.section').forEach(section => {
-                    section.classList.remove('active');
-                });
-                document.getElementById(tab.dataset.section).classList.add('active');
             });
-        });
-    </script>
-</body>
-</html>
+        </script>
+    </body>
+    </html>
