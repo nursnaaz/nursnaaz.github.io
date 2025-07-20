@@ -1,0 +1,663 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BERT Text Classification Deep Dive</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e90ff 0%, #00b7eb 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .breadcrumbs {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-item {
+            color: white;
+            font-size: 1em;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-right: 5px;
+        }
+
+        .breadcrumb-item:hover {
+            color: #e8e8e8;
+            transform: translateY(-1px);
+        }
+
+        .breadcrumb-item.active {
+            color: #ffffff;
+            font-weight: 600;
+            cursor: default;
+        }
+
+        .breadcrumb-item.active:hover {
+            transform: none;
+        }
+
+        .breadcrumb-separator {
+            color: white;
+            margin: 0 10px;
+            font-size: 1em;
+        }
+
+        .main-header {
+            text-align: center;
+            color: white;
+            padding: 40px 0;
+            margin-bottom: 30px;
+        }
+
+        .main-header h1 {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .main-header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin: 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-tab:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .nav-tab.active {
+            background: white;
+            color: #1e90ff;
+            font-weight: 600;
+        }
+
+        .section {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section h2 {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            color: #1e90ff;
+        }
+
+        .section p {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .step-container {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: #1e90ff;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .step-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .code-block {
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            overflow-x: auto;
+            font-size: 0.95em;
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .code-block code {
+            font-family: 'Fira Code', monospace;
+        }
+
+        .info-box {
+            background: #e6f3ff;
+            border-left: 5px solid #1e90ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .info-box h3 {
+            font-size: 1.4em;
+            color: #1e90ff;
+            margin-bottom: 10px;
+        }
+
+        .warning-box {
+            background: #fff3e6;
+            border-left: 5px solid #ff8c00;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .warning-box h3 {
+            font-size: 1.4em;
+            color: #ff8c00;
+            margin-bottom: 10px;
+        }
+
+        .interactive-demo {
+            background: #f0faff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .interactive-demo h4 {
+            font-size: 1.3em;
+            color: #1e90ff;
+            margin-bottom: 15px;
+        }
+
+        .demo-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .demo-button {
+            background: #1e90ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s ease;
+        }
+
+        .demo-button:hover {
+            background: #0077cc;
+        }
+
+        .demo-output {
+            margin-top: 15px;
+            font-size: 1.1em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumbs">
+            <a href="/" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item active">BERT Text Classification</span>
+        </div>
+
+        <div class="main-header">
+            <h1>BERT Text Classification Deep Dive</h1>
+            <p>Explore the power of BERT for sentiment analysis with an interactive demo and detailed code walkthrough.</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-section="overview" aria-selected="true">Overview</button>
+            <button class="nav-tab" data-section="architecture" aria-selected="false">Architecture</button>
+            <button class="nav-tab" data-section="classification" aria-selected="false">Text Classification</button>
+            <button class="nav-tab" data-section="code" aria-selected="false">Complete Code</button>
+        </div>
+
+        <!-- Overview Section -->
+        <div class="section active" id="overview" role="tabpanel">
+            <h2>🌟 What is BERT?</h2>
+            <p>BERT (Bidirectional Encoder Representations from Transformers) is a revolutionary NLP model introduced by Google in 2018. Unlike traditional models that process text sequentially, BERT is bidirectional, capturing context from both left and right directions simultaneously. This makes it exceptionally powerful for tasks like text classification, question answering, and more.</p>
+            <p>Key features of BERT:</p>
+            <ul>
+                <li><strong>Bidirectional Context:</strong> Understands words in context by looking at the entire sentence.</li>
+                <li><strong>Pre-training:</strong> Trained on massive datasets (e.g., Wikipedia) using Masked Language Modeling (MLM) and Next Sentence Prediction (NSP).</li>
+                <li><strong>Fine-tuning:</strong> Adapted to specific tasks like sentiment analysis with minimal additional training.</li>
+            </ul>
+            <div class="info-box">
+                <h3>🔑 Why BERT?</h3>
+                <p>BERT’s ability to understand nuanced language patterns makes it ideal for tasks requiring deep contextual understanding, such as classifying movie reviews as positive or negative.</p>
+            </div>
+        </div>
+
+        <!-- Architecture Section -->
+        <div class="section" id="architecture" role="tabpanel">
+            <h2>🏗️ BERT Architecture</h2>
+            <p>BERT is built on the Transformer’s encoder architecture, stacking multiple layers of interconnected nodes. Each layer includes:</p>
+            <ul>
+                <li><strong>Multi-Head Self-Attention:</strong> Computes attention scores to focus on relevant words, defined as:</li>
+                <p>\[ \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V \]</p>
+                <p>Where \( Q \) (query), \( K \) (key), and \( V \) (value) are vectors, and \( d_k \) is the dimension of the keys.</p>
+                <li><strong>Feed-Forward Networks:</strong> Applies dense layers to each token’s representation.</li>
+                <li><strong>Layer Normalization:</strong> Stabilizes training by normalizing outputs.</li>
+            </ul>
+            <p>BERT’s input includes tokenized text with special tokens:</p>
+            <ul>
+                <li><strong>[CLS]:</strong> Added at the start, its output is used for classification tasks.</li>
+                <li><strong>[SEP]:</strong> Separates sentences or marks the end of a sequence.</li>
+            </ul>
+            <div class="info-box">
+                <h3>🔑 BERT’s Power</h3>
+                <p>The bidirectional nature and pre-training allow BERT to capture deep semantic relationships, making it highly effective for downstream tasks.</p>
+            </div>
+        </div>
+
+        <!-- Text Classification Section -->
+        <div class="section" id="classification" role="tabpanel">
+            <h2>🔍 BERT for Text Classification</h2>
+            <p>BERT excels in text classification by leveraging its contextual embeddings. For sentiment analysis, we fine-tune BERT on a labeled dataset (e.g., movie reviews labeled as positive or negative). Here’s how it works:</p>
+
+            <div class="step-container">
+                <div class="step-number">1</div>
+                <div class="step-title">Data Preparation</div>
+                <p>The dataset consists of movie reviews with binary labels (1 for positive, 0 for negative). We tokenize the text using BERT’s tokenizer, which converts words into subword tokens and adds special tokens like [CLS] and [SEP].</p>
+                <div class="code-block" tabindex="0">
+                    <pre><code>texts = [
+    "This movie is great and I loved it!",
+    "Terrible film, very boring.",
+    ...
+]
+labels = [1, 0, ...]
+train_texts, val_texts, train_labels, val_labels = train_test_split(
+    texts, labels, test_size=0.2, random_state=42
+)
+tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+</code></pre>
+                </div>
+                <p>The tokenizer outputs <code>input_ids</code> (token indices) and <code>attention_mask</code> (indicating valid tokens vs. padding).</p>
+            </div>
+
+            <div class="step-container">
+                <div class="step-number">2</div>
+                <div class="step-title">Model Architecture</div>
+                <p>We use the pre-trained <code>bert-base-uncased</code> model and add a classification head. The [CLS] token’s output (pooled_output) is passed through a dropout layer and a dense layer with softmax activation for binary classification.</p>
+                <div class="code-block" tabindex="0">
+                    <pre><code>bert_model = TFBertModel.from_pretrained('bert-base-uncased')
+input_ids = tf.keras.layers.Input(shape=(None,), dtype=tf.int32, name="input_ids")
+attention_mask = tf.keras.layers.Input(shape=(None,), dtype=tf.int32, name="attention_mask")
+bert_outputs = bert_model(input_ids, attention_mask=attention_mask)
+pooled_output = bert_outputs.pooler_output
+dropout = tf.keras.layers.Dropout(0.3)(pooled_output)
+output = tf.keras.layers.Dense(2, activation='softmax')(dropout)
+model = tf.keras.Model(inputs=[input_ids, attention_mask], outputs=output)
+</code></pre>
+                </div>
+                <p>The softmax layer outputs probabilities for positive and negative classes.</p>
+            </div>
+
+            <div class="step-container">
+                <div class="step-number">3</div>
+                <div class="step-title">Training</div>
+                <p>The model is fine-tuned with a small learning rate (e.g., 2e-5) using the Adam optimizer and sparse categorical crossentropy loss. We train for 10 epochs on batched data.</p>
+                <div class="code-block" tabindex="0">
+                    <pre><code>model.compile(
+    optimizer=tf.keras.optimizers.Adam(learning_rate=2e-5),
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+model.fit(
+    train_dataset,
+    validation_data=val_dataset,
+    epochs=10,
+    verbose=2
+)
+</code></pre>
+                </div>
+                <div class="warning-box">
+                    <h3>⚠️ Training Tips</h3>
+                    <p><strong>Small Learning Rate:</strong> BERT requires small learning rates (e.g., 2e-5) to avoid catastrophic forgetting of pre-trained weights.</p>
+                    <p><strong>Batch Size:</strong> Small batches (e.g., 2) are used due to BERT’s memory demands.</p>
+                    <p><strong>Epochs:</strong> 3-10 epochs are often sufficient for fine-tuning on small datasets.</p>
+                </div>
+            </div>
+
+            <div class="step-container">
+                <div class="step-number">4</div>
+                <div class="step-title">Inference</div>
+                <p>For inference, we tokenize a new text, pass it through the model, and predict the sentiment based on the highest probability class.</p>
+                <div class="code-block" tabindex="0">
+                    <pre><code>def predict_sentiment(text, model, tokenizer, max_len=128):
+    encodings = tokenizer(
+        [text],
+        max_length=max_len,
+        padding='max_length',
+        truncation=True,
+        return_tensors='tf'
+    )
+    probs = model({'input_ids': encodings['input_ids'], 'attention_mask': encodings['attention_mask']}).numpy()
+    prediction = np.argmax(probs, axis=-1)[0]
+    print(f"Probabilities: {probs}")
+    return "Positive" if prediction == 1 else "Negative"
+</code></pre>
+                </div>
+            </div>
+
+            <div class="step-container">
+                <div class="step-number">5</div>
+                <div class="step-title">Interactive Demo</div>
+                <p>Test the sentiment analysis model with your own text:</p>
+                <div class="interactive-demo">
+                    <h4>🔄 Sentiment Analysis Demo</h4>
+                    <input type="text" class="demo-input" placeholder="Enter a movie review (e.g., 'This is an awesome movie!')" id="sentiment-input">
+                    <button class="demo-button" onclick="simulateSentiment()">Analyze</button>
+                    <div class="demo-output" id="sentiment-output">Sentiment will appear here...</div>
+                    <script>
+                        function simulateSentiment() {
+                            const input = document.getElementById('sentiment-input').value.toLowerCase();
+                            const positiveWords = ['great', 'amazing', 'fantastic', 'loved', 'brilliant', 'heartwarming', 'incredible', 'engaging'];
+                            const negativeWords = ['terrible', 'boring', 'disappointing', 'bad', 'waste', 'dull', 'poor', 'worst', 'mess'];
+                            let sentiment = 'Neutral';
+                            if (positiveWords.some(word => input.includes(word))) {
+                                sentiment = 'Positive';
+                            } else if (negativeWords.some(word => input.includes(word))) {
+                                sentiment = 'Negative';
+                            }
+                            document.getElementById('sentiment-output').innerText = `Predicted Sentiment: ${sentiment}`;
+                        }
+                    </script>
+                </div>
+                <p>Note: This demo uses a simple keyword-based simulation. The actual model uses BERT’s contextual understanding for more accurate predictions.</p>
+            </div>
+        </div>
+
+        <!-- Complete Code Section -->
+        <div class="section" id="code" role="tabpanel">
+            <h2>🚀 Complete BERT Classification Code</h2>
+            <p>This section provides the complete Python script for fine-tuning BERT for sentiment analysis on movie reviews.</p>
+            <div class="code-block" tabindex="0">
+                <pre><code>import tensorflow as tf
+from transformers import TFBertModel, BertTokenizer
+from sklearn.model_selection import train_test_split
+import numpy as np
+
+# Dataset
+texts = [
+    "This movie is great and I loved it!",
+    "Terrible film, very boring.",
+    "Amazing storyline and acting!",
+    "I didn't enjoy this at all.",
+    "Fantastic experience, highly recommend!",
+    "Really bad, waste of time.",
+    "One of the best movies I've seen this year!",
+    "Completely disappointing and predictable.",
+    "Brilliant direction and stunning visuals.",
+    "I fell asleep halfway through, so dull.",
+    "Heartwarming and beautifully shot.",
+    "Poor acting and weak script.",
+    "Absolutely loved the plot twists!",
+    "Not worth the hype at all.",
+    "Engaging from start to finish!",
+    "The worst film I’ve ever watched.",
+    "Incredible performances by the cast!",
+    "Script was a mess and pacing was off."
+]
+labels = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]
+
+# Train/Val Split
+train_texts, val_texts, train_labels, val_labels = train_test_split(
+    texts, labels, test_size=0.2, random_state=42
+)
+
+# Load tokenizer
+tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+
+# Tokenization function
+def tokenize_texts(texts, max_len=128):
+    encodings = tokenizer(
+        texts,
+        max_length=max_len,
+        padding='max_length',
+        truncation=True,
+        return_tensors='tf'
+    )
+    return encodings['input_ids'], encodings['attention_mask']
+
+# Tokenize data
+train_input_ids, train_attention_mask = tokenize_texts(train_texts)
+val_input_ids, val_attention_mask = tokenize_texts(val_texts)
+
+# Convert labels to tensors
+train_labels = tf.convert_to_tensor(train_labels, dtype=tf.int32)
+val_labels = tf.convert_to_tensor(val_labels, dtype=tf.int32)
+
+# Prepare datasets
+train_dataset = tf.data.Dataset.from_tensor_slices((
+    {'input_ids': train_input_ids, 'attention_mask': train_attention_mask},
+    train_labels
+)).batch(2).prefetch(tf.data.AUTOTUNE)
+
+val_dataset = tf.data.Dataset.from_tensor_slices((
+    {'input_ids': val_input_ids, 'attention_mask': val_attention_mask},
+    val_labels
+)).batch(2).prefetch(tf.data.AUTOTUNE)
+
+# Load base BERT model
+bert_model = TFBertModel.from_pretrained('bert-base-uncased')
+
+# Input layers
+input_ids = tf.keras.layers.Input(shape=(None,), dtype=tf.int32, name="input_ids")
+attention_mask = tf.keras.layers.Input(shape=(None,), dtype=tf.int32, name="attention_mask")
+
+# Get pooled output from BERT
+bert_outputs = bert_model(input_ids, attention_mask=attention_mask)
+pooled_output = bert_outputs.pooler_output
+
+# Classification head
+dropout = tf.keras.layers.Dropout(0.3)(pooled_output)
+output = tf.keras.layers.Dense(2, activation='softmax')(dropout)
+
+# Build model
+model = tf.keras.Model(inputs=[input_ids, attention_mask], outputs=output)
+
+# Compile model
+model.compile(
+    optimizer=tf.keras.optimizers.Adam(learning_rate=2e-5),
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+# Train the model
+model.fit(
+    train_dataset,
+    validation_data=val_dataset,
+    epochs=10,
+    verbose=2
+)
+
+# Inference function
+def predict_sentiment(text, model, tokenizer, max_len=128):
+    encodings = tokenizer(
+        [text],
+        max_length=max_len,
+        padding='max_length',
+        truncation=True,
+        return_tensors='tf'
+    )
+    probs = model({'input_ids': encodings['input_ids'], 'attention_mask': encodings['attention_mask']}).numpy()
+    prediction = np.argmax(probs, axis=-1)[0]
+    print(f"Probabilities: {probs}")
+    return "Positive" if prediction == 1 else "Negative"
+
+# Test inference
+test_text = "This is an awesome movie!"
+result = predict_sentiment(test_text, model, tokenizer)
+print(f"\nText: {test_text}")
+print(f"Predicted Sentiment: {result}")
+</code></pre>
+            </div>
+
+            <div class="step-container">
+                <div class="step-number">1</div>
+                <div class="step-title">Running the Code</div>
+                <p>Follow these steps to run the BERT model locally:</p>
+                <ol style="margin-left: 20px;">
+                    <li><strong>Install Dependencies:</strong> Ensure you have TensorFlow, Transformers, and scikit-learn installed:
+                        <div class="code-block" tabindex="0">
+                            <pre><code>pip install tensorflow transformers scikit-learn numpy
+</code></pre>
+                        </div>
+                    </li>
+                    <li><strong>Save the Code:</strong> Copy the complete code into a file named <code>bert_sentiment.py</code>.</li>
+                    <li><strong>Run the Script:</strong> Execute the script using Python:
+                        <div class="code-block" tabindex="0">
+                            <pre><code>python bert_sentiment.py
+</code></pre>
+                        </div>
+                    </li>
+                    <li><strong>Expected Output:</strong> The script will fine-tune BERT, display training progress, and output the sentiment for a test sentence.</li>
+                </ol>
+            </div>
+
+            <div class="info-box">
+                <h3>🔑 Code Features</h3>
+                <ul style="margin-top: 15px;">
+                    <li><strong>Pre-trained BERT:</strong> Leverages <code>bert-base-uncased</code> for robust embeddings.</li>
+                    <li><strong>Fine-tuning:</strong> Adapts BERT to sentiment analysis with minimal code.</li>
+                    <li><strong>Efficient Data Pipeline:</strong> Uses TensorFlow datasets with batching and prefetching.</li>
+                    <li><strong>Interactive Inference:</strong> Allows testing custom sentences for sentiment prediction.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab navigation
+        const tabs = document.querySelectorAll('.nav-tab');
+        const sections = document.querySelectorAll('.section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                });
+                tab.classList.add('active');
+                tab.setAttribute('aria-selected', 'true');
+
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === tab.dataset.section) {
+                        section.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
