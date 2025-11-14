@@ -1,0 +1,64 @@
+{
+  "articles": [
+    {
+      "id": "self-attention",
+      "title": "Interactive Self Attention Walkthrough",
+      "description": "Learn how self-attention works using 'I bought apple to eat' - see how context determines if apple is fruit or company.",
+      "url": "tutorials/self-attention.html",
+      "level": "beginner",
+      "tags": ["attention", "transformers", "basics"],
+      "featured": true,
+      "estimatedTime": "30 minutes"
+    },
+    {
+      "id": "multi-head-attention",
+      "title": "Multi-Head Attention Explained",
+      "description": "Understand multi-head attention mechanism with practical examples and visualizations.",
+      "url": "tutorials/multi-head-attention.html",
+      "level": "intermediate",
+      "tags": ["attention", "transformers", "advanced"],
+      "featured": false,
+      "estimatedTime": "45 minutes"
+    },
+    {
+      "id": "transformer-code",
+      "title": "Complete Transformer Implementation",
+      "description": "Build a complete transformer model from scratch with TensorFlow and Keras.",
+      "url": "tutorials/transformer-code.html",
+      "level": "advanced",
+      "tags": ["transformers", "tensorflow", "implementation"],
+      "featured": true,
+      "estimatedTime": "60 minutes"
+    },
+    {
+      "id": "bert-classification",
+      "title": "BERT Text Classification",
+      "description": "Fine-tune BERT for text classification tasks with practical examples.",
+      "url": "tutorials/bert-classification.html",
+      "level": "intermediate",
+      "tags": ["bert", "nlp", "classification"],
+      "featured": false,
+      "estimatedTime": "45 minutes"
+    },
+    {
+      "id": "production-challenges",
+      "title": "Production Challenges for AI Agents",
+      "description": "Real-world challenges and solutions for deploying AI agents in production.",
+      "url": "tutorials/production-challenges.html",
+      "level": "advanced",
+      "tags": ["deployment", "production", "agents"],
+      "featured": true,
+      "estimatedTime": "40 minutes"
+    },
+    {
+      "id": "secured-agents",
+      "title": "Secured Agents Handbook",
+      "description": "Security best practices and implementation guide for AI agents.",
+      "url": "tutorials/secured-agents.html",
+      "level": "advanced",
+      "tags": ["security", "agents", "best-practices"],
+      "featured": false,
+      "estimatedTime": "50 minutes"
+    }
+  ]
+}

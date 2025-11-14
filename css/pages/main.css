@@ -1,0 +1,87 @@
+/**
+ * Noordeen Tutorials - Main Stylesheet
+ * Modular CSS Architecture
+ * 
+ * Import Order:
+ * 1. Base (reset, variables, typography)
+ * 2. Layouts (grid, containers)
+ * 3. Components (navbar, cards, buttons, etc.)
+ * 4. Pages (home, tutorial)
+ */
+
+
+/* Base Styles */
+@import 'base/reset.css';
+@import 'base/variables.css';
+@import 'base/typography.css';
+
+
+/* Layout Styles */
+@import 'layouts/grid.css';
+@import 'layouts/containers.css';
+
+
+/* Component Styles */
+@import 'components/navbar.css';
+@import 'components/buttons.css';
+@import 'components/cards.css';
+@import 'components/forms.css';
+@import 'components/footer.css';
+
+
+/* Page Styles */
+@import 'pages/home.css';
+@import 'pages/tutorial.css';
+
+
+/* Global Body Styles */
+body {
+    background: var(--bg-gradient);
+    min-height: 100vh;
+}
+
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+
+.hidden { display: none; }
+.visible { display: block; }
+
+
+.fade-in {
+    animation: fadeIn var(--transition-slow) ease-in;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* Selection Styles */
+::selection {
+    background: var(--primary-purple);
+    color: var(--text-white);
+}
+
+
+::-moz-selection {
+    background: var(--primary-purple);
+    color: var(--text-white);
+}
