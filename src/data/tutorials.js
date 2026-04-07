@@ -1,5 +1,14 @@
 export const tutorials = [
   {
+    id: 'search-engine-job-hunt',
+    title: 'Build a Job Search Engine from Scratch',
+    description: 'You\'ve been hired as a Search Engineer. Build a TF-IDF engine across 25 real AI job postings, earn 7 badges, discover its fatal flaw, and understand why semantic search exists.',
+    level: 'beginner',
+    tags: ['search', 'tfidf', 'nlp', 'gamified'],
+    estimatedTime: '45 minutes',
+    featured: true
+  },
+  {
     id: 'self-attention',
     title: 'Self-Attention Mechanism',
     description: 'Learn how self-attention works with step-by-step calculations using "I bought apple to eat" - discover how context determines meaning',
