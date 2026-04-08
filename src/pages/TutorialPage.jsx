@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useProgress } from '../hooks/useProgress'
 import Container from '@cloudscape-design/components/container'
 import Header from '@cloudscape-design/components/header'
 import SpaceBetween from '@cloudscape-design/components/space-between'
@@ -31,6 +32,25 @@ export function TutorialPage({ tutorial }) {
   const navigate = useNavigate()
   const [currentStep, setCurrentStep] = useState(0)
   const [totalSteps, setTotalSteps] = useState(9)
+  const { markVisited, markCompleted } = useProgress()
+
+  // Set browser tab title to the tutorial name
+  useEffect(() => {
+    document.title = `${tutorial.title} — Noordeen Tutorials`
+    return () => { document.title = 'Noordeen Tutorials — Learn ML & AI by Building' }
+  }, [tutorial.title])
+
+  // Mark tutorial as visited on first mount
+  useEffect(() => {
+    markVisited(tutorial.id)
+  }, [tutorial.id, markVisited])
+
+  // Mark tutorial as completed when student reaches the final step
+  useEffect(() => {
+    if (currentStep === totalSteps - 1) {
+      markCompleted(tutorial.id)
+    }
+  }, [currentStep, totalSteps, tutorial.id, markCompleted])
 
   useEffect(() => {
     // Trigger MathJax rendering when component mounts or updates
