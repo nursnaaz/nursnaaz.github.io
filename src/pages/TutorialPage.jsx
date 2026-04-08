@@ -8,7 +8,7 @@ import Alert from '@cloudscape-design/components/alert'
 import Box from '@cloudscape-design/components/box'
 import Badge from '@cloudscape-design/components/badge'
 import Breadcrumbs from '@cloudscape-design/components/breadcrumb-group'
-import { SearchEngineJobHuntComplete } from '../components/tutorials/SearchEngineJobHuntComplete'
+import { HowSearchEnginesWork } from '../components/tutorials/HowSearchEnginesWork'
 import { SelfAttentionTutorialComplete } from '../components/tutorials/SelfAttentionTutorialComplete'
 import { MultiHeadAttentionComplete } from '../components/tutorials/MultiHeadAttentionComplete'
 import { TransformerCodeComplete } from '../components/tutorials/TransformerCodeComplete'
@@ -18,7 +18,7 @@ import { SecuredAgentsComplete } from '../components/tutorials/SecuredAgentsComp
 
 // Tutorial component mapping
 const tutorialComponents = {
-  'search-engine-job-hunt': SearchEngineJobHuntComplete,
+  'how-search-engines-work': HowSearchEnginesWork,
   'self-attention': SelfAttentionTutorialComplete,
   'multi-head-attention': MultiHeadAttentionComplete,
   'transformer-code': TransformerCodeComplete,

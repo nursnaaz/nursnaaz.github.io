@@ -1,10 +1,10 @@
 export const tutorials = [
   {
-    id: 'search-engine-job-hunt',
-    title: 'Build a Job Search Engine from Scratch',
-    description: 'You\'ve been hired as a Search Engineer. Build a TF-IDF engine across 25 real AI job postings, earn 7 badges, discover its fatal flaw, and understand why semantic search exists.',
+    id: 'how-search-engines-work',
+    title: 'How Search Engines Work — Build One from Scratch',
+    description: 'Google runs this same 7-step pipeline 8.5 billion times a day. In this interactive tutorial you build each step yourself — live, with real data — and discover the one thing TF-IDF can never do.',
     level: 'beginner',
-    tags: ['search', 'tfidf', 'nlp', 'gamified'],
+    tags: ['search', 'tfidf', 'nlp', 'interactive'],
     estimatedTime: '45 minutes',
     featured: true
   },
