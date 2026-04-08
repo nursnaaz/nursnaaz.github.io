@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import AppLayout from '@cloudscape-design/components/app-layout'
 import TopNavigation from '@cloudscape-design/components/top-navigation'
@@ -8,6 +9,8 @@ import { tutorials } from './data/tutorials'
 
 
 function App() {
+  const [navOpen, setNavOpen] = useState(false)
+
   return (
     <>
       <TopNavigation
@@ -32,7 +35,8 @@ function App() {
       
       <AppLayout
         navigation={<Navigation />}
-        navigationOpen={false}
+        navigationOpen={navOpen}
+        onNavigationChange={({ detail }) => setNavOpen(detail.open)}
         content={
           <Routes>
             <Route path="/" element={<HomePage />} />
