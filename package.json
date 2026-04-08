@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && npm run postbuild",
-    "postbuild": "mv docs/index-react.html docs/index.html 2>/dev/null || true && touch docs/.nojekyll",
+    "postbuild": "mv docs/index-react.html docs/index.html 2>/dev/null || true && cp docs/index.html docs/404.html && touch docs/.nojekyll",
     "preview": "vite preview",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0"
   },
