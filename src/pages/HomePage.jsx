@@ -256,7 +256,24 @@ function ProfileSection() {
               <div>
                 <Box variant="h2">{PROFILE.name}</Box>
                 <Box variant="p" color="text-status-info">{PROFILE.title}</Box>
-                <Box variant="small" color="text-body-secondary">{PROFILE.company}</Box>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4, flexWrap: 'wrap' }}>
+                  <span style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 5,
+                    background: '#1a2233', border: '1px solid #414d5c',
+                    borderRadius: 20, padding: '3px 10px',
+                    fontSize: 12, fontWeight: 600, color: '#ff9900',
+                  }}>
+                    🟠 Amazon Web Services
+                  </span>
+                  <span style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 5,
+                    background: '#1a2233', border: '1px solid #414d5c',
+                    borderRadius: 20, padding: '3px 10px',
+                    fontSize: 12, color: '#8d99a5',
+                  }}>
+                    📍 Dubai, UAE
+                  </span>
+                </div>
               </div>
             </div>
 
