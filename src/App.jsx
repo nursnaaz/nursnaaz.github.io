@@ -32,6 +32,7 @@ function App() {
       
       <AppLayout
         navigation={<Navigation />}
+        navigationOpen={false}
         content={
           <Routes>
             <Route path="/" element={<HomePage />} />
