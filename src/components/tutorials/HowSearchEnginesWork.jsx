@@ -1744,6 +1744,88 @@ function Step9({ onUnlock, unlockedBadges, xp, onRestart }) {
         </p>
       </div>
 
+      {/* ── Run in Python ── */}
+      <div style={{ ...card('#0D1321', C.border2), border: `1px solid ${C.border2}` }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, marginBottom: 14 }}>
+          <div>
+            <div style={{ color: C.text1, fontWeight: 700, fontSize: 14, marginBottom: 4 }}>
+              Run the Real Code in Python
+            </div>
+            <div style={{ color: C.text3, fontSize: 12 }}>
+              You understood the concepts — now run the same pipeline in a real notebook.
+            </div>
+          </div>
+          <a
+            href="https://github.com/nursnaaz/zero-to-genai-engineer/tree/main/00_search_engine"
+            target="_blank" rel="noopener noreferrer"
+            style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 6,
+              border: `1px solid ${C.border2}`, background: C.bg1,
+              color: C.text2, fontSize: 12, fontWeight: 600, textDecoration: 'none', flexShrink: 0 }}
+          >
+            <span style={{ fontSize: 14 }}>⭐</span> View on GitHub
+          </a>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 12 }}>
+          {[
+            {
+              num: '01',
+              title: 'Build the Search Engine',
+              desc: 'Tokenisation → stop words → stemming → inverted index → TF-IDF ranking. Full pipeline from scratch.',
+              time: '30 min',
+              colab: 'https://colab.research.google.com/github/nursnaaz/zero-to-genai-engineer/blob/main/00_search_engine/notebooks/01_search_engine.ipynb',
+              github: 'https://github.com/nursnaaz/zero-to-genai-engineer/blob/main/00_search_engine/notebooks/01_search_engine.ipynb',
+            },
+            {
+              num: '02',
+              title: 'TF-IDF Math Explained',
+              desc: 'Step-by-step breakdown of the math — why naive counting fails and how TF × IDF combines to give relevance.',
+              time: '45 min',
+              colab: 'https://colab.research.google.com/github/nursnaaz/zero-to-genai-engineer/blob/main/00_search_engine/notebooks/02_tfidf_explained.ipynb',
+              github: 'https://github.com/nursnaaz/zero-to-genai-engineer/blob/main/00_search_engine/notebooks/02_tfidf_explained.ipynb',
+            },
+          ].map(nb => (
+            <div key={nb.num} style={{
+              background: C.bg2, border: `1px solid ${C.border2}`,
+              borderRadius: 8, padding: '14px 16px',
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
+                <span style={{ color: C.text3, fontFamily: 'monospace', fontSize: 11 }}>Notebook {nb.num}</span>
+                <span style={{ color: C.text3, fontSize: 11 }}>⏱ {nb.time}</span>
+              </div>
+              <div style={{ color: C.text1, fontWeight: 600, fontSize: 13, marginBottom: 6 }}>{nb.title}</div>
+              <div style={{ color: C.text3, fontSize: 12, lineHeight: 1.5, marginBottom: 12 }}>{nb.desc}</div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <a
+                  href={nb.colab}
+                  target="_blank" rel="noopener noreferrer"
+                  style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                    padding: '7px 0', borderRadius: 5, textDecoration: 'none', fontSize: 12, fontWeight: 600,
+                    background: `${C.orange}22`, border: `1px solid ${C.orange}60`, color: C.orange }}
+                >
+                  <span>▶</span> Open in Colab
+                </a>
+                <a
+                  href={nb.github}
+                  target="_blank" rel="noopener noreferrer"
+                  style={{ padding: '7px 12px', borderRadius: 5, textDecoration: 'none', fontSize: 12, fontWeight: 600,
+                    background: C.bg1, border: `1px solid ${C.border2}`, color: C.text2 }}
+                >
+                  GitHub
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ marginTop: 12, padding: '8px 12px', borderRadius: 6,
+          background: `${C.green}10`, border: `1px solid ${C.green}30`,
+          color: C.text3, fontSize: 12 }}>
+          No API key needed — everything runs on pure Python (<code style={{ color: C.green2 }}>collections</code>, <code style={{ color: C.green2 }}>math</code>).
+          Works in Google Colab or locally.
+        </div>
+      </div>
+
       {/* ── LinkedIn share ── */}
       <div style={{ ...card(C.bg2, C.border2), border: `1px solid ${C.border2}` }}>
         <div style={{ color: C.text1, fontWeight: 'bold', marginBottom: 6, fontSize: 14 }}>
