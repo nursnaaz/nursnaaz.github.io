@@ -328,17 +328,6 @@ function ProfileSection() {
         </ColumnLayout>
       </Container>
 
-      {/* ── Professional Experience ── */}
-      <Container
-        header={
-          <Header variant="h2" description="Industry roles across Amazon, Salesforce, Logitech, Tiger Analytics, and TCS">
-            Professional Experience
-          </Header>
-        }
-      >
-        <ExperienceTimeline items={PROFILE.professionalExp} />
-      </Container>
-
       {/* ── Expertise tags ── */}
       <Container
         header={<Header variant="h2">Areas of Expertise</Header>}
