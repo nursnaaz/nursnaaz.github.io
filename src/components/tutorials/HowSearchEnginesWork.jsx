@@ -225,7 +225,7 @@ function Exercise({ question, check, hint, onPass }) {
       )}
       {state === 'wrong' && (
         <div style={{ color: C.red2, marginTop: 8, fontSize: 13 }}>
-          ❌ {tries >= 2 ? `Hint: ${hint}` : 'Not quite — try again!'}
+          ❌ {tries >= 2 ? `Hint: ${hint}` : 'Not quite, try again!'}
         </div>
       )}
     </div>
@@ -274,7 +274,7 @@ function ChoiceExercise({ question, options, answer, onPass }) {
       </div>
       {done && <div style={{ color: C.green2, fontWeight: 'bold', marginTop: 10 }}>✅ Exactly right!</div>}
       {selected && !done && selected !== answer && (
-        <div style={{ color: C.red2, marginTop: 8, fontSize: 13 }}>❌ Not quite — try again!</div>
+        <div style={{ color: C.red2, marginTop: 8, fontSize: 13 }}>❌ Not quite. Try again!</div>
       )}
     </div>
   )
@@ -369,7 +369,7 @@ function PipelineJourney({ step }) {
       num: '⑦ Ranked Result', color: C.green2, show: step >= 7,
       content: (
         <span style={{ color: C.green2, fontFamily: 'monospace', fontSize: 12 }}>
-          #1 S1 (0.7962) — "The best homemade pizza recipe for beginners" ✅
+          #1 S1 (0.7962): "The best homemade pizza recipe for beginners" ✅
         </span>
       ),
     },
@@ -384,7 +384,7 @@ function PipelineJourney({ step }) {
       borderRadius: 8, padding: '10px 14px',
     }}>
       <div style={{ color: C.border1, fontSize: 11, marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-        📍 Pipeline Journey — S1 transformation so far
+        📍 Pipeline Journey: S1 transformation so far
       </div>
       {activeStages.map(({ num, color, content }) => (
         <div key={num} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', marginBottom: 6 }}>
@@ -428,10 +428,10 @@ function Step0({ onUnlock, onNext }) {
       <div style={card()}>
         <div style={{ color: C.orange, fontWeight: 'bold', marginBottom: 10 }}>📋 Your Mission</div>
         <p style={{ color: C.text2, margin: '0 0 8px' }}>
-          FoodFind has <strong style={{ color: C.text1 }}>15 articles</strong> in their database —
+          FoodFind has <strong style={{ color: C.text1 }}>15 articles</strong> in their database:
           10 food recipes and guides, plus 5 general-interest topics.
           Users type queries like <em style={{ color: C.codeKw }}>"best pizza recipe"</em> and expect
-          ranked results — most relevant first, irrelevant ones filtered out.
+          ranked results, most relevant first, with irrelevant ones filtered out.
         </p>
         <p style={{ color: C.text2, margin: 0 }}>
           Your job: build a <strong style={{ color: C.text1 }}>working search engine from scratch</strong>.
@@ -453,7 +453,7 @@ function Step0({ onUnlock, onNext }) {
             <span style={{ ...pill(C.purple), minWidth: 22, textAlign: 'center', flexShrink: 0 }}>{n}</span>
             <span>
               <strong style={{ color: C.text1 }}>{name}</strong>
-              <span style={{ color: C.text3 }}> — {desc}</span>
+              <span style={{ color: C.text3 }}>: {desc}</span>
             </span>
           </div>
         ))}
@@ -468,7 +468,7 @@ function Step0({ onUnlock, onNext }) {
       ) : (
         <div style={{ textAlign: 'center' }}>
           <div style={{ color: C.green2, fontWeight: 'bold', marginBottom: 12 }}>
-            🎯 Mission accepted — let's build.
+            🎯 Mission accepted. Let's build.
           </div>
           <Button variant="primary" onClick={onNext}>See the Data →</Button>
         </div>
@@ -496,11 +496,11 @@ function Step1({ onUnlock, onNext }) {
 
   return (
     <SpaceBetween size="m">
-      <Alert type="info" header="Step 1 — HTML Parsing: From Web Page to Plain Text">
+      <Alert type="info" header="Step 1: HTML Parsing">
         FoodFind's 15 articles live on web pages as HTML. A search engine first crawls the web,
         downloads those HTML files, and <strong>extracts the plain text</strong>.
         HTML tags like <code>&lt;h1&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;script&gt;</code>
-        are structure — not content. We strip them away before anything else.
+        are structure, not content. We strip them away before anything else.
       </Alert>
 
       <div style={card()}>
@@ -594,7 +594,7 @@ function Step1({ onUnlock, onNext }) {
         <>
           <div style={card()}>
             <div style={{ color: C.orange, fontWeight: 'bold', marginBottom: 12 }}>
-              📄 FoodFind's 15 Articles — after running strip_html() on each page
+              📄 FoodFind's 15 Articles (after running strip_html() on each page)
             </div>
             <div style={{ color: C.text3, fontSize: 13, marginBottom: 10 }}>
               All 15 web pages have been parsed. This is the clean text we'll work with:
@@ -612,11 +612,11 @@ function Step1({ onUnlock, onNext }) {
               🤔 Is plain text enough to search?
             </div>
             <p style={{ color: C.blue2, margin: '0 0 8px' }}>
-              We have clean text — but searching it directly still has serious problems:
+              We have clean text, but searching it directly still has serious problems:
             </p>
             <ul style={{ color: C.blue2, margin: 0, paddingLeft: 20 }}>
-              <li>"Recipe" and "recipe" won't match — uppercase vs lowercase</li>
-              <li>"the", "a", "for" appear in <em>every</em> document — they're noise</li>
+              <li>"Recipe" and "recipe" won't match (uppercase vs lowercase)</li>
+              <li>"the", "a", "for" appear in <em>every</em> document. They're noise.</li>
               <li>"recipes" and "recipe" are different strings but mean the same thing</li>
               <li>How do we rank S1 vs S2 when both contain "pizza recipe"?</li>
             </ul>
@@ -630,7 +630,7 @@ function Step1({ onUnlock, onNext }) {
               👁️ Data Explorer badge earned! HTML stripped → clean text extracted.
             </div>
             <Button variant="primary" onClick={onNext}>
-              Next: Step 2 — Tokenization →
+              Next: Step 2 Tokenization →
             </Button>
           </div>
         </>
@@ -651,8 +651,8 @@ function Step2({ onUnlock, onNext }) {
 
   return (
     <SpaceBetween size="m">
-      <Alert type="info" header="Step 2: Tokenization — Break text into words">
-        A computer can't search a sentence. It needs individual words — called <strong>tokens</strong>.
+      <Alert type="info" header="Step 2: Tokenization">
+        A computer can't search a sentence. It needs individual words, called <strong>tokens</strong>.
         We call the process of splitting a sentence into tokens: <strong>tokenization</strong>.
       </Alert>
 
@@ -729,7 +729,7 @@ function Step3({ onUnlock, onNext }) {
 
   return (
     <SpaceBetween size="m">
-      <Alert type="info" header="Step 3: Stop Word Removal — Filter out the noise">
+      <Alert type="info" header="Step 3: Stop Word Removal">
         Words like "the", "a", "for", "it" appear in <em>every</em> document.
         They carry zero meaning for search. We remove them to keep only the signal.
       </Alert>
@@ -754,10 +754,10 @@ function Step3({ onUnlock, onNext }) {
 
       <div style={card()}>
         <div style={{ color: C.orange, fontWeight: 'bold', marginBottom: 10 }}>
-          🔍 Trace S1 — watch the stop words disappear
+          🔍 Trace S1: watch the stop words disappear
         </div>
         <div style={{ color: C.text3, fontSize: 12, marginBottom: 6 }}>
-          Before ({s1Raw.length} tokens) — <span style={{ color: C.red2 }}>red = stop word (removed)</span>:
+          Before ({s1Raw.length} tokens) | <span style={{ color: C.red2 }}>red = stop word (removed)</span>:
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 14 }}>
           {s1Raw.map((t, i) => (
@@ -823,7 +823,7 @@ function Step4({ onUnlock, onNext }) {
 
   return (
     <SpaceBetween size="m">
-      <Alert type="info" header="Step 4: Stemming — Reduce words to their root form">
+      <Alert type="info" header="Step 4: Stemming">
         "recipe" and "recipes" mean the same thing. "baking" and "bake" mean the same.
         Stemming reduces all variants to a common root so they all match.
       </Alert>
@@ -852,14 +852,14 @@ function Step4({ onUnlock, onNext }) {
           </div>
         ))}
         <div style={{ color: C.text3, fontSize: 12, marginTop: 8 }}>
-          Note: "recip" isn't a real English word — that's fine. We apply the same rules to queries.
+          Note: "recip" isn't a real English word. That's fine. We apply the same rules to queries.
           When the user types "recipe" it also becomes "recip" → they match perfectly.
         </div>
       </div>
 
       <div style={card()}>
         <div style={{ color: C.orange, fontWeight: 'bold', marginBottom: 10 }}>
-          🔍 Complete pipeline on S1 — all 3 steps
+          🔍 Complete pipeline on S1 (all 3 steps)
         </div>
         {pipeline.map(({ label, tokens, color }) => (
           <div key={label} style={{ marginBottom: 12 }}>
@@ -909,9 +909,9 @@ function Step5({ onUnlock, onNext }) {
 
   return (
     <SpaceBetween size="m">
-      <Alert type="info" header="Step 5: Inverted Index — The heart of search">
+      <Alert type="info" header="Step 5: Inverted Index">
         An inverted index maps every term to the list of documents that contain it.
-        When a user searches, we just do a single lookup — no scanning all documents.
+        When a user searches, we do a single lookup with no document scanning at all.
         This is why search is fast even with billions of pages.
       </Alert>
 
@@ -948,7 +948,7 @@ function Step5({ onUnlock, onNext }) {
 
       <div style={card(C.bg2, C.blue)}>
         <div style={{ color: C.blue2, fontWeight: 'bold', marginBottom: 8 }}>
-          🔎 Try the index — type any word to look it up
+          🔎 Try the index: type any word to look it up
         </div>
         <Input
           value={query}
@@ -987,7 +987,7 @@ function Step5({ onUnlock, onNext }) {
       {passed && (
         <div style={{ textAlign: 'center' }}>
           <div style={{ color: C.green2, fontWeight: 'bold', marginBottom: 10 }}>
-            📚 Indexer badge earned! Instant lookup — no document scanning needed.
+            📚 Indexer badge earned! Instant lookup with no document scanning needed.
           </div>
           <Button variant="primary" onClick={onNext}>Next: The Math Behind Ranking →</Button>
         </div>
@@ -1017,14 +1017,14 @@ function Step6({ onUnlock, onNext }) {
 
   return (
     <SpaceBetween size="m">
-      <Alert type="info" header="Step 6: TF-IDF — Score every (term, document) pair">
+      <Alert type="info" header="Step 6: TF-IDF Scoring">
         We found candidate documents via the index. Now we need to <strong>rank</strong> them.
         TF-IDF gives each document a score for each query term. Higher score = more relevant.
       </Alert>
 
       <div style={card()}>
         <div style={{ color: C.orange, fontWeight: 'bold', marginBottom: 10 }}>
-          📐 Part 1: TF — Term Frequency
+          📐 Part 1: Term Frequency (TF)
         </div>
         <p style={{ color: C.text2, margin: '0 0 10px' }}>
           <em>How often does the term appear in this specific document?</em>
@@ -1037,7 +1037,7 @@ function Step6({ onUnlock, onNext }) {
         <div style={{ ...card(C.bg0, C.border1), marginTop: 10 }}>
           <div style={{ fontFamily: 'monospace', fontSize: 13, color: C.text2 }}>
             S1 = [<span style={{ color: C.green2 }}>'best'</span>, 'homemad',{' '}
-            <span style={{ color: C.orange }}>'pizza'</span>, 'recip', 'beginn'] — 5 terms
+            <span style={{ color: C.orange }}>'pizza'</span>, 'recip', 'beginn'] (5 terms)
           </div>
           <div style={{ fontFamily: 'monospace', fontSize: 13, color: C.text2, marginTop: 6 }}>
             tf("pizza", S1) = <span style={{ color: C.green2 }}>1</span> occurrence /{' '}
@@ -1049,7 +1049,7 @@ function Step6({ onUnlock, onNext }) {
 
       <div style={card()}>
         <div style={{ color: C.orange, fontWeight: 'bold', marginBottom: 10 }}>
-          📐 Part 2: IDF — Inverse Document Frequency
+          📐 Part 2: Inverse Document Frequency (IDF)
         </div>
         <p style={{ color: C.text2, margin: '0 0 10px' }}>
           <em>How rare is this term across all 15 documents? Rare = more meaningful.</em>
@@ -1071,8 +1071,8 @@ function Step6({ onUnlock, onNext }) {
             <span style={{ color: C.green2, fontSize: 18, fontWeight: 'bold' }}>0.7621</span>
           </div>
           <div style={{ color: C.text3, fontSize: 12, marginTop: 6 }}>
-            Moderate IDF — pizza appears in 7 of 15 docs, so it's somewhat discriminating.
-            Compare: "homemad" only appears in S1, S9 → IDF = ln(15/2) = 2.015 — much higher!
+            Moderate IDF. Pizza appears in 7 of 15 docs, so it's somewhat discriminating.
+            Compare: "homemad" only appears in S1, S9 → IDF = ln(15/2) = 2.015, much higher!
           </div>
         </div>
       </div>
@@ -1108,13 +1108,13 @@ function Step6({ onUnlock, onNext }) {
             )
           })}
         <div style={{ color: C.text3, fontSize: 12, marginTop: 6 }}>
-          S1 scores highest for "pizza" because it has only 5 total terms — so pizza takes up 1/5 of it.
+          S1 scores highest for "pizza" because it has only 5 total terms, so pizza takes up 1/5 of it.
           Fewer terms = higher TF. The full query score will also factor in "best" and "recipe".
         </div>
       </div>
 
       <Exercise
-        question={`S8 = "Best wood-fired pizza restaurants in the best cities"\nS8 processed: ['best', 'wood-fired', 'pizza', 'restaur', 'best', 'citi'] — 6 terms\n\n"best" appears TWICE in S8. What is tf("best", S8)?\nEnter as a decimal, 2 decimal places (e.g. 0.33)`}
+        question={`S8 = "Best wood-fired pizza restaurants in the best cities"\nS8 processed: ['best', 'wood-fired', 'pizza', 'restaur', 'best', 'citi'] (6 terms)\n\n"best" appears TWICE in S8. What is tf("best", S8)?\nEnter as a decimal, 2 decimal places (e.g. 0.33)`}
         check={v => {
           const n = parseFloat(v)
           return Math.abs(n - 2 / 6) < 0.01 || v === '0.33' || v === '0.333'
@@ -1130,16 +1130,16 @@ function Step6({ onUnlock, onNext }) {
               ✅ tf("best", S8) = 2/6 ≈ 0.333
             </div>
             <div style={{ color: C.green2, fontSize: 13 }}>
-              Now let's test IDF — the other half of the formula.
+              Now let's test IDF, the other half of the formula.
             </div>
           </div>
 
           <div style={card()}>
             <div style={{ color: C.orange, fontWeight: 'bold', marginBottom: 10 }}>
-              📊 IDF in action — compare two terms
+              📊 IDF in action: compare two terms
             </div>
             <div style={{ ...codeBox, marginBottom: 10 }}>
-              <div style={{ color: C.text3, marginBottom: 4 }}># "pizza" vs "homemad" — which has higher IDF and why?</div>
+              <div style={{ color: C.text3, marginBottom: 4 }}># "pizza" vs "homemad": which has higher IDF and why?</div>
               <div style={{ color: C.text2 }}>
                 "pizza"  → in <span style={{ color: C.red2 }}>7/15</span> docs → idf = ln(15/7) = <span style={{ color: C.red2 }}>0.7621</span>  (common → lower IDF){'\n'}
               </div>
@@ -1156,12 +1156,12 @@ function Step6({ onUnlock, onNext }) {
           <ChoiceExercise
             question='"naples" appears in only 1 out of 15 documents (just S6). "pizza" appears in 7 out of 15. Which has a HIGHER IDF score?'
             options={[
-              '"pizza" — it appears in more documents',
-              '"naples" — it is rarer, so more discriminating',
+              '"pizza" (it appears in more documents)',
+              '"naples" (it is rarer, so more discriminating)',
               'Both have the same IDF',
-              'Neither — common words always score zero',
+              'Neither (common words always score zero)',
             ]}
-            answer='"naples" — it is rarer, so more discriminating'
+            answer='"naples" (it is rarer, so more discriminating)'
             onPass={() => setIdfPassed(true)}
           />
         </>
@@ -1250,7 +1250,7 @@ function Step7({ onUnlock, onNext }) {
 
   return (
     <SpaceBetween size="m">
-      <Alert type="success" header="Step 7: Full Search — All 6 components working together">
+      <Alert type="success" header="Step 7: Full Search (All 6 components working together)">
         Every piece of the pipeline is connected. Watch your engine run exactly like a real search engine.
       </Alert>
 
@@ -1363,7 +1363,7 @@ function Step7({ onUnlock, onNext }) {
       {trace && (
         <div style={{ ...codeBox, padding: '10px 14px' }}>
           <div style={{ color: C.text3, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
-            ⚙ Engine internals — what ran under the hood
+            ⚙ Engine internals: what ran under the hood
           </div>
           {[
             { label: 'tokenise()',      items: trace.tokens,     color: C.text2 },
@@ -1492,31 +1492,31 @@ function Step8({ onUnlock, onNext }) {
 
   const flaws = [
     {
-      title: 'Flaw 1: Synonyms — Same meaning, different word',
+      title: 'Flaw 1: Synonyms (same meaning, different word)',
       problem: 'In Italy, pizza is sometimes called "pie". A user from Naples searches for "pie". Should they find S6 ("The history of pizza from Naples")?',
       query: 'pie',
-      expectedMsg: 'S6 should appear — it\'s literally about the origin of pizza in Italy. But "pie" ≠ "pizza" in our vocabulary.',
+      expectedMsg: 'S6 should appear. It\'s literally about the origin of pizza in Italy. But "pie" and "pizza" are different tokens in our vocabulary.',
       lesson: 'TF-IDF works with exact words (after stemming). It cannot understand that "pie" and "pizza" mean the same thing. No synonym support.',
     },
     {
       title: 'Flaw 2: Word order doesn\'t matter (bag of words)',
-      problem: '"recipe best pizza" vs "best pizza recipe" — are these the same search?',
+      problem: '"recipe best pizza" vs "best pizza recipe": are these the same search?',
       query: 'recipe best pizza',
       expectedMsg: 'Try both. You\'ll get identical results. TF-IDF doesn\'t care about word order at all.',
       lesson: 'TF-IDF is a "bag of words" model. It counts tokens, not sequences. Good for search, but it can\'t distinguish "dog bites man" from "man bites dog".',
     },
     {
-      title: 'Flaw 3: Vocabulary mismatch — User says "food", docs say "cooking"',
+      title: 'Flaw 3: Vocabulary mismatch (user says "food", docs say "cooking")',
       problem: 'A user searches "Italian food". S4 and S10 are clearly about Italian cuisine. Will they appear?',
       query: 'Italian food',
-      expectedMsg: 'S4 and S10 contain "italian" ✓. But "food" is not in any document — our articles use "cooking", "recipe", "meal". So the score is low.',
-      lesson: 'TF-IDF requires the user to use the same vocabulary as the author. If you write "food" but the doc says "cooking" — no match. No semantic bridge exists.',
+      expectedMsg: 'S4 and S10 contain "italian" ✓. But "food" is not in any document. Our articles use "cooking", "recipe", "meal". So the score is low.',
+      lesson: 'TF-IDF requires the user to use the same vocabulary as the author. Write "food" and the doc says "cooking"? No match. No semantic bridge exists.',
     },
   ]
 
   return (
     <SpaceBetween size="m">
-      <Alert type="warning" header="Step 8: The Fatal Flaws — Where TF-IDF breaks">
+      <Alert type="warning" header="Step 8: Where TF-IDF breaks">
         Your search engine works. But let's stress-test it. There are 3 fundamental limitations
         built into TF-IDF. Every major search engine hit these same walls.
       </Alert>
@@ -1568,15 +1568,15 @@ function Step8({ onUnlock, onNext }) {
         <>
           <div style={card('#1e1b2e', '#8b5cf6')}>
             <div style={{ color: C.blue2, fontWeight: 'bold', marginBottom: 8 }}>
-              💡 The Root Cause — And the Solution
+              💡 The Root Cause and the Solution
             </div>
             <p style={{ color: C.blue2, margin: '0 0 8px' }}>
               All 3 flaws share the same root: TF-IDF understands <em>words</em>, not <em>meaning</em>.
-              It has no knowledge of the world — just a frequency table.
+              It has no knowledge of the world, just a frequency table.
             </p>
             <p style={{ color: C.blue2, margin: 0 }}>
-              The fix? <strong style={{ color: C.blue2 }}>Word Embeddings and Semantic Search</strong> —
-              convert every word into a vector in high-dimensional space, where "pizza" and "pie"
+              The fix? <strong style={{ color: C.blue2 }}>Word Embeddings and Semantic Search.</strong>{' '}
+              Convert every word into a vector in high-dimensional space, where "pizza" and "pie"
               sit close together. That's what you'll learn next.
             </p>
           </div>
@@ -1599,21 +1599,21 @@ const TUTORIAL_URL = 'https://nursnaaz.github.io/tutorial/how-search-engines-wor
 
 const LINKEDIN_POST = `Every time you type in a search bar, 7 things happen before you see a single result.
 
-I just built all 7 from scratch — and now I understand exactly why Google is fast.
+I just built all 7 from scratch and now I understand exactly why Google is fast.
 
 The full pipeline, step by step:
 
-① HTML parser → strips tags, extracts visible text
-② Tokeniser → splits "Best Pizza Recipe" into ['best', 'pizza', 'recipe']
-③ Stop word filter → drops 'the', 'a', 'for' — noise, not signal
-④ Stemmer → 'recipes' and 'recipe' become the same root
-⑤ Inverted index → maps each term to the docs that contain it
-⑥ TF-IDF scorer → tf() × idf() gives every doc a relevance score
-⑦ Search → rank by score, return results in order
+① HTML parser: strips tags, extracts visible text
+② Tokeniser: splits "Best Pizza Recipe" into ['best', 'pizza', 'recipe']
+③ Stop word filter: drops 'the', 'a', 'for' (noise, not signal)
+④ Stemmer: 'recipes' and 'recipe' become the same root
+⑤ Inverted index: maps each term to the docs that contain it
+⑥ TF-IDF scorer: tf() × idf() gives every doc a relevance score
+⑦ Search: rank by score, return results in order
 
 The insight that surprised me most:
 
-The inverted index is why search is fast at scale. Instead of scanning every document for every query, you do one lookup — "which docs contain this word?" — and only score those. O(1) instead of O(n). Google's index is just a massive version of this.
+The inverted index is why search is fast at scale. Instead of scanning every document for every query, you do one lookup ("which docs contain this word?") and only score those. O(1) instead of O(n). Google's index is just a massive version of this.
 
 The limit I found:
 
@@ -1623,7 +1623,7 @@ If you have ever wondered what happens between typing and results, this is worth
 
 → ${TUTORIAL_URL}
 
-What is something you always assumed was magic — until you saw the math behind it?
+What is something you always assumed was magic, until you saw the math behind it?
 
 #MachineLearning #NLP #AI #SearchEngines #TechEducation`
 
@@ -1672,7 +1672,7 @@ function Step9({ onUnlock, unlockedBadges, xp, onRestart }) {
               What You Built Today
             </h2>
             <p style={{ color: C.text2, margin: 0, fontSize: 14 }}>
-              A working TF-IDF search engine — the same pipeline used in production systems.
+              A working TF-IDF search engine, the same pipeline used in production systems.
             </p>
           </div>
           <div style={{
@@ -1690,17 +1690,17 @@ function Step9({ onUnlock, unlockedBadges, xp, onRestart }) {
       {/* ── Functions implemented ── */}
       <div style={card()}>
         <div style={{ color: C.orange, fontWeight: 'bold', marginBottom: 14, fontSize: 14 }}>
-          The Search Engine Pipeline — End to End
+          The Search Engine Pipeline: End to End
         </div>
         <div style={codeBox}>
           {[
             ['parse_html(html)',          '→ str',    'Strip tags, extract visible text'],
             ['tokenise(text)',            '→ list',   'text.lower().split()'],
-            ['remove_stop_words(tokens)', '→ list',   'Filter "the", "a", "for" — noise'],
+            ['remove_stop_words(tokens)', '→ list',   'Filter "the", "a", "for" (noise)'],
             ['stem(token)',               '→ str',    'STEM_RULES lookup: "recipes" → "recip"'],
             ['build_inverted_index(docs)','→ dict',   'term → [doc_id, ...]'],
             ['tf(term, doc)',             '→ float',  'count(term) / len(doc_terms)'],
-            ['idf(term)',                 '→ float',  'ln(N / df)  — rewards rare terms'],
+            ['idf(term)',                 '→ float',  'ln(N / df), rewards rare terms'],
             ['search(query)',             '→ ranked', 'TF×IDF score → sorted results'],
           ].map(([fn, ret, desc]) => (
             <div key={fn} style={{ display: 'flex', gap: 10, alignItems: 'baseline', marginBottom: 7 }}>
@@ -1715,15 +1715,15 @@ function Step9({ onUnlock, unlockedBadges, xp, onRestart }) {
       {/* ── Key insight ── */}
       <div style={{ ...card(C.bg2, C.purple), borderLeft: `3px solid ${C.purple}` }}>
         <div style={{ color: C.purple, fontWeight: 'bold', marginBottom: 8, fontSize: 14 }}>
-          The Core Insight — Why Inverted Index Matters
+          The Core Insight: Why the Inverted Index Matters
         </div>
         <p style={{ color: C.text2, margin: '0 0 8px', fontSize: 13, lineHeight: 1.6 }}>
           A naïve search engine scans every document for every query.
-          With 15 docs it's fast — with 15 billion web pages it's impossible.
+          With 15 docs it's fast. With 15 billion web pages it's impossible.
         </p>
         <p style={{ color: C.text2, margin: 0, fontSize: 13, lineHeight: 1.6 }}>
           The inverted index flips the lookup: instead of <em>"does doc X contain the word?"</em>
-          you ask <em>"which docs contain this word?"</em> — and get the answer in O(1).
+          you ask <em>"which docs contain this word?"</em> and get the answer in O(1).
           Google's index is just a massive version of what you built.
         </p>
       </div>
@@ -1731,11 +1731,11 @@ function Step9({ onUnlock, unlockedBadges, xp, onRestart }) {
       {/* ── What's next ── */}
       <div style={{ ...card('#0D1321', C.blue), borderLeft: `3px solid ${C.blue}` }}>
         <div style={{ color: C.blue, fontWeight: 'bold', marginBottom: 8, fontSize: 14 }}>
-          The Limit You Found — What's Next
+          The Limit You Found: What's Next
         </div>
         <p style={{ color: C.text2, margin: '0 0 8px', fontSize: 13, lineHeight: 1.6 }}>
           Your engine has no concept of meaning. "pizza" and "pie" are unrelated.
-          Search "neapolitan" and you get nothing — even though it's exactly about pizza.
+          Search "neapolitan" and you get nothing, even though it's exactly about pizza.
         </p>
         <p style={{ color: C.text2, margin: 0, fontSize: 13, lineHeight: 1.6 }}>
           <strong style={{ color: C.blue2 }}>Word Embeddings</strong> solve this: every word becomes
@@ -1752,7 +1752,7 @@ function Step9({ onUnlock, unlockedBadges, xp, onRestart }) {
               Run the Real Code in Python
             </div>
             <div style={{ color: C.text3, fontSize: 12 }}>
-              You understood the concepts — now run the same pipeline in a real notebook.
+              You understood the concepts. Now run the same pipeline in a real notebook.
             </div>
           </div>
           <a
@@ -1779,7 +1779,7 @@ function Step9({ onUnlock, unlockedBadges, xp, onRestart }) {
             {
               num: '02',
               title: 'TF-IDF Math Explained',
-              desc: 'Step-by-step breakdown of the math — why naive counting fails and how TF × IDF combines to give relevance.',
+              desc: 'Step-by-step breakdown of the math: why naive counting fails and how TF × IDF combines to give relevance.',
               time: '45 min',
               colab: 'https://colab.research.google.com/github/nursnaaz/zero-to-genai-engineer/blob/main/00_search_engine/notebooks/02_tfidf_explained.ipynb',
               github: 'https://github.com/nursnaaz/zero-to-genai-engineer/blob/main/00_search_engine/notebooks/02_tfidf_explained.ipynb',
@@ -1821,7 +1821,7 @@ function Step9({ onUnlock, unlockedBadges, xp, onRestart }) {
         <div style={{ marginTop: 12, padding: '8px 12px', borderRadius: 6,
           background: `${C.green}10`, border: `1px solid ${C.green}30`,
           color: C.text3, fontSize: 12 }}>
-          No API key needed — everything runs on pure Python (<code style={{ color: C.green2 }}>collections</code>, <code style={{ color: C.green2 }}>math</code>).
+          No API key needed. Everything runs on pure Python (<code style={{ color: C.green2 }}>collections</code>, <code style={{ color: C.green2 }}>math</code>).
           Works in Google Colab or locally.
         </div>
       </div>
@@ -1832,7 +1832,7 @@ function Step9({ onUnlock, unlockedBadges, xp, onRestart }) {
           Show Your Network What You Now Understand
         </div>
         <p style={{ color: C.text3, fontSize: 13, margin: '0 0 14px', lineHeight: 1.5 }}>
-          This post demonstrates real understanding — not "I finished a course."
+          This post demonstrates real understanding, not just "I finished a course."
           Add one personal insight before posting. Your version will always land better than a generic copy.
         </p>
 
@@ -1876,7 +1876,7 @@ function Step9({ onUnlock, unlockedBadges, xp, onRestart }) {
             background: `${C.blue}12`, border: `1px solid ${C.blue}40`,
             color: C.blue2, fontSize: 13,
           }}>
-            Text copied — paste it in LinkedIn with <strong>Ctrl+V</strong> (or <strong>⌘V</strong> on Mac)
+            Text copied. Paste it in LinkedIn with <strong>Ctrl+V</strong> (or <strong>⌘V</strong> on Mac)
           </div>
         )}
       </div>

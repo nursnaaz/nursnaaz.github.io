@@ -184,7 +184,7 @@ function Exercise({ question, check, hint, onPass }) {
       )}
       {state === 'wrong' && (
         <div style={{ color: C.red2, marginTop: 8, fontSize: 13 }}>
-          ❌ {tries >= 2 ? `Hint: ${hint}` : 'Not quite — try again!'}
+          ❌ {tries >= 2 ? `Hint: ${hint}` : 'Not quite, try again!'}
         </div>
       )}
     </div>
@@ -224,7 +224,7 @@ function ChoiceExercise({ question, options, answer, onPass }) {
       </div>
       {done && <div style={{ color: C.green2, fontWeight: 'bold', marginTop: 10 }}>✅ Exactly right!</div>}
       {selected && !done && selected !== answer && (
-        <div style={{ color: C.red2, marginTop: 8, fontSize: 13 }}>❌ Not quite — try another option!</div>
+        <div style={{ color: C.red2, marginTop: 8, fontSize: 13 }}>❌ Not quite. Try another option!</div>
       )}
     </div>
   )
@@ -332,7 +332,7 @@ function Step0({ onUnlock, onNext }) {
       <div style={{ ...card(C.bg2, C.border2), padding: '12px 18px', borderLeft: `3px solid ${C.orange}` }}>
         <span style={{ color: C.text3, fontSize: 13 }}>
           Netflix, Spotify, and Amazon all solve the same problem:
-          <strong style={{ color: C.orange }}> How do you find what a user wants — when they can't perfectly describe it?</strong>
+          <strong style={{ color: C.orange }}> How do you find what a user wants when they can't perfectly describe it?</strong>
           {' '}The answer is text similarity. This tutorial shows you exactly how it works.
         </span>
       </div>
@@ -341,7 +341,7 @@ function Step0({ onUnlock, onNext }) {
         <div style={{ fontSize: 56 }}>🎬</div>
         <h2 style={{ color: C.blue2, margin: '12px 0 6px' }}>You are building a movie recommender</h2>
         <p style={{ color: C.text2, fontSize: 15, margin: 0 }}>
-          Using <strong style={{ color: C.text1 }}>5 different ways</strong> to turn text into numbers — and understanding
+          Using <strong style={{ color: C.text1 }}>5 different ways</strong> to turn text into numbers, and understanding
           why one metric measures similarity better than any other.
         </p>
       </div>
@@ -350,16 +350,16 @@ function Step0({ onUnlock, onNext }) {
         <div style={{ color: C.orange, fontWeight: 'bold', marginBottom: 10 }}>📋 What you will master</div>
         {[
           ['📐', 'Text as Vectors',         'Every document becomes a point in high-dimensional space'],
-          ['📏', 'Euclidean vs Cosine',     'Why distance fails — and what angle measures instead'],
+          ['📏', 'Euclidean vs Cosine',     'Why distance fails and what angle measures instead'],
           ['🔄', 'Cosine Similarity',        'The formula that powers every recommendation engine'],
           ['🧠', '5 Embedding Methods',      'BoW → TF-IDF → Word2Vec → GloVe → FastText (1954–2016)'],
-          ['🎬', 'Live Movie Recommender',   'See all 5 methods give different results — in your browser'],
+          ['🎬', 'Live Movie Recommender',   'See all 5 methods give different results, right in your browser'],
         ].map(([icon, name, desc]) => (
           <div key={name} style={{ display: 'flex', gap: 10, marginBottom: 8, alignItems: 'flex-start' }}>
             <span style={{ fontSize: 16, flexShrink: 0, marginTop: 1 }}>{icon}</span>
             <span>
               <strong style={{ color: C.text1 }}>{name}</strong>
-              <span style={{ color: C.text3 }}> — {desc}</span>
+              <span style={{ color: C.text3 }}>: {desc}</span>
             </span>
           </div>
         ))}
@@ -370,7 +370,7 @@ function Step0({ onUnlock, onNext }) {
           <strong style={{ color: C.yellow }}>💡 The key question this tutorial answers:</strong>
           <br />
           Two documents can be identical in meaning but very different in length.
-          A 10-word tweet and a 1,000-word essay about the same topic — how do you know they are similar?
+          A 10-word tweet and a 1,000-word essay about the same topic. How do you know they are similar?
           <br /><br />
           <strong style={{ color: C.text1 }}>Euclidean distance gets this wrong. Cosine similarity gets it right.</strong>
           {' '}You will prove this yourself in Step 2.
@@ -385,7 +385,7 @@ function Step0({ onUnlock, onNext }) {
         </div>
       ) : (
         <div style={{ textAlign: 'center' }}>
-          <div style={{ color: C.green2, fontWeight: 'bold', marginBottom: 12 }}>🎯 Let's go — building your intuition now.</div>
+          <div style={{ color: C.green2, fontWeight: 'bold', marginBottom: 12 }}>🎯 Let's go. Building your intuition now.</div>
           <Button variant="primary" onClick={onNext}>Text as Vectors →</Button>
         </div>
       )}
@@ -411,9 +411,9 @@ function Step1({ onUnlock, onNext }) {
 
   return (
     <SpaceBetween size="m">
-      <Alert type="info" header="Step 1 — Text as Vectors: The Bag of Words Idea">
+      <Alert type="info" header="Step 1: Text as Vectors">
         A computer cannot read. It only understands numbers. The simplest way to turn text into numbers
-        is to count how many times each word appears. That count becomes a vector — a list of numbers.
+        is to count how many times each word appears. That count becomes a vector, a list of numbers.
       </Alert>
 
       <div style={card()}>
@@ -421,7 +421,7 @@ function Step1({ onUnlock, onNext }) {
           The "Bag of Words" model (1954)
         </div>
         <p style={{ color: C.text2, margin: '0 0 10px', fontSize: 13, lineHeight: 1.6 }}>
-          Think of shaking a document until all the words fall out into a bag — you lose the order,
+          Think of shaking a document until all the words fall out into a bag. You lose the order,
           but you can count how many of each word you have. That count is your vector.
         </p>
         <div style={{ ...codeBox, fontSize: 12 }}>
@@ -438,7 +438,7 @@ function Step1({ onUnlock, onNext }) {
 
       <div style={card()}>
         <div style={{ color: C.blue2, fontWeight: 'bold', marginBottom: 12 }}>
-          BoW Matrix — 3 movies × 12 words
+          BoW Matrix: 3 movies × 12 words
         </div>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ borderCollapse: 'collapse', fontFamily: 'monospace', fontSize: 12, width: '100%' }}>
@@ -473,7 +473,7 @@ function Step1({ onUnlock, onNext }) {
           </table>
         </div>
         <div style={{ marginTop: 10, color: C.text3, fontSize: 12 }}>
-          Each row is now a <strong style={{ color: C.blue2 }}>vector</strong> — a point in 12-dimensional space.
+          Each row is now a <strong style={{ color: C.blue2 }}>vector</strong>, a point in 12-dimensional space.
           Movies that share words are nearby. Movies that share no words are far apart.
         </div>
       </div>
@@ -547,8 +547,8 @@ function Step2({ onUnlock, onNext }) {
 
   return (
     <SpaceBetween size="m">
-      <Alert type="warning" header="Step 2 — The Length Problem: Why Euclidean Distance Fails">
-        Copy-paste a document twice. It is twice as long — but means the same thing.
+      <Alert type="warning" header="Step 2: Why Euclidean Distance Fails">
+        Copy-paste a document twice. It is twice as long but means the same thing.
         Euclidean distance says it is a completely different document. Cosine similarity says: identical.
         Which one is right for measuring meaning?
       </Alert>
@@ -611,7 +611,7 @@ function Step2({ onUnlock, onNext }) {
             <span style={{ color: C.codeKw }}>cosine(Doc B, Query)</span>{' = (3×0 + 3×1) / (√18 × √1) = 3/(3√2) = 1/√2 = '}<span style={{ color: C.green2 }}>{cosB}</span>
           </div>
           <div style={{ marginTop: 10, padding: '8px 12px', background: `${C.green}15`, borderRadius: 6, color: C.green2, fontSize: 13 }}>
-            ✅ Cosine gives Doc A and Doc B the <strong>exact same score ({cosA})</strong> — because they point in the same direction.
+            ✅ Cosine gives Doc A and Doc B the <strong>exact same score ({cosA})</strong> because they point in the same direction.
             Magnitude (length) cancels out. Only the angle matters.
           </div>
         </div>
@@ -622,13 +622,13 @@ function Step2({ onUnlock, onNext }) {
           <div style={{ ...card('#0B1521', C.purple), borderLeft: `3px solid ${C.purple}` }}>
             <div style={{ color: C.purple, fontWeight: 'bold', marginBottom: 8 }}>💡 The Core Insight</div>
             <p style={{ color: C.text2, margin: 0, fontSize: 13, lineHeight: 1.7 }}>
-              Cosine similarity measures the <strong style={{ color: C.text1 }}>angle</strong> between two vectors —
+              Cosine similarity measures the <strong style={{ color: C.text1 }}>angle</strong> between two vectors,
               not the distance between their tips. Two vectors pointing in the same direction have cosine = 1 (identical meaning).
               Two vectors pointing in opposite directions have cosine = −1 (opposite meaning).
               <br /><br />
               <strong style={{ color: C.yellow }}>Why this matters for text:</strong> A short tweet and a long essay about
               the same topic point in the same direction in word-space. Their angle is small. Cosine catches this.
-              Euclidean distance just sees one vector is longer — and says they are different.
+              Euclidean distance just sees one vector is longer and says they are different.
             </p>
           </div>
 
@@ -675,7 +675,7 @@ function Step3({ onUnlock, onNext }) {
 
   return (
     <SpaceBetween size="m">
-      <Alert type="info" header="Step 3 — The Cosine Formula: How Similarity is Computed">
+      <Alert type="info" header="Step 3: The Cosine Formula">
         You now know WHY cosine similarity works. Let's look at exactly HOW the formula computes it —
         step by step, with real movie vectors.
       </Alert>
@@ -701,10 +701,10 @@ function Step3({ onUnlock, onNext }) {
 
       <div style={card()}>
         <div style={{ color: C.blue2, fontWeight: 'bold', marginBottom: 12 }}>
-          Live Calculation — 4 semantic dimensions
+          Live Calculation: 4 semantic dimensions
         </div>
         <div style={{ color: C.text3, fontSize: 12, marginBottom: 10 }}>
-          Dimensions: [crime/dark, sci-fi, animation, action] — simplified from the full 8D model
+          Dimensions: [crime/dark, sci-fi, animation, action] (simplified from the full 8D model)
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 10, marginBottom: 14 }}>
           {[
@@ -795,21 +795,21 @@ function Step4({ onUnlock, onNext }) {
     {
       id: 'tfidf', year: '1972', name: 'TF-IDF', emoji: '📊', color: C.yellow,
       idea: 'Words that appear often in this document but rarely elsewhere are more important.',
-      strength: 'Weights rare, distinctive words higher — finds unique topics',
-      weakness: 'Still bag of words — no understanding of "car" ≈ "automobile".',
-      example: '"pizza" in a recipe blog — high IDF, rewarded. "the" — near-zero.',
+      strength: 'Weights rare, distinctive words higher, which helps find unique topics',
+      weakness: 'Still a bag of words with no understanding of "car" meaning "automobile".',
+      example: '"pizza" in a recipe blog: high IDF, rewarded. "the": near-zero.',
     },
     {
       id: 'w2v', year: '2013', name: 'Word2Vec', emoji: '🧠', color: C.blue,
       idea: 'Train a neural network to predict surrounding words. Words with similar contexts get similar vectors.',
       strength: 'king − man + woman ≈ queen. Captures meaning and analogies.',
-      weakness: 'One fixed vector per word — "bank" always same vector regardless of context.',
+      weakness: 'One fixed vector per word. "bank" gets the same vector regardless of context.',
       example: 'Trained on Google News: 3 million words, 300 dimensions each.',
     },
     {
       id: 'glove', year: '2014', name: 'GloVe', emoji: '🌐', color: C.purple,
       idea: 'Build a global word co-occurrence matrix first, then factorize it into vectors.',
-      strength: 'Captures global statistics — better for thematic/genre similarity.',
+      strength: 'Captures global statistics, which works better for thematic/genre similarity.',
       weakness: 'Still one fixed vector per word. Slower to train than Word2Vec.',
       example: 'Wikipedia + Gigaword: 6 billion tokens → 50/100/200/300d vectors.',
     },
@@ -824,7 +824,7 @@ function Step4({ onUnlock, onNext }) {
 
   return (
     <SpaceBetween size="m">
-      <Alert type="info" header="Step 4 — The 5 Methods: 60 Years of Turning Text into Numbers">
+      <Alert type="info" header="Step 4: The 5 Methods (60 Years of Turning Text into Numbers)">
         Every method builds on the one before it. Each one was invented because the previous one had a critical flaw.
         Tap any card to expand the details.
       </Alert>
@@ -931,7 +931,7 @@ function Step5({ onUnlock, onNext }) {
 
   return (
     <SpaceBetween size="m">
-      <Alert type="success" header="Step 5 — Live Movie Recommender: All 5 Methods Side-by-Side">
+      <Alert type="success" header="Step 5: Live Movie Recommender (All 5 Methods Side-by-Side)">
         Select any movie. See what each embedding method recommends. Notice how BoW/TF-IDF look for
         exact shared words, while Word2Vec/GloVe/FastText understand semantic meaning.
       </Alert>
@@ -1061,7 +1061,7 @@ function Step5({ onUnlock, onNext }) {
               Select <strong style={{ color: C.text1 }}>Inception</strong>, then compare all 5 methods.
               BoW and TF-IDF will find movies sharing exact words from its description.
               Word2Vec, GloVe, and FastText understand that Inception, The Matrix, and Interstellar
-              all live in the same "mind-bending sci-fi" region of semantic space — even when
+              all live in the same "mind-bending sci-fi" region of semantic space, even when
               they share few exact words.
             </p>
           </div>
@@ -1086,7 +1086,7 @@ function Step6({ onUnlock, onNext }) {
 
   return (
     <SpaceBetween size="m">
-      <Alert type="info" header="Step 6 — When Each Method Wins">
+      <Alert type="info" header="Step 6: When Each Method Wins">
         No embedding method is best in every situation. The right choice depends on your data,
         your query type, and whether you need to handle unseen words.
       </Alert>
@@ -1127,7 +1127,7 @@ function Step6({ onUnlock, onNext }) {
         <div style={{ color: C.purple, fontWeight: 'bold', marginBottom: 8 }}>💡 What Comes After FastText?</div>
         <p style={{ color: C.text2, margin: 0, fontSize: 13, lineHeight: 1.6 }}>
           All five methods give each word <strong style={{ color: C.text1 }}>one fixed vector</strong>.
-          The word "bank" always gets the same vector — whether it means a riverbank or a financial institution.
+          The word "bank" always gets the same vector, whether it means a riverbank or a financial institution.
           <br /><br />
           This is exactly the gap the <strong style={{ color: C.yellow }}>Transformer architecture</strong> fills.
           Self-attention assigns different vectors to the same word based on its surrounding context.
@@ -1168,7 +1168,7 @@ function Step7({ onUnlock, onNext }) {
     },
     {
       num: '02', title: 'Cosine Similarity',
-      desc: 'Why cosine similarity works — geometric intuition, the length problem, and full implementation.',
+      desc: 'Why cosine similarity works: geometric intuition, the length problem, and full implementation.',
       time: '30 min',
       colab: 'https://colab.research.google.com/github/nursnaaz/zero-to-genai-engineer/blob/main/01_text_to_numbers/notebooks/02_cosine_similarity.ipynb',
       github: 'https://github.com/nursnaaz/zero-to-genai-engineer/blob/main/01_text_to_numbers/notebooks/02_cosine_similarity.ipynb',
@@ -1177,15 +1177,15 @@ function Step7({ onUnlock, onNext }) {
 
   return (
     <SpaceBetween size="m">
-      <Alert type="info" header="Step 7 — Run It Yourself in Python">
+      <Alert type="info" header="Step 7: Run It Yourself in Python">
         The interactive demo proved the concepts. Now run the real implementations —
         all 5 embedding methods with full cosine similarity math in Python.
       </Alert>
 
       <div style={card()}>
-        <div style={{ color: C.orange, fontWeight: 'bold', marginBottom: 10 }}>Cosine Similarity — Pure Python (no libraries)</div>
+        <div style={{ color: C.orange, fontWeight: 'bold', marginBottom: 10 }}>Cosine Similarity: Pure Python (no libraries)</div>
         <div style={codeBox}>
-          <span style={{ color: C.codeCmt }}># The exact formula from Step 3 — runs anywhere</span>{'\n'}
+          <span style={{ color: C.codeCmt }}># The exact formula from Step 3, runs anywhere</span>{'\n'}
           <span style={{ color: C.codeKw }}>import</span>{' math\n\n'}
           <span style={{ color: C.codeKw }}>def</span>{' '}<span style={{ color: C.codeStr }}>cosine_similarity</span>{'(a, b):\n'}
           {'    dot   = '}<span style={{ color: C.codeKw }}>sum</span>{'(ai * bi '}<span style={{ color: C.codeKw }}>for</span>{' ai, bi '}<span style={{ color: C.codeKw }}>in</span>{' '}<span style={{ color: C.codeKw }}>zip</span>{'(a, b))\n'}
@@ -1201,7 +1201,7 @@ function Step7({ onUnlock, onNext }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, marginBottom: 14 }}>
           <div>
             <div style={{ color: C.text1, fontWeight: 700, fontSize: 14, marginBottom: 4 }}>Run the Full Movie Recommender in Python</div>
-            <div style={{ color: C.text3, fontSize: 12 }}>FastAPI backend + React frontend — all 5 embedding methods with real IMDB data.</div>
+            <div style={{ color: C.text3, fontSize: 12 }}>FastAPI backend + React frontend with all 5 embedding methods and real IMDB data.</div>
           </div>
           <a href="https://github.com/nursnaaz/zero-to-genai-engineer/tree/main/01_text_to_numbers"
             target="_blank" rel="noopener noreferrer"
@@ -1246,7 +1246,7 @@ function Step7({ onUnlock, onNext }) {
 
         <div style={{ marginTop: 12, padding: '8px 12px', borderRadius: 6,
           background: `${C.green}10`, border: `1px solid ${C.green}30`, color: C.text3, fontSize: 12 }}>
-          No API key needed — everything runs on Python, numpy, and gensim. Works in Google Colab or locally.
+          No API key needed. Everything runs on Python, numpy, and gensim. Works in Google Colab or locally.
         </div>
       </div>
 
@@ -1277,15 +1277,15 @@ Which one is correct for meaning? Cosine. Always.
 
 This led me to build a movie recommender that compares ALL 5 ways humans have turned text into numbers:
 
-① Bag of Words (1954) — counts words, loses all meaning and word order
-② TF-IDF (1972) — weights rare words higher, still misses synonyms
-③ Word2Vec (2013) — neural network learns that "king − man + woman ≈ queen"
-④ GloVe (2014) — global co-occurrence statistics capture topic and genre
-⑤ FastText (2016) — works on word fragments, handles typos and unseen words
+① Bag of Words (1954): counts words, loses all meaning and word order
+② TF-IDF (1972): weights rare words higher, still misses synonyms
+③ Word2Vec (2013): neural network learns that "king minus man plus woman equals queen"
+④ GloVe (2014): global co-occurrence statistics capture topic and genre
+⑤ FastText (2016): works on word fragments, handles typos and unseen words
 
-Each method finds different "similar" movies for the same query — and now I understand exactly why.
+Each method finds different "similar" movies for the same query. Now I understand exactly why.
 
-The interactive demo runs in your browser — no signup, no install.
+The interactive demo runs in your browser with no signup and no install.
 
 → ${TUTORIAL_URL}
 
@@ -1341,7 +1341,7 @@ function Step8({ onUnlock, unlockedBadges, xp, onRestart }) {
             </div>
             <h2 style={{ color: C.text1, margin: '0 0 6px', fontSize: 22, fontWeight: 700 }}>What You Built Today</h2>
             <p style={{ color: C.text2, margin: 0, fontSize: 14 }}>
-              A working movie recommender — powered by all 5 text embedding methods.
+              A working movie recommender powered by all 5 text embedding methods.
             </p>
           </div>
           <div style={{
@@ -1363,12 +1363,12 @@ function Step8({ onUnlock, unlockedBadges, xp, onRestart }) {
         </div>
         <div style={codeBox}>
           {[
-            ['bow_vec(text, vocab)',      '→ list[int]',  'Count each vocab word — O(n) per doc'],
-            ['tfidf_vec(text, corpus)',   '→ list[float]','tf × log(N/df) — rewards rare, specific words'],
+            ['bow_vec(text, vocab)',      '→ list[int]',  'Count each vocab word, O(n) per doc'],
+            ['tfidf_vec(text, corpus)',   '→ list[float]','tf × log(N/df), rewards rare specific words'],
             ['word2vec(corpus)',          '→ 300d vectors','Local context window → learns analogies'],
             ['glove(corpus)',             '→ 50-300d',    'Global co-occurrence matrix factorization'],
             ['fasttext(corpus)',          '→ 300d vectors','Character n-grams → handles OOV words'],
-            ['cosine_similarity(a, b)',   '→ float [0,1]','(a·b) / (|a||b|) — angle, not distance'],
+            ['cosine_similarity(a, b)',   '→ float [0,1]','(a·b) / (|a||b|), angle not distance'],
           ].map(([fn, ret, desc]) => (
             <div key={fn} style={{ display: 'flex', gap: 10, alignItems: 'baseline', marginBottom: 7 }}>
               <span style={{ color: C.codeKw, fontFamily: 'monospace', fontSize: 12, minWidth: 220 }}>{fn}</span>
@@ -1382,11 +1382,11 @@ function Step8({ onUnlock, unlockedBadges, xp, onRestart }) {
       {/* Key insight recap */}
       <div style={{ ...card(C.bg2, C.purple), borderLeft: `3px solid ${C.purple}` }}>
         <div style={{ color: C.purple, fontWeight: 'bold', marginBottom: 8, fontSize: 14 }}>
-          The Limit You Found — What Is Next
+          The Limit You Found: What Is Next
         </div>
         <p style={{ color: C.text2, margin: '0 0 8px', fontSize: 13, lineHeight: 1.6 }}>
           All five methods give each word <strong style={{ color: C.text1 }}>one fixed vector</strong>.
-          "Bank" (river) and "bank" (finance) get the same vector — forever.
+          "Bank" (river) and "bank" (finance) always get the same vector.
         </p>
         <p style={{ color: C.text2, margin: 0, fontSize: 13, lineHeight: 1.6 }}>
           The <strong style={{ color: C.yellow }}>Transformer attention mechanism</strong> solves this:
@@ -1401,7 +1401,7 @@ function Step8({ onUnlock, unlockedBadges, xp, onRestart }) {
           Show Your Network What You Now Understand
         </div>
         <p style={{ color: C.text3, fontSize: 13, margin: '0 0 14px', lineHeight: 1.5 }}>
-          This post demonstrates real understanding — not "I finished a course."
+          This post demonstrates real understanding, not just "I finished a course."
           Add one personal insight before posting. Your version always lands better than a generic copy.
         </p>
 
@@ -1438,7 +1438,7 @@ function Step8({ onUnlock, unlockedBadges, xp, onRestart }) {
             background: `${C.blue}12`, border: `1px solid ${C.blue}40`,
             color: C.blue2, fontSize: 13,
           }}>
-            Text copied — paste it in LinkedIn with <strong>Ctrl+V</strong> (or <strong>⌘V</strong> on Mac)
+            Text copied. Paste it in LinkedIn with <strong>Ctrl+V</strong> (or <strong>⌘V</strong> on Mac)
           </div>
         )}
       </div>

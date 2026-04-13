@@ -25,7 +25,7 @@ const LEVEL_OPTIONS = [
 // ─── Profile data — single source of truth ────────────────────────────────────
 const PROFILE = {
   name:    'Mohamed Noordeen Alaudeen',
-  title:   'Data Scientist — AWS Generative AI Innovation Center',
+  title:   'Data Scientist, AWS Generative AI Innovation Center',
   company: 'Amazon Web Services (AWS) · Dubai, UAE',
   photo:   'https://digitalconfex.com/wp-content/uploads/2024/07/Mohamed-Noordeen-Alaudeen.webp',
   motto:   'AI won\'t replace you, but a person using AI will.',
@@ -48,7 +48,7 @@ const PROFILE = {
     {
       company:   'Amazon Web Services (AWS)',
       logo:      '🟠',
-      title:     'Data Scientist — Generative AI Innovation Center',
+      title:     'Data Scientist, Generative AI Innovation Center',
       period:    '2024 – Present',
       location:  'Dubai, UAE',
       current:   true,
@@ -61,7 +61,7 @@ const PROFILE = {
     {
       company:   'Dyninno Group',
       logo:      '✈️',
-      title:     'Senior AI Scientist — Generative AI',
+      title:     'Senior AI Scientist, Generative AI',
       period:    '2023 – 2024',
       location:  'Dubai, UAE',
       current:   false,
@@ -114,7 +114,7 @@ const PROFILE = {
       current:   false,
       highlights: [
         'Delivered enterprise software solutions across banking and insurance domains',
-        'Foundation in large-scale systems engineering, Java, and SQL — precursor to AI/ML career',
+        'Foundation in large-scale systems engineering, Java, and SQL. This is where my path into AI/ML started.',
       ],
     },
   ],
@@ -124,7 +124,7 @@ const PROFILE = {
     {
       org:    'GenAI-2026 Cohort (Self-run)',
       role:   'GenAI Trainer & Curriculum Architect',
-      detail: 'Designed and delivering a 21-module GenAI curriculum — NLP foundations through production AI systems',
+      detail: 'Designed and delivering a 21-module GenAI curriculum covering NLP foundations through production AI systems',
     },
     {
       org:    'KnowledgeHut upGrad',
@@ -139,7 +139,7 @@ const PROFILE = {
     {
       org:    'Packt Publishing',
       role:   'Author & Technical Editor',
-      detail: 'Co-authored Data Science with Python (2019) — 426 pages, published internationally',
+      detail: 'Co-authored Data Science with Python (2019), 426 pages, published internationally',
     },
   ],
 

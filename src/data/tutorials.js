@@ -1,8 +1,8 @@
 export const tutorials = [
   {
     id: 'cosine-similarity-movie-recommender',
-    title: 'Cosine Similarity & Movie Recommender — 5 Embedding Methods',
-    description: 'Why does Netflix use cosine similarity instead of Euclidean distance? Build a movie recommender that runs all 5 text embedding methods (BoW → TF-IDF → Word2Vec → GloVe → FastText) in your browser and see why the angle between vectors beats straight-line distance for measuring meaning.',
+    title: 'Cosine Similarity and Movie Recommender: 5 Embedding Methods',
+    description: 'Why does Netflix use cosine similarity instead of Euclidean distance? Build a movie recommender that runs all 5 text embedding methods (BoW, TF-IDF, Word2Vec, GloVe, FastText) in your browser and see why the angle between vectors beats straight-line distance for measuring meaning.',
     level: 'beginner',
     tags: ['nlp', 'embeddings', 'cosine-similarity', 'interactive', 'recommender'],
     estimatedTime: '45 minutes',
@@ -10,8 +10,8 @@ export const tutorials = [
   },
   {
     id: 'how-search-engines-work',
-    title: 'How Search Engines Work — Build One from Scratch',
-    description: 'Google runs this same 7-step pipeline 8.5 billion times a day. In this interactive tutorial you build each step yourself — live, with real data — and discover the one thing TF-IDF can never do.',
+    title: 'How Search Engines Work: Build One from Scratch',
+    description: 'Google runs this same 7-step pipeline 8.5 billion times a day. In this interactive tutorial you build each step yourself, live with real data, and discover the one thing TF-IDF can never do.',
     level: 'beginner',
     tags: ['search', 'tfidf', 'nlp', 'interactive'],
     estimatedTime: '45 minutes',
