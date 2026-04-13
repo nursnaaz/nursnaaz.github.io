@@ -8,6 +8,7 @@ import Alert from '@cloudscape-design/components/alert'
 import Box from '@cloudscape-design/components/box'
 import Badge from '@cloudscape-design/components/badge'
 import Breadcrumbs from '@cloudscape-design/components/breadcrumb-group'
+import { CosineSimilarityMovieRecommender } from '../components/tutorials/CosineSimilarityMovieRecommender'
 import { HowSearchEnginesWork } from '../components/tutorials/HowSearchEnginesWork'
 import { SelfAttentionTutorialComplete } from '../components/tutorials/SelfAttentionTutorialComplete'
 import { MultiHeadAttentionComplete } from '../components/tutorials/MultiHeadAttentionComplete'
@@ -18,6 +19,7 @@ import { SecuredAgentsComplete } from '../components/tutorials/SecuredAgentsComp
 
 // Tutorial component mapping
 const tutorialComponents = {
+  'cosine-similarity-movie-recommender': CosineSimilarityMovieRecommender,
   'how-search-engines-work': HowSearchEnginesWork,
   'self-attention': SelfAttentionTutorialComplete,
   'multi-head-attention': MultiHeadAttentionComplete,
