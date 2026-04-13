@@ -148,9 +148,9 @@ const C = {
   bg2:     '#1C2331',  // elevated card
   border1: '#21303F',  // default border
   border2: '#2D4460',  // highlighted border
-  text1:   '#E6EDF3',  // primary text
-  text2:   '#C0CDD6',  // secondary text — lightened for readability on dark bg
-  text3:   '#8AABBC',  // muted text — lightened for readability
+  text1:   '#F0F6FA',  // primary text — near white
+  text2:   '#D8E8F0',  // body text — bright, high contrast on dark bg
+  text3:   '#B0CCDA',  // muted text — clearly readable even in sunlight
   orange:  '#FF9900',  // Amazon orange — badges, XP, section titles
   orange2: '#FFB347',  // lighter orange
   blue:    '#4285F4',  // Google Blue — primary interactive
@@ -163,7 +163,7 @@ const C = {
   purple:  '#8B5CF6',  // purple — index, pipeline
   codeKw:  '#5BB8FF',  // code keywords (def, import)
   codeStr: '#4ECC6F',  // code strings
-  codeCmt: '#7A97AB',  // code comments — lightened for readability
+  codeCmt: '#94B8C8',  // code comments — clearly readable in dark code blocks
 }
 
 const card = (bg = C.bg1, border = C.border1) => ({

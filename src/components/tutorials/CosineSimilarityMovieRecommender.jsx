@@ -115,9 +115,9 @@ const C = {
   bg2:     '#1C2331',
   border1: '#21303F',
   border2: '#2D4460',
-  text1:   '#E6EDF3',
-  text2:   '#C0CDD6',  // lightened — readable on dark cards
-  text3:   '#8AABBC',  // lightened — visible hints and labels
+  text1:   '#F0F6FA',  // primary text — near white
+  text2:   '#D8E8F0',  // body text — bright, high contrast on dark bg
+  text3:   '#B0CCDA',  // muted text — clearly readable even in sunlight
   orange:  '#FF9900',
   orange2: '#FFB347',
   blue:    '#4285F4',
@@ -130,7 +130,7 @@ const C = {
   purple:  '#8B5CF6',
   codeKw:  '#5BB8FF',
   codeStr: '#4ECC6F',
-  codeCmt: '#7A97AB',  // lightened for readability
+  codeCmt: '#94B8C8',  // code comments — clearly readable in dark code blocks
 }
 
 const card = (bg = C.bg1, border = C.border1) => ({
