@@ -424,15 +424,54 @@ function Step1({ onUnlock, onNext }) {
           Think of shaking a document until all the words fall out into a bag. You lose the order,
           but you can count how many of each word you have. That count is your vector.
         </p>
-        <div style={{ ...codeBox, fontSize: 12 }}>
-          <span style={{ color: C.codeCmt }}># Step 1: build vocabulary from ALL documents</span>{'\n'}
-          <span style={{ color: C.codeKw }}>vocab</span>{' = ["action", "batman", "crime", "hero", "joker", ...] '}
-          <span style={{ color: C.codeCmt }}># N unique words</span>{'\n\n'}
-          <span style={{ color: C.codeCmt }}># Step 2: for each document, count each vocab word</span>{'\n'}
-          <span style={{ color: C.codeKw }}>dark_knight</span>{' = [0, 1, 1, 0, 1, ...]  '}
-          <span style={{ color: C.codeCmt }}># one number per vocab word</span>{'\n'}
-          <span style={{ color: C.codeKw }}>toy_story</span>{'   = [0, 0, 0, 0, 0, ...]  '}
-          <span style={{ color: C.codeCmt }}># different position in space</span>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {[
+            {
+              step: 1,
+              label: 'Build vocabulary from ALL documents',
+              lines: [
+                { code: 'vocab = ["action", "batman", "crime", "hero", "joker", ...]', note: 'N unique words across every document' },
+              ],
+            },
+            {
+              step: 2,
+              label: 'For each document, count each vocab word',
+              lines: [
+                { code: 'dark_knight = [0, 1, 1, 0, 1, ...]', note: 'one number per vocab word' },
+                { code: 'toy_story   = [0, 0, 0, 0, 0, ...]', note: 'different position in space' },
+              ],
+            },
+            {
+              step: 3,
+              label: 'Each document is now a vector, a point in N-dimensional space',
+              lines: [
+                { code: 'len(dark_knight) == len(toy_story) == len(vocab)', note: 'every movie lives in the same space' },
+              ],
+            },
+          ].map(({ step, label, lines }) => (
+            <div key={step} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+              <div style={{
+                minWidth: 24, height: 24, borderRadius: '50%',
+                background: C.orange, color: '#000',
+                fontWeight: 'bold', fontSize: 12,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                marginTop: 2, flexShrink: 0,
+              }}>{step}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ color: C.text1, fontSize: 13, fontWeight: 600, marginBottom: 6 }}>{label}</div>
+                {lines.map(({ code, note }) => (
+                  <div key={code} style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 4, flexWrap: 'wrap' }}>
+                    <code style={{
+                      background: C.bg0, color: C.codeKw,
+                      padding: '2px 8px', borderRadius: 4,
+                      fontSize: 12, fontFamily: 'monospace', whiteSpace: 'nowrap',
+                    }}>{code}</code>
+                    <span style={{ color: C.text3, fontSize: 12 }}>{note}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
