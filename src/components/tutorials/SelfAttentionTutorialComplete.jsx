@@ -795,7 +795,7 @@ function Step6({ onNext, onPrevious }) {
               { word: 'bought', i: '1.827', bought: '2.617', apple: '2.112', to: '2.010', eat: '2.796 ⭐' },
               { word: '🍎 apple', i: '1.506', bought: '1.952', apple: '1.786', to: '1.455', eat: '2.124 ⭐' },
               { word: 'to', i: '1.476', bought: '2.155', apple: '1.698', to: '1.678', eat: '2.312 ⭐' },
-              { word: 'eat', i: '2.058', bought: '2.919', apple: '2.377', to: '2.248', eat: '3.141 ⭐' }
+              { word: 'eat', i: '2.059', bought: '2.919', apple: '2.377', to: '2.248', eat: '3.141 ⭐' }
             ]}
             variant="embedded"
           />
@@ -1001,16 +1001,16 @@ function Step8({ onNext, onPrevious }) {
                 { id: 'vvec', header: 'V Vector (from Step 5)', cell: item => item.vvec },
               ]}
               items={[
-                { word: 'I',         weight: '0.149', pct: '14.9%', vvec: '[1.290, 0.710, 0.770, 0.830]' },
-                { word: 'bought',    weight: '0.233', pct: '23.3%', vvec: '[1.600, 1.100, 0.950, 1.530]' },
-                { word: '🍎 apple',  weight: '0.198', pct: '19.8%', vvec: '[1.040, 1.160, 0.880, 0.780]' },
-                { word: 'to',        weight: '0.142', pct: '14.2%', vvec: '[1.150, 0.850, 0.810, 1.270]' },
-                { word: 'eat ⭐',    weight: '0.277', pct: '27.7%', vvec: '[1.830, 1.070, 1.190, 1.620]' },
+                { word: 'I',         weight: '0.1494', pct: '14.9%', vvec: '[1.290, 0.710, 0.770, 0.830]' },
+                { word: 'bought',    weight: '0.2335', pct: '23.3%', vvec: '[1.600, 1.100, 0.950, 1.530]' },
+                { word: '🍎 apple',  weight: '0.1977', pct: '19.8%', vvec: '[1.040, 1.160, 0.880, 0.780]' },
+                { word: 'to',        weight: '0.1420', pct: '14.2%', vvec: '[1.150, 0.850, 0.810, 1.270]' },
+                { word: 'eat ⭐',    weight: '0.2773', pct: '27.7%', vvec: '[1.830, 1.070, 1.190, 1.620]' },
               ]}
               variant="embedded"
             />
             <StudentNote>
-              Notice: the attention weights sum to exactly 1.0 (0.149 + 0.233 + 0.198 + 0.142 + 0.277 = 1.000).
+              The softmax formula guarantees these weights sum to exactly 1.0. The 4-decimal values shown (0.1494 + 0.2335 + 0.1977 + 0.1420 + 0.2773 = 0.9999) appear to fall just short of 1.000 due to display rounding — the underlying computation is exact.
               They act like percentages — apple is distributing 100% of its "attention budget" across all five words.
             </StudentNote>
           </SpaceBetween>
@@ -1022,10 +1022,37 @@ function Step8({ onNext, onPrevious }) {
             <div style={{ background: '#f8f9fa', padding: '20px', borderRadius: '8px', fontFamily: 'monospace', textAlign: 'center', fontSize: '15px', lineHeight: '2' }}>
               Apple_output = (w_I × V_I) + (w_bought × V_bought) + (w_apple × V_apple) + (w_to × V_to) + (w_eat × V_eat)
             </div>
+
+            <div style={{ background: '#fff8e1', padding: '16px', borderRadius: '8px', border: '2px solid #f9a825' }}>
+              <strong>First: what does "weight × V vector" actually mean?</strong><br/><br/>
+              A weight is a <em>single number</em>. A V vector has <em>4 components</em>. Multiplying them scales every component by that same number — nothing more:<br/><br/>
+              <div style={{ fontFamily: 'monospace', fontSize: '13px', lineHeight: '2.2', marginLeft: '16px' }}>
+                0.2773 × [1.830, 1.070, 1.190, 1.620]<br/>
+                = [0.2773×1.830, &nbsp;0.2773×1.070, &nbsp;0.2773×1.190, &nbsp;0.2773×1.620]<br/>
+                = [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.507, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.297, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.330, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.449]
+              </div><br/>
+              This result is eat's <strong>contribution vector</strong> — exactly 27.73% of eat's full meaning, ready to be added into apple's new representation.
+            </div>
+
+            <StudentNote title="The formula expanded — 4 independent weighted averages">
+              Each of apple's 4 output components is a <em>separate</em> weighted average of that same component across all 5 V vectors. Here are all 4, fully expanded with real numbers:<br/><br/>
+              <div style={{ fontFamily: 'monospace', fontSize: '12px', lineHeight: '2.2' }}>
+                Output[1] = (0.1494×1.290) + (0.2335×1.600) + (0.1977×1.040) + (0.1420×1.150) + (0.2773×1.830)<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= &nbsp;&nbsp;0.193 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ &nbsp;&nbsp;0.374 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ &nbsp;&nbsp;0.206 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ &nbsp;&nbsp;0.163 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ &nbsp;&nbsp;0.507 = <strong>1.443</strong><br/><br/>
+                Output[2] = (0.1494×0.710) + (0.2335×1.100) + (0.1977×1.160) + (0.1420×0.850) + (0.2773×1.070)<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= &nbsp;&nbsp;0.106 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ &nbsp;&nbsp;0.257 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ &nbsp;&nbsp;0.229 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ &nbsp;&nbsp;0.121 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ &nbsp;&nbsp;0.297 = <strong>1.010</strong><br/><br/>
+                Output[3] = (0.1494×0.770) + (0.2335×0.950) + (0.1977×0.880) + (0.1420×0.810) + (0.2773×1.190)<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= &nbsp;&nbsp;0.115 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ &nbsp;&nbsp;0.222 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ &nbsp;&nbsp;0.174 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ &nbsp;&nbsp;0.115 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ &nbsp;&nbsp;0.330 = <strong>0.956</strong><br/><br/>
+                Output[4] = (0.1494×0.830) + (0.2335×1.530) + (0.1977×0.780) + (0.1420×1.270) + (0.2773×1.620)<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= &nbsp;&nbsp;0.124 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ &nbsp;&nbsp;0.357 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ &nbsp;&nbsp;0.154 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ &nbsp;&nbsp;0.180 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ &nbsp;&nbsp;0.449 = <strong>1.265</strong>
+              </div><br/>
+              The weights (0.1494, 0.2335, …) are the same across all 4 rows — they come from the softmax and never change. Only the V-vector column changes per row. Step 3 below shows the same numbers reorganised by word instead of by component. Both views arrive at [1.443, 1.010, 0.956, 1.265].
+            </StudentNote>
+
             <StudentNote>
               <strong>Why multiply weight × V vector?</strong><br/>
               Multiplying scales the V vector up or down based on how relevant that word is.
-              A word with weight 0.277 contributes almost twice as much as a word with weight 0.142.
+              A word with weight 0.2773 contributes almost twice as much as a word with weight 0.1420.
               It's like mixing paint — more of the "eat" colour goes into the final blend.
             </StudentNote>
           </SpaceBetween>
@@ -1042,33 +1069,33 @@ function Step8({ onNext, onPrevious }) {
             {/* I */}
             <div style={{ background: '#f0f4ff', padding: '15px', borderRadius: '8px', border: '1px solid #c5cae9', fontFamily: 'monospace', fontSize: '13px', lineHeight: '2' }}>
               <strong>Word "I" — contributes 14.9% of its information:</strong><br/>
-              weight = 0.149 &nbsp;|&nbsp; V_I = [1.290, 0.710, 0.770, 0.830]<br/>
-              0.149 × 1.290 = <strong>0.193</strong> &nbsp; (component 1)<br/>
-              0.149 × 0.710 = <strong>0.106</strong> &nbsp; (component 2)<br/>
-              0.149 × 0.770 = <strong>0.115</strong> &nbsp; (component 3)<br/>
-              0.149 × 0.830 = <strong>0.124</strong> &nbsp; (component 4)<br/>
+              weight = 0.1494 &nbsp;|&nbsp; V_I = [1.290, 0.710, 0.770, 0.830]<br/>
+              0.1494 × 1.290 = <strong>0.193</strong> &nbsp; (component 1)<br/>
+              0.1494 × 0.710 = <strong>0.106</strong> &nbsp; (component 2)<br/>
+              0.1494 × 0.770 = <strong>0.115</strong> &nbsp; (component 3)<br/>
+              0.1494 × 0.830 = <strong>0.124</strong> &nbsp; (component 4)<br/>
               → Contribution from "I": <strong>[0.193, 0.106, 0.115, 0.124]</strong>
             </div>
 
             {/* bought */}
             <div style={{ background: '#f0f4ff', padding: '15px', borderRadius: '8px', border: '1px solid #c5cae9', fontFamily: 'monospace', fontSize: '13px', lineHeight: '2' }}>
               <strong>Word "bought" — contributes 23.3% of its information:</strong><br/>
-              weight = 0.233 &nbsp;|&nbsp; V_bought = [1.600, 1.100, 0.950, 1.530]<br/>
-              0.233 × 1.600 = <strong>0.374</strong> &nbsp; (component 1)<br/>
-              0.233 × 1.100 = <strong>0.257</strong> &nbsp; (component 2)<br/>
-              0.233 × 0.950 = <strong>0.222</strong> &nbsp; (component 3)<br/>
-              0.233 × 1.530 = <strong>0.357</strong> &nbsp; (component 4)<br/>
+              weight = 0.2335 &nbsp;|&nbsp; V_bought = [1.600, 1.100, 0.950, 1.530]<br/>
+              0.2335 × 1.600 = <strong>0.374</strong> &nbsp; (component 1)<br/>
+              0.2335 × 1.100 = <strong>0.257</strong> &nbsp; (component 2)<br/>
+              0.2335 × 0.950 = <strong>0.222</strong> &nbsp; (component 3)<br/>
+              0.2335 × 1.530 = <strong>0.357</strong> &nbsp; (component 4)<br/>
               → Contribution from "bought": <strong>[0.374, 0.257, 0.222, 0.357]</strong>
             </div>
 
             {/* apple self */}
             <div style={{ background: '#ffebee', padding: '15px', borderRadius: '8px', border: '2px solid #e74c3c', fontFamily: 'monospace', fontSize: '13px', lineHeight: '2' }}>
               <strong>🍎 Word "apple" — contributes 19.8% of its OWN original information (self-attention):</strong><br/>
-              weight = 0.198 &nbsp;|&nbsp; V_apple = [1.040, 1.160, 0.880, 0.780]<br/>
-              0.198 × 1.040 = <strong>0.206</strong> &nbsp; (component 1)<br/>
-              0.198 × 1.160 = <strong>0.229</strong> &nbsp; (component 2)<br/>
-              0.198 × 0.880 = <strong>0.174</strong> &nbsp; (component 3)<br/>
-              0.198 × 0.780 = <strong>0.154</strong> &nbsp; (component 4)<br/>
+              weight = 0.1977 &nbsp;|&nbsp; V_apple = [1.040, 1.160, 0.880, 0.780]<br/>
+              0.1977 × 1.040 = <strong>0.206</strong> &nbsp; (component 1)<br/>
+              0.1977 × 1.160 = <strong>0.229</strong> &nbsp; (component 2)<br/>
+              0.1977 × 0.880 = <strong>0.174</strong> &nbsp; (component 3)<br/>
+              0.1977 × 0.780 = <strong>0.154</strong> &nbsp; (component 4)<br/>
               → Contribution from "apple": <strong>[0.206, 0.229, 0.174, 0.154]</strong><br/>
               <em style={{color: '#c0392b'}}>← This is apple reading its own V vector — it keeps some of its original identity.</em>
             </div>
@@ -1076,22 +1103,22 @@ function Step8({ onNext, onPrevious }) {
             {/* to */}
             <div style={{ background: '#f0f4ff', padding: '15px', borderRadius: '8px', border: '1px solid #c5cae9', fontFamily: 'monospace', fontSize: '13px', lineHeight: '2' }}>
               <strong>Word "to" — contributes 14.2% of its information:</strong><br/>
-              weight = 0.142 &nbsp;|&nbsp; V_to = [1.150, 0.850, 0.810, 1.270]<br/>
-              0.142 × 1.150 = <strong>0.163</strong> &nbsp; (component 1)<br/>
-              0.142 × 0.850 = <strong>0.121</strong> &nbsp; (component 2)<br/>
-              0.142 × 0.810 = <strong>0.115</strong> &nbsp; (component 3)<br/>
-              0.142 × 1.270 = <strong>0.180</strong> &nbsp; (component 4)<br/>
+              weight = 0.1420 &nbsp;|&nbsp; V_to = [1.150, 0.850, 0.810, 1.270]<br/>
+              0.1420 × 1.150 = <strong>0.163</strong> &nbsp; (component 1)<br/>
+              0.1420 × 0.850 = <strong>0.121</strong> &nbsp; (component 2)<br/>
+              0.1420 × 0.810 = <strong>0.115</strong> &nbsp; (component 3)<br/>
+              0.1420 × 1.270 = <strong>0.180</strong> &nbsp; (component 4)<br/>
               → Contribution from "to": <strong>[0.163, 0.121, 0.115, 0.180]</strong>
             </div>
 
             {/* eat */}
             <div style={{ background: '#e8f5e8', padding: '15px', borderRadius: '8px', border: '2px solid #27ae60', fontFamily: 'monospace', fontSize: '13px', lineHeight: '2' }}>
               <strong>Word "eat" ⭐ — contributes the MOST: 27.7% of its information:</strong><br/>
-              weight = 0.277 &nbsp;|&nbsp; V_eat = [1.830, 1.070, 1.190, 1.620]<br/>
-              0.277 × 1.830 = <strong>0.507</strong> &nbsp; (component 1)<br/>
-              0.277 × 1.070 = <strong>0.297</strong> &nbsp; (component 2)<br/>
-              0.277 × 1.190 = <strong>0.330</strong> &nbsp; (component 3)<br/>
-              0.277 × 1.620 = <strong>0.449</strong> &nbsp; (component 4)<br/>
+              weight = 0.2773 &nbsp;|&nbsp; V_eat = [1.830, 1.070, 1.190, 1.620]<br/>
+              0.2773 × 1.830 = <strong>0.507</strong> &nbsp; (component 1)<br/>
+              0.2773 × 1.070 = <strong>0.297</strong> &nbsp; (component 2)<br/>
+              0.2773 × 1.190 = <strong>0.330</strong> &nbsp; (component 3)<br/>
+              0.2773 × 1.620 = <strong>0.449</strong> &nbsp; (component 4)<br/>
               → Contribution from "eat": <strong>[0.507, 0.297, 0.330, 0.449]</strong><br/>
               <em style={{color: '#27ae60'}}>← Largest contribution in all 4 components — "eat" dominates apple's new meaning.</em>
             </div>
@@ -1101,12 +1128,12 @@ function Step8({ onNext, onPrevious }) {
         {/* ── 5. Interactive exercise ── */}
         <TryYourself>
           <Box variant="h4">🎯 Try It Yourself — Verify "eat" component 1</Box>
-          <Box variant="p">We said: 0.277 × 1.830 = ?</Box>
+          <Box variant="p">We said: 0.2773 × 1.830 = ?</Box>
           <Box variant="p">This is the single biggest contributor to apple's new component 1.</Box>
           <InteractiveInput
             label="Your answer:"
             correctAnswer={0.507}
-            hint="0.277 × 1.830 = 0.50691, rounds to 0.507"
+            hint="0.2773 × 1.830 = 0.50746, rounds to 0.507"
             tolerance={0.005}
           />
         </TryYourself>
