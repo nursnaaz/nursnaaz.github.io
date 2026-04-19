@@ -961,8 +961,56 @@ function Step7({ onNext, onPrevious }) {
 }
 
 
+// ─────────────────────────────────────────────────────────────────────────────
+const SA_LINKEDIN_POST = `I finally understood self-attention by doing the math myself.
+
+Not reading about it. Actually computing Q, K, V for "I bought apple to eat" — number by number.
+
+Here's what changed my thinking:
+
+"Apple" attends to "eat" the most — 27.7% of its attention budget.
+
+That number is not random. It comes from:
+① each word's embedding multiplied by three weight matrices (W_Q, W_K, W_V)
+② 25 dot products computed across all word pairs
+③ dividing by √4 so softmax doesn't collapse to one word
+④ softmax turning scores into probabilities that sum to 1.0
+⑤ a weighted sum that literally blends "eat" and "bought" into apple's new vector
+
+The output? Apple went from [0.6, 0.4, 1.0, 0.2] to [1.44, 1.01, 0.96, 1.27].
+
+The same word in "I bought Apple stock to sell" would produce completely different attention weights — and a completely different output vector. Same spelling, different math, different meaning.
+
+That's self-attention.
+
+→ https://nursnaaz.github.io/tutorial/self-attention
+
+35 minutes. Every number worked out step by step. No hand-waving.
+
+When did self-attention finally click for you?
+
+#NLP #Transformers #DeepLearning #MachineLearning #AI #AttentionMechanism`
+
 // Step 8: Final Contextual Vector
 function Step8({ onNext, onPrevious }) {
+  const [copied, setCopied] = useState(false)
+  const [linkedInReady, setLinkedInReady] = useState(false)
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(SA_LINKEDIN_POST).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 3000)
+    })
+  }
+
+  const handleLinkedIn = () => {
+    navigator.clipboard.writeText(SA_LINKEDIN_POST).then(() => {
+      setLinkedInReady(true)
+      setTimeout(() => setLinkedInReady(false), 6000)
+      window.open('https://www.linkedin.com/feed/', '_blank', 'noopener,noreferrer')
+    })
+  }
+
   return (
     <StepContainer
       stepNumber={9}
@@ -1274,6 +1322,66 @@ function Step8({ onNext, onPrevious }) {
           </ol>
           This entire pipeline runs <strong>in parallel for all 5 words simultaneously</strong> — every word gets its own new contextual vector in a single pass.
         </StudentNote>
+
+        {/* ── LinkedIn sharing ── */}
+        <div style={{ background: '#f0f8ff', padding: '24px', borderRadius: '12px', border: '2px solid #0077b5' }}>
+          <Box variant="h3">📢 Show Your Network What You Now Understand</Box>
+          <Box variant="p" color="text-body-secondary">
+            You worked through every calculation. Share what that feels like — others are stuck where you were an hour ago.
+          </Box>
+          <div style={{
+            background: 'white',
+            border: '1px solid #ddd',
+            borderRadius: '8px',
+            padding: '16px',
+            marginTop: '12px',
+            fontFamily: 'sans-serif',
+            fontSize: '14px',
+            lineHeight: '1.6',
+            whiteSpace: 'pre-wrap',
+            maxHeight: '220px',
+            overflowY: 'auto',
+            color: '#333'
+          }}>
+            {SA_LINKEDIN_POST}
+          </div>
+          <div style={{ display: 'flex', gap: '12px', marginTop: '16px', flexWrap: 'wrap' }}>
+            <button
+              onClick={handleCopy}
+              style={{
+                padding: '10px 20px',
+                background: copied ? '#27ae60' : '#f0f0f0',
+                color: copied ? 'white' : '#333',
+                border: '1px solid #ccc',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                transition: 'all 0.2s'
+              }}
+            >
+              {copied ? '✓ Copied' : 'Copy post text'}
+            </button>
+            <button
+              onClick={handleLinkedIn}
+              style={{
+                padding: '10px 20px',
+                background: '#0077b5',
+                color: 'white',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontWeight: 'bold'
+              }}
+            >
+              Copy & Open LinkedIn →
+            </button>
+          </div>
+          {linkedInReady && (
+            <div style={{ marginTop: '12px', color: '#0077b5', fontWeight: 'bold', fontSize: '14px' }}>
+              ✓ Text copied. Paste it in LinkedIn with Ctrl+V (or Cmd+V on Mac).
+            </div>
+          )}
+        </div>
 
         <div style={{ background: '#e8f5e8', padding: '20px', borderRadius: '8px', border: '2px solid #27ae60' }}>
           <Box variant="h3">🎉 You completed the full self-attention walkthrough!</Box>

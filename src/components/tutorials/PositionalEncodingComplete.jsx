@@ -889,9 +889,57 @@ function Step7({ onNext, onPrevious }) {
 
 
 // ─────────────────────────────────────────────────────────────────────────────
+const PE_LINKEDIN_POST = `Self-attention has a blind spot. It literally cannot tell if two words are next to each other or ten positions apart.
+
+I learned this by watching it fail.
+
+Take "apple" at position 0 and "apple" at position 2 in the same sentence. Without positional encoding, self-attention gets identical Q, K, V vectors for both. No way to distinguish them. The math is the same. The output is the same.
+
+Positional encoding fixes this with a formula, not a lookup table:
+
+→ Even-numbered dimensions: sin(position / 10000^(2i/d))
+→ Odd-numbered dimensions: cos(position / 10000^(2i/d))
+
+For "apple" at position 2 (d_model=4):
+  dim 0: sin(2/1.0) = +0.909
+  dim 1: cos(2/1.0) = −0.416
+  dim 2: sin(2/100) = +0.020
+  dim 3: cos(2/100) = +1.000
+
+Add those four numbers to apple's word embedding. Now position 0 and position 2 are different inputs — even with identical words.
+
+The math took me 35 minutes to follow step by step. The concept took me a week to actually get.
+
+→ https://nursnaaz.github.io/tutorial/positional-encoding
+
+Every calculation is there. No "trust me, it works."
+
+What took you longest to understand about transformers?
+
+#NLP #Transformers #PositionalEncoding #DeepLearning #MachineLearning #AI`
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Step 8 — Where PE Fits + Final Summary
 // ─────────────────────────────────────────────────────────────────────────────
 function Step8({ onNext, onPrevious }) {
+  const [copied, setCopied] = useState(false)
+  const [linkedInReady, setLinkedInReady] = useState(false)
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(PE_LINKEDIN_POST).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 3000)
+    })
+  }
+
+  const handleLinkedIn = () => {
+    navigator.clipboard.writeText(PE_LINKEDIN_POST).then(() => {
+      setLinkedInReady(true)
+      setTimeout(() => setLinkedInReady(false), 6000)
+      window.open('https://www.linkedin.com/feed/', '_blank', 'noopener,noreferrer')
+    })
+  }
+
   return (
     <StepContainer
       stepNumber={9}
@@ -981,6 +1029,66 @@ function Step8({ onNext, onPrevious }) {
             <li><strong>PE happens once:</strong> added to embeddings at the start, before any attention layer.</li>
           </ol>
         </StudentNote>
+
+        {/* ── LinkedIn sharing ── */}
+        <div style={{ background: '#f0f8ff', padding: '24px', borderRadius: '12px', border: '2px solid #0077b5' }}>
+          <Box variant="h3">📢 Show Your Network What You Now Understand</Box>
+          <Box variant="p" color="text-body-secondary">
+            You computed the exact numbers that fix self-attention's blind spot. That's worth sharing — most people just wave their hands at "positional encoding."
+          </Box>
+          <div style={{
+            background: 'white',
+            border: '1px solid #ddd',
+            borderRadius: '8px',
+            padding: '16px',
+            marginTop: '12px',
+            fontFamily: 'sans-serif',
+            fontSize: '14px',
+            lineHeight: '1.6',
+            whiteSpace: 'pre-wrap',
+            maxHeight: '220px',
+            overflowY: 'auto',
+            color: '#333'
+          }}>
+            {PE_LINKEDIN_POST}
+          </div>
+          <div style={{ display: 'flex', gap: '12px', marginTop: '16px', flexWrap: 'wrap' }}>
+            <button
+              onClick={handleCopy}
+              style={{
+                padding: '10px 20px',
+                background: copied ? '#27ae60' : '#f0f0f0',
+                color: copied ? 'white' : '#333',
+                border: '1px solid #ccc',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                transition: 'all 0.2s'
+              }}
+            >
+              {copied ? '✓ Copied' : 'Copy post text'}
+            </button>
+            <button
+              onClick={handleLinkedIn}
+              style={{
+                padding: '10px 20px',
+                background: '#0077b5',
+                color: 'white',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontWeight: 'bold'
+              }}
+            >
+              Copy & Open LinkedIn →
+            </button>
+          </div>
+          {linkedInReady && (
+            <div style={{ marginTop: '12px', color: '#0077b5', fontWeight: 'bold', fontSize: '14px' }}>
+              ✓ Text copied. Paste it in LinkedIn with Ctrl+V (or Cmd+V on Mac).
+            </div>
+          )}
+        </div>
 
         <div style={{ background: '#e8f5e8', padding: '20px', borderRadius: '8px', border: '2px solid #27ae60' }}>
           <Box variant="h3">🎉 What's Next — Multi-Head Attention</Box>

@@ -1682,8 +1682,51 @@ function Step12({ onNext, onPrevious }) {
 }
 
 
+// ─────────────────────────────────────────────────────────────────────────────
+const MHA_LINKEDIN_POST = `I just ran three attention heads in parallel on the same sentence. By hand.
+
+"I bought apple to eat" — five words, three different perspectives, all computed step by step.
+
+Head 1 (semantic): apple attends most to "eat" and "bought" → it's a food object.
+Head 2 (syntactic): apple is the direct object of "bought" → grammar-aware.
+Head 3 (purpose): apple was bought to be eaten → the "why" is captured.
+
+Then all three get glued into 12 numbers. One matrix multiplication (W_O) collapses them back to 4 numbers.
+
+Result: Apple went from [0.6, 0.4, 1.0, 0.2] (isolated word) to [0.618, 0.594, 0.597, 0.578] (context-aware).
+
+The numbers are more balanced now — because three angles of context got blended in.
+
+This is what every GPT, BERT, and Gemini does for every token. Not once — 8 to 96 heads in parallel.
+
+→ https://nursnaaz.github.io/tutorial/multi-head-attention
+
+60 minutes of actual math. No skipping steps.
+
+What's one thing that finally clicked for you when learning transformers?
+
+#NLP #Transformers #MultiHeadAttention #DeepLearning #MachineLearning #AI`
+
 // Step 18: Output Projection — The Z Calculation
 function Step13({ onNext, onPrevious }) {
+  const [copied, setCopied] = useState(false)
+  const [linkedInReady, setLinkedInReady] = useState(false)
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(MHA_LINKEDIN_POST).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 3000)
+    })
+  }
+
+  const handleLinkedIn = () => {
+    navigator.clipboard.writeText(MHA_LINKEDIN_POST).then(() => {
+      setLinkedInReady(true)
+      setTimeout(() => setLinkedInReady(false), 6000)
+      window.open('https://www.linkedin.com/feed/', '_blank', 'noopener,noreferrer')
+    })
+  }
+
   return (
     <StepContainer
       stepNumber={19}
@@ -2012,6 +2055,66 @@ function Step13({ onNext, onPrevious }) {
           attention heads, through a W_O projection, all the way to its final context-rich embedding Z.
           This is exactly what every transformer (GPT, BERT, Gemini) does for every word in every sentence.
         </Alert>
+
+        {/* ── LinkedIn sharing ── */}
+        <div style={{ background: '#f0f8ff', padding: '24px', borderRadius: '12px', border: '2px solid #0077b5' }}>
+          <Box variant="h3">📢 Show Your Network What You Now Understand</Box>
+          <Box variant="p" color="text-body-secondary">
+            You just ran three attention heads by hand. Most people have heard of multi-head attention — almost no one has actually done the math. Share that.
+          </Box>
+          <div style={{
+            background: 'white',
+            border: '1px solid #ddd',
+            borderRadius: '8px',
+            padding: '16px',
+            marginTop: '12px',
+            fontFamily: 'sans-serif',
+            fontSize: '14px',
+            lineHeight: '1.6',
+            whiteSpace: 'pre-wrap',
+            maxHeight: '220px',
+            overflowY: 'auto',
+            color: '#333'
+          }}>
+            {MHA_LINKEDIN_POST}
+          </div>
+          <div style={{ display: 'flex', gap: '12px', marginTop: '16px', flexWrap: 'wrap' }}>
+            <button
+              onClick={handleCopy}
+              style={{
+                padding: '10px 20px',
+                background: copied ? '#27ae60' : '#f0f0f0',
+                color: copied ? 'white' : '#333',
+                border: '1px solid #ccc',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                transition: 'all 0.2s'
+              }}
+            >
+              {copied ? '✓ Copied' : 'Copy post text'}
+            </button>
+            <button
+              onClick={handleLinkedIn}
+              style={{
+                padding: '10px 20px',
+                background: '#0077b5',
+                color: 'white',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontWeight: 'bold'
+              }}
+            >
+              Copy & Open LinkedIn →
+            </button>
+          </div>
+          {linkedInReady && (
+            <div style={{ marginTop: '12px', color: '#0077b5', fontWeight: 'bold', fontSize: '14px' }}>
+              ✓ Text copied. Paste it in LinkedIn with Ctrl+V (or Cmd+V on Mac).
+            </div>
+          )}
+        </div>
 
       </SpaceBetween>
     </StepContainer>
