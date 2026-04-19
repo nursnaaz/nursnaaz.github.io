@@ -16,11 +16,13 @@ import { TransformerCodeComplete } from '../components/tutorials/TransformerCode
 import { BertClassificationComplete } from '../components/tutorials/BertClassificationComplete'
 import { ProductionChallengesComplete } from '../components/tutorials/ProductionChallengesComplete'
 import { SecuredAgentsComplete } from '../components/tutorials/SecuredAgentsComplete'
+import { PositionalEncodingComplete } from '../components/tutorials/PositionalEncodingComplete'
 
 // Tutorial component mapping
 const tutorialComponents = {
   'cosine-similarity-movie-recommender': CosineSimilarityMovieRecommender,
   'how-search-engines-work': HowSearchEnginesWork,
+  'positional-encoding': PositionalEncodingComplete,
   'self-attention': SelfAttentionTutorialComplete,
   'multi-head-attention': MultiHeadAttentionComplete,
   'transformer-code': TransformerCodeComplete,

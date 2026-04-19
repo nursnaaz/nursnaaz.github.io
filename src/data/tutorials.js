@@ -27,6 +27,15 @@ export const tutorials = [
     featured: true
   },
   {
+    id: 'positional-encoding',
+    title: 'Positional Encoding in Transformers',
+    description: 'Self-attention is blind to word order. Learn how sinusoidal positional encoding solves this — with full step-by-step calculations using "I bought apple to eat" and the exact PE formula from the original Transformer paper.',
+    level: 'beginner',
+    tags: ['attention', 'transformers', 'positional-encoding', 'basics'],
+    estimatedTime: '35 minutes',
+    featured: true
+  },
+  {
     id: 'multi-head-attention',
     title: 'Multi-Head Attention',
     description: 'Explore how 3 attention heads work in parallel - semantic, syntactic, and purpose-driven relationships all computed step-by-step',
