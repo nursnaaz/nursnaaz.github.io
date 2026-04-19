@@ -14,7 +14,7 @@ import { InteractiveInput } from '../interactive/InterativeInput'
 
 export function MultiHeadAttentionComplete({ onStepChange }) {
   const [currentStep, setCurrentStep] = useState(0)
-  const totalSteps = 18 // 18 sub-steps total
+  const totalSteps = 19 // 19 sub-steps total
 
 
   useEffect(() => {
@@ -49,7 +49,8 @@ export function MultiHeadAttentionComplete({ onStepChange }) {
     <Step9_6 key={14} onNext={nextStep} onPrevious={prevStep} />,
     <Step10 key={15} onNext={nextStep} onPrevious={prevStep} />,
     <Step11 key={16} onNext={nextStep} onPrevious={prevStep} />,
-    <Step12 key={17} onNext={nextStep} onPrevious={prevStep} />
+    <Step12 key={17} onNext={nextStep} onPrevious={prevStep} />,
+    <Step13 key={18} onNext={nextStep} onPrevious={prevStep} />
   ]
 
 
@@ -344,7 +345,7 @@ function Step3({ onNext, onPrevious }) {
           
           <InteractiveInput
             label="K₁[0]:"
-            correctAnswer={1.62}
+            correctAnswer={1.52}
             hint="0.6×0.7 = 0.42, 0.4×0.4 = 0.16, 1.0×0.9 = 0.9, 0.2×0.2 = 0.04. Sum: 0.42 + 0.16 + 0.9 + 0.04 = 1.52"
             tolerance={0.01}
           />
@@ -478,15 +479,15 @@ function Step5({ onNext, onPrevious }) {
             
             <strong>Apple → apple (self):</strong><br/>
             = 1.18×1.52 + 1.02×0.88 + 0.96×0.98 + 0.92×0.82<br/>
-            = 1.794 + 0.898 + 0.941 + 0.754 = <strong>4.387</strong><br/><br/>
-            
+            = 1.794 + 0.898 + 0.941 + 0.754 = <strong style={{fontSize: '16px', color: '#27ae60'}}>4.387 ⭐ HIGHEST!</strong><br/><br/>
+
             <strong>Apple → to:</strong><br/>
             = 1.18×0.68 + 1.02×0.72 + 0.96×0.55 + 0.92×0.70<br/>
             = 0.802 + 0.734 + 0.528 + 0.644 = <strong>2.708</strong><br/><br/>
-            
+
             <strong>Apple → eat:</strong><br/>
             = 1.18×1.18 + 1.02×1.00 + 0.96×0.75 + 0.92×0.92<br/>
-            = 1.392 + 1.020 + 0.720 + 0.846 = <strong style={{fontSize: '16px', color: '#27ae60'}}>3.978 ⭐ HIGHEST!</strong>
+            = 1.392 + 1.020 + 0.720 + 0.846 = <strong>3.978</strong>
           </div>
         </Container>
 
@@ -508,7 +509,7 @@ function Step5({ onNext, onPrevious }) {
             items={[
               { word: 'I', i: '3.245', bought: '3.567', apple: '3.769', to: '2.345', eat: '3.456 ⭐' },
               { word: 'bought', i: '3.678', bought: '4.234', apple: '4.110', to: '2.789', eat: '4.123 ⭐' },
-              { word: '🍎 apple', i: '3.769', bought: '4.110', apple: '4.387', to: '2.708', eat: '3.978 ⭐' },
+              { word: '🍎 apple', i: '3.769', bought: '4.110', apple: '4.387 ⭐', to: '2.708', eat: '3.978' },
               { word: 'to', i: '2.567', bought: '2.890', apple: '2.708', to: '2.234', eat: '2.789 ⭐' },
               { word: 'eat', i: '3.456', bought: '3.890', apple: '3.978', to: '2.567', eat: '3.789 ⭐' }
             ]}
@@ -518,9 +519,9 @@ function Step5({ onNext, onPrevious }) {
 
 
         <StudentNote title="Key Observations">
-          • Apple's highest attention score is with "eat" (3.978) - semantic connection to food!<br/>
-          • Apple also has high attention to itself (4.387) - self-awareness<br/>
-          • Apple attends to "bought" (4.110) - connecting purchase action to object<br/>
+          • Apple's highest attention score is with <strong>itself (4.387)</strong> - strong self-reference in semantic space!<br/>
+          • Apple also attends strongly to "bought" (4.110) - connecting purchase action to object<br/>
+          • "eat" scores 3.978 - semantic connection to food consumption<br/>
           • Lower attention to "to" (2.708) - less semantic relevance
         </StudentNote>
       </SpaceBetween>
@@ -1528,7 +1529,6 @@ function Step12({ onNext, onPrevious }) {
       title="Head 3 - Output Vector and Concatenation"
       onNext={onNext}
       onPrevious={onPrevious}
-      isLast={true}
     >
       <SpaceBetween size="m">
         <StudentNote>
@@ -1671,9 +1671,271 @@ function Step12({ onNext, onPrevious }) {
         </Container>
 
 
-        <Alert type="success" header="🎉 Congratulations!">
-          You've successfully completed the Multi-Head Attention tutorial! You now understand how transformers 
-          use parallel attention mechanisms to create rich, multi-dimensional representations of language.
+        <Alert type="info" header="➡️ One More Step!">
+          We have our 12D concatenated vector — but the transformer needs to project it back to the original 4D
+          space using the <strong>output projection matrix W_O</strong>. That's the final Z calculation: Apple's
+          transformed embedding!
+        </Alert>
+      </SpaceBetween>
+    </StepContainer>
+  )
+}
+
+
+// Step 18: Output Projection — The Z Calculation
+function Step13({ onNext, onPrevious }) {
+  return (
+    <StepContainer
+      stepNumber={19}
+      title="Output Projection: Apple's Transformed Embedding Z"
+      onNext={onNext}
+      onPrevious={onPrevious}
+      isLast={true}
+    >
+      <SpaceBetween size="m">
+        <StudentNote>
+          The final step! We multiply the <strong>12D concatenated vector</strong> by a learned
+          <strong> output projection matrix W_O</strong> (12×4). This mixes information from all three
+          heads and projects it back to the <strong>original 4D embedding space</strong>, giving us
+          Apple's context-aware transformed embedding Z.
+        </StudentNote>
+
+        <Container>
+          <Box variant="h4">The Final Formula:</Box>
+          <div style={{
+            background: '#f8f9fa',
+            padding: '15px',
+            borderRadius: '8px',
+            fontFamily: 'monospace',
+            textAlign: 'center',
+            fontSize: '16px',
+            lineHeight: '2'
+          }}>
+            <strong>Z = Concat(Head₁, Head₂, Head₃) × W_O</strong><br/>
+            [12D vector] × [12×4 matrix] = [4D transformed embedding]
+          </div>
+        </Container>
+
+        <Container header={<Header variant="h3">📥 Input: Our 12D Concatenated Vector</Header>}>
+          <div style={{
+            background: '#f3e5f5',
+            padding: '15px',
+            borderRadius: '8px',
+            fontFamily: 'monospace',
+            fontSize: '13px',
+            lineHeight: '2'
+          }}>
+            <strong style={{color: '#e74c3c'}}>Head 1 (Semantic):</strong>  [0.636, 0.719, 0.528, 0.575]<br/>
+            <strong style={{color: '#2980b9'}}>Head 2 (Syntactic):</strong> [0.652, 0.473, 0.489, 0.399]<br/>
+            <strong style={{color: '#27ae60'}}>Head 3 (Purpose):</strong>   [0.698, 0.604, 0.548, 0.497]<br/><br/>
+            <strong>Concatenated 12D:</strong><br/>
+            [<span style={{color: '#e74c3c'}}>0.636, 0.719, 0.528, 0.575</span>, <span style={{color: '#2980b9'}}>0.652, 0.473, 0.489, 0.399</span>, <span style={{color: '#27ae60'}}>0.698, 0.604, 0.548, 0.497</span>]
+          </div>
+        </Container>
+
+        <Container header={<Header variant="h3">W_O: Output Projection Matrix (12×4)</Header>}>
+          <StudentNote>
+            W_O has 12 rows (one per concatenated dimension) and 4 columns (matching the original embedding size).
+            It is organized in three groups of 4 rows — one per head. Each head's 4D output gets projected
+            through its own set of rows, and the contributions are summed.
+          </StudentNote>
+          <Table
+            columnDefinitions={[
+              { id: 'row', header: 'Row (Concat dim)', cell: item => item.row, width: 200 },
+              { id: 'c0', header: 'W_O Col 0', cell: item => item.c0 },
+              { id: 'c1', header: 'W_O Col 1', cell: item => item.c1 },
+              { id: 'c2', header: 'W_O Col 2', cell: item => item.c2 },
+              { id: 'c3', header: 'W_O Col 3', cell: item => item.c3 }
+            ]}
+            items={[
+              { row: 'H1[0] = 0.636 (Semantic)', c0: '0.15', c1: '0.05', c2: '0.10', c3: '0.05' },
+              { row: 'H1[1] = 0.719 (Semantic)', c0: '0.05', c1: '0.15', c2: '0.05', c3: '0.10' },
+              { row: 'H1[2] = 0.528 (Semantic)', c0: '0.10', c1: '0.05', c2: '0.15', c3: '0.05' },
+              { row: 'H1[3] = 0.575 (Semantic)', c0: '0.05', c1: '0.10', c2: '0.05', c3: '0.15' },
+              { row: 'H2[0] = 0.652 (Syntactic)', c0: '0.15', c1: '0.05', c2: '0.10', c3: '0.05' },
+              { row: 'H2[1] = 0.473 (Syntactic)', c0: '0.05', c1: '0.15', c2: '0.05', c3: '0.10' },
+              { row: 'H2[2] = 0.489 (Syntactic)', c0: '0.10', c1: '0.05', c2: '0.15', c3: '0.05' },
+              { row: 'H2[3] = 0.399 (Syntactic)', c0: '0.05', c1: '0.10', c2: '0.05', c3: '0.15' },
+              { row: 'H3[0] = 0.698 (Purpose)', c0: '0.15', c1: '0.05', c2: '0.10', c3: '0.05' },
+              { row: 'H3[1] = 0.604 (Purpose)', c0: '0.05', c1: '0.15', c2: '0.05', c3: '0.10' },
+              { row: 'H3[2] = 0.548 (Purpose)', c0: '0.10', c1: '0.05', c2: '0.15', c3: '0.05' },
+              { row: 'H3[3] = 0.497 (Purpose)', c0: '0.05', c1: '0.10', c2: '0.05', c3: '0.15' }
+            ]}
+            variant="embedded"
+          />
+        </Container>
+
+        <Container header={<Header variant="h3">🍎 Computing Z[0]: Head-by-Head Contributions</Header>}>
+          <StudentNote>
+            For each output dimension, we sum each row value × its W_O weight across all 12 rows.
+            We group the calculation by head for clarity.
+          </StudentNote>
+          <div style={{
+            background: '#ffebee',
+            padding: '20px',
+            borderRadius: '8px',
+            border: '2px solid #e74c3c',
+            fontFamily: 'monospace',
+            fontSize: '13px',
+            lineHeight: '2'
+          }}>
+            <strong>Z[0] = Σ (Concat[i] × W_O[i, col 0]) for i = 0..11</strong><br/><br/>
+
+            <strong style={{color: '#e74c3c'}}>Head 1 contribution to Z[0]:</strong><br/>
+            0.636×0.15 + 0.719×0.05 + 0.528×0.10 + 0.575×0.05<br/>
+            = 0.0954 + 0.0360 + 0.0528 + 0.0288 = <strong>0.2130</strong><br/><br/>
+
+            <strong style={{color: '#2980b9'}}>Head 2 contribution to Z[0]:</strong><br/>
+            0.652×0.15 + 0.473×0.05 + 0.489×0.10 + 0.399×0.05<br/>
+            = 0.0978 + 0.0237 + 0.0489 + 0.0200 = <strong>0.1904</strong><br/><br/>
+
+            <strong style={{color: '#27ae60'}}>Head 3 contribution to Z[0]:</strong><br/>
+            0.698×0.15 + 0.604×0.05 + 0.548×0.10 + 0.497×0.05<br/>
+            = 0.1047 + 0.0302 + 0.0548 + 0.0249 = <strong>0.2146</strong><br/><br/>
+
+            <strong style={{fontSize: '16px', color: '#27ae60'}}>
+              Z[0] = 0.2130 + 0.1904 + 0.2146 = 0.618
+            </strong>
+          </div>
+        </Container>
+
+        <TryYourself>
+          <Box variant="h4">🎯 Your Turn: Compute Head 1's Contribution to Z[1]</Box>
+          <Box variant="p">
+            Head 1 output: [0.636, 0.719, 0.528, 0.575]<br/>
+            W_O column 1, rows 0–3: [0.05, 0.15, 0.05, 0.10]<br/>
+            Compute: 0.636×0.05 + 0.719×0.15 + 0.528×0.05 + 0.575×0.10 = ?
+          </Box>
+          <InteractiveInput
+            label="Head 1 contribution to Z[1]:"
+            correctAnswer={0.2236}
+            hint="0.636×0.05 = 0.0318, 0.719×0.15 = 0.1079, 0.528×0.05 = 0.0264, 0.575×0.10 = 0.0575. Sum = 0.2236"
+            tolerance={0.01}
+          />
+        </TryYourself>
+
+        <Container header={<Header variant="h3">📋 All Four Z Components (Full Calculation)</Header>}>
+          <div style={{
+            background: '#e8f5e9',
+            padding: '20px',
+            borderRadius: '8px',
+            border: '2px solid #27ae60',
+            fontFamily: 'monospace',
+            fontSize: '13px',
+            lineHeight: '2'
+          }}>
+            <strong>Z[1] = Head1(0.2236) + Head2(0.1680) + Head3(0.2026) = 0.594</strong><br/>
+            &nbsp;&nbsp;H1: 0.636×0.05 + 0.719×0.15 + 0.528×0.05 + 0.575×0.10 = 0.2236<br/>
+            &nbsp;&nbsp;H2: 0.652×0.05 + 0.473×0.15 + 0.489×0.05 + 0.399×0.10 = 0.1680<br/>
+            &nbsp;&nbsp;H3: 0.698×0.05 + 0.604×0.15 + 0.548×0.05 + 0.497×0.10 = 0.2026<br/><br/>
+
+            <strong>Z[2] = Head1(0.2076) + Head2(0.1823) + Head3(0.2071) = 0.597</strong><br/>
+            &nbsp;&nbsp;H1: 0.636×0.10 + 0.719×0.05 + 0.528×0.15 + 0.575×0.05 = 0.2076<br/>
+            &nbsp;&nbsp;H2: 0.652×0.10 + 0.473×0.05 + 0.489×0.15 + 0.399×0.05 = 0.1823<br/>
+            &nbsp;&nbsp;H3: 0.698×0.10 + 0.604×0.05 + 0.548×0.15 + 0.497×0.05 = 0.2071<br/><br/>
+
+            <strong>Z[3] = Head1(0.2164) + Head2(0.1643) + Head3(0.1973) = 0.578</strong><br/>
+            &nbsp;&nbsp;H1: 0.636×0.05 + 0.719×0.10 + 0.528×0.05 + 0.575×0.15 = 0.2164<br/>
+            &nbsp;&nbsp;H2: 0.652×0.05 + 0.473×0.10 + 0.489×0.05 + 0.399×0.15 = 0.1643<br/>
+            &nbsp;&nbsp;H3: 0.698×0.05 + 0.604×0.10 + 0.548×0.05 + 0.497×0.15 = 0.1973
+          </div>
+        </Container>
+
+        <Container header={<Header variant="h3" style={{color: '#9c27b0'}}>✅ Apple's Transformed Embedding Z</Header>}>
+          <div style={{
+            background: '#f3e5f5',
+            padding: '25px',
+            borderRadius: '8px',
+            border: '3px solid #9c27b0',
+            fontFamily: 'monospace',
+            textAlign: 'center',
+            fontSize: '18px',
+            lineHeight: '2'
+          }}>
+            <strong>🍎 Apple's Final Transformed Embedding:</strong><br/><br/>
+            <strong style={{fontSize: '22px', color: '#9c27b0'}}>
+              Z = [0.618, 0.594, 0.597, 0.578]
+            </strong>
+          </div>
+        </Container>
+
+        <Container header={<Header variant="h3">📊 Before vs After: What Multi-Head Attention Did to Apple</Header>}>
+          <StudentNote>
+            Compare the original embedding with the transformed Z to see what the model learned.
+          </StudentNote>
+          <Table
+            columnDefinitions={[
+              { id: 'label', header: 'Representation', cell: item => item.label },
+              { id: 'd0', header: 'Dim 0', cell: item => item.d0 },
+              { id: 'd1', header: 'Dim 1', cell: item => item.d1 },
+              { id: 'd2', header: 'Dim 2', cell: item => item.d2 },
+              { id: 'd3', header: 'Dim 3', cell: item => item.d3 },
+              { id: 'meaning', header: 'What It Captures', cell: item => item.meaning }
+            ]}
+            items={[
+              {
+                label: 'Original Embedding',
+                d0: '0.600', d1: '0.400', d2: '1.000', d3: '0.200',
+                meaning: 'Raw word meaning — isolated, no context'
+              },
+              {
+                label: '🍎 Transformed Z',
+                d0: '0.618', d1: '0.594', d2: '0.597', d3: '0.578',
+                meaning: 'Context-aware — knows it was bought and will be eaten'
+              },
+              {
+                label: 'Change (Z − original)',
+                d0: '+0.018', d1: '+0.194', d2: '−0.403', d3: '+0.378',
+                meaning: 'Information redistributed across dimensions by attention'
+              }
+            ]}
+            variant="embedded"
+          />
+        </Container>
+
+        <StudentNote title="🧠 What Changed and Why">
+          The original embedding had a strong spike at <strong>Dim 2 (1.0)</strong> and a very low
+          <strong> Dim 3 (0.2)</strong> — this was the model's raw, context-free representation of "apple".<br/><br/>
+
+          After multi-head attention, Z is much more <strong>balanced: [0.618, 0.594, 0.597, 0.578]</strong>.<br/><br/>
+
+          This balancing means information from neighboring words ("bought", "eat") has been
+          <strong> mixed into apple's representation</strong>:
+          <ul style={{ marginTop: '10px', marginLeft: '20px' }}>
+            <li>Dim 1 rose by +0.194 — syntactic awareness that it's a direct object</li>
+            <li>Dim 2 dropped by −0.403 — the raw spike was redistributed into context</li>
+            <li>Dim 3 rose by +0.378 — purpose information (it will be consumed) was absorbed</li>
+          </ul>
+          The model now knows apple is <strong>a food item that was purchased for consumption</strong> —
+          not just an isolated word.
+        </StudentNote>
+
+        <Container header={<Header variant="h3">🎓 The Complete Multi-Head Attention Pipeline</Header>}>
+          <div style={{
+            background: '#f8f9fa',
+            padding: '20px',
+            borderRadius: '8px',
+            fontFamily: 'monospace',
+            fontSize: '13px',
+            lineHeight: '2.2'
+          }}>
+            <strong>Step 1:</strong> Start with Apple's embedding: [0.6, 0.4, 1.0, 0.2]<br/>
+            <strong>Step 2:</strong> Each head projects to Q, K, V using W_Q, W_K, W_V<br/>
+            <strong>Step 3:</strong> Compute attention scores: Q·Kᵀ / √d_k<br/>
+            <strong>Step 4:</strong> Apply softmax → attention weights<br/>
+            <strong>Step 5:</strong> Weighted sum of V vectors → Head outputs<br/>
+            &nbsp;&nbsp;&nbsp;Head 1: [0.636, 0.719, 0.528, 0.575]<br/>
+            &nbsp;&nbsp;&nbsp;Head 2: [0.652, 0.473, 0.489, 0.399]<br/>
+            &nbsp;&nbsp;&nbsp;Head 3: [0.698, 0.604, 0.548, 0.497]<br/>
+            <strong>Step 6:</strong> Concatenate → 12D vector<br/>
+            <strong style={{color: '#9c27b0'}}>Step 7:</strong> Multiply by W_O → <strong style={{color: '#9c27b0'}}>Z = [0.618, 0.594, 0.597, 0.578] ← Apple's new embedding!</strong>
+          </div>
+        </Container>
+
+        <Alert type="success" header="🎉 Congratulations! You've Completed Multi-Head Attention!">
+          You've followed every calculation from raw word embedding to the final transformed vector Z.
+          You now understand how transformers use <strong>parallel attention heads + output projection</strong>
+          to create rich, context-aware word representations — the core of every modern LLM!
         </Alert>
       </SpaceBetween>
     </StepContainer>
