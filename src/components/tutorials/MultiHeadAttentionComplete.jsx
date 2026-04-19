@@ -1687,89 +1687,147 @@ function Step13({ onNext, onPrevious }) {
   return (
     <StepContainer
       stepNumber={19}
-      title="Output Projection: Apple's Transformed Embedding Z"
+      title="How Apple Gets Its New Embedding: The W_O Step"
       onNext={onNext}
       onPrevious={onPrevious}
       isLast={true}
     >
       <SpaceBetween size="m">
-        <StudentNote>
-          The final step! We multiply the <strong>12D concatenated vector</strong> by a learned
-          <strong> output projection matrix W_O</strong> (12×4). This mixes information from all three
-          heads and projects it back to the <strong>original 4D embedding space</strong>, giving us
-          Apple's context-aware transformed embedding Z.
-        </StudentNote>
 
-        <Container>
-          <Box variant="h4">The Final Formula:</Box>
+        {/* ── PART 1: The Problem We're Solving ── */}
+        <Alert type="info" header="🎯 The Problem We're Solving Right Now">
+          We have THREE separate reports about Apple — one from each head.
+          But the rest of the neural network expects <strong>ONE single 4-number vector</strong> for Apple,
+          just like the original embedding.<br/><br/>
+          <strong>Question:</strong> How do we collapse these three 4-number reports into one 4-number summary?<br/>
+          <strong>Answer:</strong> Multiply by W_O — the Output Projection Matrix.
+        </Alert>
+
+        {/* ── PART 2: Plain English Analogy ── */}
+        <Container header={<Header variant="h3">📰 Think of It Like This: Three Reporters, One Editor</Header>}>
           <div style={{
-            background: '#f8f9fa',
-            padding: '15px',
+            background: '#fff8e1',
+            padding: '20px',
             borderRadius: '8px',
-            fontFamily: 'monospace',
-            textAlign: 'center',
-            fontSize: '16px',
+            border: '2px solid #f39c12',
+            fontSize: '15px',
             lineHeight: '2'
           }}>
-            <strong>Z = Concat(Head₁, Head₂, Head₃) × W_O</strong><br/>
-            [12D vector] × [12×4 matrix] = [4D transformed embedding]
+            <strong>Reporter 1 (Head 1 — Semantic):</strong> "Apple is an object that was bought and can be eaten.
+            My 4 scores: [0.636, 0.719, 0.528, 0.575]"<br/><br/>
+
+            <strong>Reporter 2 (Head 2 — Syntactic):</strong> "Apple is the direct object of the verb 'bought'.
+            My 4 scores: [0.652, 0.473, 0.489, 0.399]"<br/><br/>
+
+            <strong>Reporter 3 (Head 3 — Purpose):</strong> "Apple was bought for the purpose of eating.
+            My 4 scores: [0.698, 0.604, 0.548, 0.497]"<br/><br/>
+
+            <strong style={{color: '#9c27b0'}}>The Editor (W_O):</strong> reads ALL 12 numbers from all 3 reporters
+            and writes ONE final 4-number summary: <strong style={{color: '#9c27b0'}}>[0.618, 0.594, 0.597, 0.578]</strong><br/><br/>
+
+            <strong>That final 4-number summary IS Apple's new embedding. That's it. That's Z.</strong>
           </div>
         </Container>
 
-        <Container header={<Header variant="h3">📥 Input: Our 12D Concatenated Vector</Header>}>
+        {/* ── PART 3: What We Have ── */}
+        <Container header={<Header variant="h3">📋 What We Currently Have (12 Numbers)</Header>}>
+          <StudentNote>
+            The three reporters wrote their reports. We just glued them together in a row.
+            This gives us <strong>12 numbers total</strong> (4 from each head).
+          </StudentNote>
           <div style={{
             background: '#f3e5f5',
-            padding: '15px',
+            padding: '20px',
             borderRadius: '8px',
             fontFamily: 'monospace',
-            fontSize: '13px',
-            lineHeight: '2'
+            fontSize: '14px',
+            lineHeight: '2.2'
           }}>
-            <strong style={{color: '#e74c3c'}}>Head 1 (Semantic):</strong>  [0.636, 0.719, 0.528, 0.575]<br/>
-            <strong style={{color: '#2980b9'}}>Head 2 (Syntactic):</strong> [0.652, 0.473, 0.489, 0.399]<br/>
-            <strong style={{color: '#27ae60'}}>Head 3 (Purpose):</strong>   [0.698, 0.604, 0.548, 0.497]<br/><br/>
-            <strong>Concatenated 12D:</strong><br/>
-            [<span style={{color: '#e74c3c'}}>0.636, 0.719, 0.528, 0.575</span>, <span style={{color: '#2980b9'}}>0.652, 0.473, 0.489, 0.399</span>, <span style={{color: '#27ae60'}}>0.698, 0.604, 0.548, 0.497</span>]
+            <span style={{color: '#e74c3c', fontWeight: 'bold'}}>Head 1 report → [0.636, 0.719, 0.528, 0.575]</span>&nbsp;&nbsp;← 4 numbers<br/>
+            <span style={{color: '#2980b9', fontWeight: 'bold'}}>Head 2 report → [0.652, 0.473, 0.489, 0.399]</span>&nbsp;&nbsp;← 4 numbers<br/>
+            <span style={{color: '#27ae60', fontWeight: 'bold'}}>Head 3 report → [0.698, 0.604, 0.548, 0.497]</span>&nbsp;&nbsp;← 4 numbers<br/><br/>
+            <strong>Glued together into one row (12 numbers):</strong><br/>
+            [<span style={{color:'#e74c3c'}}>0.636, 0.719, 0.528, 0.575</span>,&nbsp;
+             <span style={{color:'#2980b9'}}>0.652, 0.473, 0.489, 0.399</span>,&nbsp;
+             <span style={{color:'#27ae60'}}>0.698, 0.604, 0.548, 0.497</span>]<br/>
+            &nbsp;&nbsp;&nbsp;↑ positions 1–4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑ positions 5–8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑ positions 9–12
           </div>
         </Container>
 
-        <Container header={<Header variant="h3">W_O: Output Projection Matrix (12×4)</Header>}>
+        {/* ── PART 4: What is W_O ── */}
+        <Container header={<Header variant="h3">🤔 What Exactly IS W_O?</Header>}>
+          <StudentNote title="W_O is a grid of weights — learned during training">
+            Think of W_O as a grid with <strong>12 rows</strong> (one for each of our 12 numbers)
+            and <strong>4 columns</strong> (because we want 4 output numbers).
+          </StudentNote>
+
+          <div style={{
+            background: '#e3f2fd',
+            padding: '20px',
+            borderRadius: '8px',
+            border: '2px solid #2980b9',
+            fontSize: '15px',
+            lineHeight: '2'
+          }}>
+            <strong>The key insight about W_O's 4 columns:</strong><br/><br/>
+            🟦 <strong>Column 1</strong> of W_O = a recipe that produces <strong>output number 1</strong><br/>
+            🟦 <strong>Column 2</strong> of W_O = a recipe that produces <strong>output number 2</strong><br/>
+            🟦 <strong>Column 3</strong> of W_O = a recipe that produces <strong>output number 3</strong><br/>
+            🟦 <strong>Column 4</strong> of W_O = a recipe that produces <strong>output number 4</strong><br/><br/>
+            <strong>Each recipe uses ALL 12 input numbers and produces exactly 1 output number.</strong><br/>
+            4 recipes → 4 output numbers → We get a 4-number vector.
+          </div>
+
+          <div style={{marginTop: '15px', background: '#fce4ec', padding: '20px', borderRadius: '8px', border: '2px solid #e74c3c', fontSize: '15px', lineHeight: '2'}}>
+            <strong>This is why 12 inputs → 4 outputs (NOT 12!):</strong><br/><br/>
+            Each column of W_O <em>combines</em> all 12 inputs into a single number.<br/>
+            W_O has 4 columns → it runs this combining process 4 times → you get 4 output numbers.<br/><br/>
+            <strong>Matrix math rule: [1 row × 12 numbers] × [12 rows × 4 columns] = [1 row × 4 numbers]</strong><br/>
+            The 12s cancel out. You are left with 4 output numbers.
+          </div>
+        </Container>
+
+        {/* ── PART 5: W_O Weights (the actual numbers) ── */}
+        <Container header={<Header variant="h3">W_O: The Actual Weight Grid (12 rows × 4 columns)</Header>}>
           <StudentNote>
-            W_O has 12 rows (one per concatenated dimension) and 4 columns (matching the original embedding size).
-            It is organized in three groups of 4 rows — one per head. Each head's 4D output gets projected
-            through its own set of rows, and the contributions are summed.
+            Here are the actual weights the editor (W_O) uses. Each row corresponds to one of our 12 input numbers.
+            Each column is one "recipe" for producing one output number.
           </StudentNote>
           <Table
             columnDefinitions={[
-              { id: 'row', header: 'Row (Concat dim)', cell: item => item.row, width: 200 },
-              { id: 'c0', header: 'W_O Col 0', cell: item => item.c0 },
-              { id: 'c1', header: 'W_O Col 1', cell: item => item.c1 },
-              { id: 'c2', header: 'W_O Col 2', cell: item => item.c2 },
-              { id: 'c3', header: 'W_O Col 3', cell: item => item.c3 }
+              { id: 'pos', header: 'Input #', cell: item => item.pos, width: 60 },
+              { id: 'row', header: 'Where this came from', cell: item => item.row, width: 220 },
+              { id: 'value', header: 'Value', cell: item => item.value, width: 70 },
+              { id: 'c0', header: '→ Output 1\n(Column 1)', cell: item => item.c0 },
+              { id: 'c1', header: '→ Output 2\n(Column 2)', cell: item => item.c1 },
+              { id: 'c2', header: '→ Output 3\n(Column 3)', cell: item => item.c2 },
+              { id: 'c3', header: '→ Output 4\n(Column 4)', cell: item => item.c3 }
             ]}
             items={[
-              { row: 'H1[0] = 0.636 (Semantic)', c0: '0.15', c1: '0.05', c2: '0.10', c3: '0.05' },
-              { row: 'H1[1] = 0.719 (Semantic)', c0: '0.05', c1: '0.15', c2: '0.05', c3: '0.10' },
-              { row: 'H1[2] = 0.528 (Semantic)', c0: '0.10', c1: '0.05', c2: '0.15', c3: '0.05' },
-              { row: 'H1[3] = 0.575 (Semantic)', c0: '0.05', c1: '0.10', c2: '0.05', c3: '0.15' },
-              { row: 'H2[0] = 0.652 (Syntactic)', c0: '0.15', c1: '0.05', c2: '0.10', c3: '0.05' },
-              { row: 'H2[1] = 0.473 (Syntactic)', c0: '0.05', c1: '0.15', c2: '0.05', c3: '0.10' },
-              { row: 'H2[2] = 0.489 (Syntactic)', c0: '0.10', c1: '0.05', c2: '0.15', c3: '0.05' },
-              { row: 'H2[3] = 0.399 (Syntactic)', c0: '0.05', c1: '0.10', c2: '0.05', c3: '0.15' },
-              { row: 'H3[0] = 0.698 (Purpose)', c0: '0.15', c1: '0.05', c2: '0.10', c3: '0.05' },
-              { row: 'H3[1] = 0.604 (Purpose)', c0: '0.05', c1: '0.15', c2: '0.05', c3: '0.10' },
-              { row: 'H3[2] = 0.548 (Purpose)', c0: '0.10', c1: '0.05', c2: '0.15', c3: '0.05' },
-              { row: 'H3[3] = 0.497 (Purpose)', c0: '0.05', c1: '0.10', c2: '0.05', c3: '0.15' }
+              { pos: '1',  row: 'Head 1 (Semantic) — 1st number',  value: '0.636', c0: '× 0.15', c1: '× 0.05', c2: '× 0.10', c3: '× 0.05' },
+              { pos: '2',  row: 'Head 1 (Semantic) — 2nd number',  value: '0.719', c0: '× 0.05', c1: '× 0.15', c2: '× 0.05', c3: '× 0.10' },
+              { pos: '3',  row: 'Head 1 (Semantic) — 3rd number',  value: '0.528', c0: '× 0.10', c1: '× 0.05', c2: '× 0.15', c3: '× 0.05' },
+              { pos: '4',  row: 'Head 1 (Semantic) — 4th number',  value: '0.575', c0: '× 0.05', c1: '× 0.10', c2: '× 0.05', c3: '× 0.15' },
+              { pos: '5',  row: 'Head 2 (Syntactic) — 1st number', value: '0.652', c0: '× 0.15', c1: '× 0.05', c2: '× 0.10', c3: '× 0.05' },
+              { pos: '6',  row: 'Head 2 (Syntactic) — 2nd number', value: '0.473', c0: '× 0.05', c1: '× 0.15', c2: '× 0.05', c3: '× 0.10' },
+              { pos: '7',  row: 'Head 2 (Syntactic) — 3rd number', value: '0.489', c0: '× 0.10', c1: '× 0.05', c2: '× 0.15', c3: '× 0.05' },
+              { pos: '8',  row: 'Head 2 (Syntactic) — 4th number', value: '0.399', c0: '× 0.05', c1: '× 0.10', c2: '× 0.05', c3: '× 0.15' },
+              { pos: '9',  row: 'Head 3 (Purpose) — 1st number',   value: '0.698', c0: '× 0.15', c1: '× 0.05', c2: '× 0.10', c3: '× 0.05' },
+              { pos: '10', row: 'Head 3 (Purpose) — 2nd number',   value: '0.604', c0: '× 0.05', c1: '× 0.15', c2: '× 0.05', c3: '× 0.10' },
+              { pos: '11', row: 'Head 3 (Purpose) — 3rd number',   value: '0.548', c0: '× 0.10', c1: '× 0.05', c2: '× 0.15', c3: '× 0.05' },
+              { pos: '12', row: 'Head 3 (Purpose) — 4th number',   value: '0.497', c0: '× 0.05', c1: '× 0.10', c2: '× 0.05', c3: '× 0.15' }
             ]}
             variant="embedded"
           />
         </Container>
 
-        <Container header={<Header variant="h3">🍎 Computing Z[0]: Head-by-Head Contributions</Header>}>
+        {/* ── PART 6: Computing Output Number 1 step-by-step ── */}
+        <Container header={<Header variant="h3">🍎 Let's Compute Output Number 1 — Step by Step</Header>}>
           <StudentNote>
-            For each output dimension, we sum each row value × its W_O weight across all 12 rows.
-            We group the calculation by head for clarity.
+            To get Output Number 1 (called Z₁), we use <strong>Column 1</strong> of W_O as our recipe.
+            We multiply each of the 12 input values by its matching weight from Column 1, then add everything up.
           </StudentNote>
+
           <div style={{
             background: '#ffebee',
             padding: '20px',
@@ -1777,166 +1835,184 @@ function Step13({ onNext, onPrevious }) {
             border: '2px solid #e74c3c',
             fontFamily: 'monospace',
             fontSize: '13px',
-            lineHeight: '2'
+            lineHeight: '2.2'
           }}>
-            <strong>Z[0] = Σ (Concat[i] × W_O[i, col 0]) for i = 0..11</strong><br/><br/>
+            <strong>Recipe for Output 1 (using Column 1 of W_O):</strong><br/><br/>
 
-            <strong style={{color: '#e74c3c'}}>Head 1 contribution to Z[0]:</strong><br/>
-            0.636×0.15 + 0.719×0.05 + 0.528×0.10 + 0.575×0.05<br/>
-            = 0.0954 + 0.0360 + 0.0528 + 0.0288 = <strong>0.2130</strong><br/><br/>
+            <span style={{color: '#e74c3c'}}>From Head 1 (Semantic report):</span><br/>
+            &nbsp;&nbsp;Input 1 (0.636) × weight (0.15) = 0.0954<br/>
+            &nbsp;&nbsp;Input 2 (0.719) × weight (0.05) = 0.0360<br/>
+            &nbsp;&nbsp;Input 3 (0.528) × weight (0.10) = 0.0528<br/>
+            &nbsp;&nbsp;Input 4 (0.575) × weight (0.05) = 0.0288<br/>
+            &nbsp;&nbsp;<strong>Head 1 subtotal = 0.0954 + 0.0360 + 0.0528 + 0.0288 = 0.2130</strong><br/><br/>
 
-            <strong style={{color: '#2980b9'}}>Head 2 contribution to Z[0]:</strong><br/>
-            0.652×0.15 + 0.473×0.05 + 0.489×0.10 + 0.399×0.05<br/>
-            = 0.0978 + 0.0237 + 0.0489 + 0.0200 = <strong>0.1904</strong><br/><br/>
+            <span style={{color: '#2980b9'}}>From Head 2 (Syntactic report):</span><br/>
+            &nbsp;&nbsp;Input 5 (0.652) × weight (0.15) = 0.0978<br/>
+            &nbsp;&nbsp;Input 6 (0.473) × weight (0.05) = 0.0237<br/>
+            &nbsp;&nbsp;Input 7 (0.489) × weight (0.10) = 0.0489<br/>
+            &nbsp;&nbsp;Input 8 (0.399) × weight (0.05) = 0.0200<br/>
+            &nbsp;&nbsp;<strong>Head 2 subtotal = 0.0978 + 0.0237 + 0.0489 + 0.0200 = 0.1904</strong><br/><br/>
 
-            <strong style={{color: '#27ae60'}}>Head 3 contribution to Z[0]:</strong><br/>
-            0.698×0.15 + 0.604×0.05 + 0.548×0.10 + 0.497×0.05<br/>
-            = 0.1047 + 0.0302 + 0.0548 + 0.0249 = <strong>0.2146</strong><br/><br/>
+            <span style={{color: '#27ae60'}}>From Head 3 (Purpose report):</span><br/>
+            &nbsp;&nbsp;Input 9  (0.698) × weight (0.15) = 0.1047<br/>
+            &nbsp;&nbsp;Input 10 (0.604) × weight (0.05) = 0.0302<br/>
+            &nbsp;&nbsp;Input 11 (0.548) × weight (0.10) = 0.0548<br/>
+            &nbsp;&nbsp;Input 12 (0.497) × weight (0.05) = 0.0249<br/>
+            &nbsp;&nbsp;<strong>Head 3 subtotal = 0.1047 + 0.0302 + 0.0548 + 0.0249 = 0.2146</strong><br/><br/>
 
-            <strong style={{fontSize: '16px', color: '#27ae60'}}>
-              Z[0] = 0.2130 + 0.1904 + 0.2146 = 0.618
-            </strong>
+            <div style={{background: '#c8e6c9', padding: '10px', borderRadius: '5px', fontSize: '16px'}}>
+              <strong>Output Number 1 = 0.2130 + 0.1904 + 0.2146 = 0.618</strong>
+            </div>
           </div>
         </Container>
 
         <TryYourself>
-          <Box variant="h4">🎯 Your Turn: Compute Head 1's Contribution to Z[1]</Box>
+          <Box variant="h4">🎯 Your Turn: Compute Head 1's part of Output Number 2</Box>
           <Box variant="p">
-            Head 1 output: [0.636, 0.719, 0.528, 0.575]<br/>
-            W_O column 1, rows 0–3: [0.05, 0.15, 0.05, 0.10]<br/>
-            Compute: 0.636×0.05 + 0.719×0.15 + 0.528×0.05 + 0.575×0.10 = ?
+            We now apply Column 2 of W_O. For Head 1 (inputs 1–4), Column 2 weights are: 0.05, 0.15, 0.05, 0.10<br/><br/>
+            Head 1 inputs: 0.636, 0.719, 0.528, 0.575<br/>
+            Compute: (0.636 × 0.05) + (0.719 × 0.15) + (0.528 × 0.05) + (0.575 × 0.10) = ?
           </Box>
           <InteractiveInput
-            label="Head 1 contribution to Z[1]:"
+            label="Head 1's contribution to Output Number 2:"
             correctAnswer={0.2236}
-            hint="0.636×0.05 = 0.0318, 0.719×0.15 = 0.1079, 0.528×0.05 = 0.0264, 0.575×0.10 = 0.0575. Sum = 0.2236"
+            hint="0.636×0.05 = 0.032, 0.719×0.15 = 0.108, 0.528×0.05 = 0.026, 0.575×0.10 = 0.058. Add them: 0.032+0.108+0.026+0.058 = 0.224"
             tolerance={0.01}
           />
         </TryYourself>
 
-        <Container header={<Header variant="h3">📋 All Four Z Components (Full Calculation)</Header>}>
+        {/* ── PART 7: All 4 Output Numbers ── */}
+        <Container header={<Header variant="h3">📋 All Four Output Numbers (Running Column 1–4 Recipes)</Header>}>
+          <StudentNote>
+            We repeat the same process using Column 2, 3, and 4 of W_O. Each column gives us one more output number.
+          </StudentNote>
           <div style={{
             background: '#e8f5e9',
             padding: '20px',
             borderRadius: '8px',
             border: '2px solid #27ae60',
             fontFamily: 'monospace',
-            fontSize: '13px',
-            lineHeight: '2'
+            fontSize: '14px',
+            lineHeight: '2.2'
           }}>
-            <strong>Z[1] = Head1(0.2236) + Head2(0.1680) + Head3(0.2026) = 0.594</strong><br/>
-            &nbsp;&nbsp;H1: 0.636×0.05 + 0.719×0.15 + 0.528×0.05 + 0.575×0.10 = 0.2236<br/>
-            &nbsp;&nbsp;H2: 0.652×0.05 + 0.473×0.15 + 0.489×0.05 + 0.399×0.10 = 0.1680<br/>
-            &nbsp;&nbsp;H3: 0.698×0.05 + 0.604×0.15 + 0.548×0.05 + 0.497×0.10 = 0.2026<br/><br/>
-
-            <strong>Z[2] = Head1(0.2076) + Head2(0.1823) + Head3(0.2071) = 0.597</strong><br/>
-            &nbsp;&nbsp;H1: 0.636×0.10 + 0.719×0.05 + 0.528×0.15 + 0.575×0.05 = 0.2076<br/>
-            &nbsp;&nbsp;H2: 0.652×0.10 + 0.473×0.05 + 0.489×0.15 + 0.399×0.05 = 0.1823<br/>
-            &nbsp;&nbsp;H3: 0.698×0.10 + 0.604×0.05 + 0.548×0.15 + 0.497×0.05 = 0.2071<br/><br/>
-
-            <strong>Z[3] = Head1(0.2164) + Head2(0.1643) + Head3(0.1973) = 0.578</strong><br/>
-            &nbsp;&nbsp;H1: 0.636×0.05 + 0.719×0.10 + 0.528×0.05 + 0.575×0.15 = 0.2164<br/>
-            &nbsp;&nbsp;H2: 0.652×0.05 + 0.473×0.10 + 0.489×0.05 + 0.399×0.15 = 0.1643<br/>
-            &nbsp;&nbsp;H3: 0.698×0.05 + 0.604×0.10 + 0.548×0.05 + 0.497×0.15 = 0.1973
+            <strong>Output 1 (Column 1 recipe):</strong> 0.2130 + 0.1904 + 0.2146 = <strong style={{color:'#9c27b0'}}>0.618</strong><br/>
+            <strong>Output 2 (Column 2 recipe):</strong> 0.2236 + 0.1680 + 0.2026 = <strong style={{color:'#9c27b0'}}>0.594</strong><br/>
+            <strong>Output 3 (Column 3 recipe):</strong> 0.2076 + 0.1823 + 0.2071 = <strong style={{color:'#9c27b0'}}>0.597</strong><br/>
+            <strong>Output 4 (Column 4 recipe):</strong> 0.2164 + 0.1643 + 0.1973 = <strong style={{color:'#9c27b0'}}>0.578</strong>
           </div>
         </Container>
 
-        <Container header={<Header variant="h3" style={{color: '#9c27b0'}}>✅ Apple's Transformed Embedding Z</Header>}>
+        {/* ── PART 8: THIS IS Apple's new embedding ── */}
+        <Container header={<Header variant="h3" style={{color: '#9c27b0'}}>✅ Apple's New Embedding — This Is Z!</Header>}>
           <div style={{
             background: '#f3e5f5',
             padding: '25px',
             borderRadius: '8px',
             border: '3px solid #9c27b0',
-            fontFamily: 'monospace',
             textAlign: 'center',
-            fontSize: '18px',
-            lineHeight: '2'
+            fontSize: '17px',
+            lineHeight: '2.5'
           }}>
-            <strong>🍎 Apple's Final Transformed Embedding:</strong><br/><br/>
-            <strong style={{fontSize: '22px', color: '#9c27b0'}}>
+            The 4 output numbers are Apple's <strong>new embedding vector</strong>, called Z:<br/><br/>
+            <div style={{fontFamily: 'monospace', fontSize: '22px', color: '#9c27b0', fontWeight: 'bold'}}>
               Z = [0.618, 0.594, 0.597, 0.578]
-            </strong>
+            </div><br/>
+            <strong>This single 4-number vector IS Apple's new embedding.</strong><br/>
+            It replaces the original [0.6, 0.4, 1.0, 0.2] with context baked in.
           </div>
         </Container>
 
-        <Container header={<Header variant="h3">📊 Before vs After: What Multi-Head Attention Did to Apple</Header>}>
-          <StudentNote>
-            Compare the original embedding with the transformed Z to see what the model learned.
+        {/* ── PART 9: Clearing up "Z[0], Z[1]..." confusion ── */}
+        <Container header={<Header variant="h3">💡 What Does Z[0], Z[1], Z[2], Z[3] Mean?</Header>}>
+          <StudentNote title="These are just position labels — like slots in a box">
+            Z = [0.618, 0.594, 0.597, 0.578] is a box with 4 slots.
+            Z[0] just means "the number in slot 0" — that's 0.618.
+            Z[1] just means "the number in slot 1" — that's 0.594. And so on.
+            There is only ONE vector Z — not multiple. The [0], [1], [2], [3] are just addressing each number inside it.
           </StudentNote>
           <Table
             columnDefinitions={[
-              { id: 'label', header: 'Representation', cell: item => item.label },
-              { id: 'd0', header: 'Dim 0', cell: item => item.d0 },
-              { id: 'd1', header: 'Dim 1', cell: item => item.d1 },
-              { id: 'd2', header: 'Dim 2', cell: item => item.d2 },
-              { id: 'd3', header: 'Dim 3', cell: item => item.d3 },
-              { id: 'meaning', header: 'What It Captures', cell: item => item.meaning }
+              { id: 'label', header: 'Notation', cell: item => item.label },
+              { id: 'meaning', header: 'Plain English', cell: item => item.meaning },
+              { id: 'value', header: 'Value', cell: item => item.value }
             ]}
             items={[
-              {
-                label: 'Original Embedding',
-                d0: '0.600', d1: '0.400', d2: '1.000', d3: '0.200',
-                meaning: 'Raw word meaning — isolated, no context'
-              },
-              {
-                label: '🍎 Transformed Z',
-                d0: '0.618', d1: '0.594', d2: '0.597', d3: '0.578',
-                meaning: 'Context-aware — knows it was bought and will be eaten'
-              },
-              {
-                label: 'Change (Z − original)',
-                d0: '+0.018', d1: '+0.194', d2: '−0.403', d3: '+0.378',
-                meaning: 'Information redistributed across dimensions by attention'
-              }
+              { label: 'Z[0]', meaning: 'The 1st number inside Apple\'s new embedding', value: '0.618' },
+              { label: 'Z[1]', meaning: 'The 2nd number inside Apple\'s new embedding', value: '0.594' },
+              { label: 'Z[2]', meaning: 'The 3rd number inside Apple\'s new embedding', value: '0.597' },
+              { label: 'Z[3]', meaning: 'The 4th number inside Apple\'s new embedding', value: '0.578' },
+              { label: 'Z', meaning: 'ALL FOUR numbers together = Apple\'s complete new embedding', value: '[0.618, 0.594, 0.597, 0.578]' }
             ]}
             variant="embedded"
           />
         </Container>
 
-        <StudentNote title="🧠 What Changed and Why">
-          The original embedding had a strong spike at <strong>Dim 2 (1.0)</strong> and a very low
-          <strong> Dim 3 (0.2)</strong> — this was the model's raw, context-free representation of "apple".<br/><br/>
+        {/* ── PART 10: Before vs After ── */}
+        <Container header={<Header variant="h3">📊 Before vs After: Apple's Journey</Header>}>
+          <Table
+            columnDefinitions={[
+              { id: 'label', header: 'Apple\'s embedding', cell: item => item.label },
+              { id: 'd0', header: 'Number 1', cell: item => item.d0 },
+              { id: 'd1', header: 'Number 2', cell: item => item.d1 },
+              { id: 'd2', header: 'Number 3', cell: item => item.d2 },
+              { id: 'd3', header: 'Number 4', cell: item => item.d3 }
+            ]}
+            items={[
+              { label: '⬛ Original (before this tutorial)', d0: '0.600', d1: '0.400', d2: '1.000', d3: '0.200' },
+              { label: '🟣 New embedding Z (after W_O)',     d0: '0.618', d1: '0.594', d2: '0.597', d3: '0.578' }
+            ]}
+            variant="embedded"
+          />
+          <div style={{
+            marginTop: '15px',
+            background: '#fff8e1',
+            padding: '20px',
+            borderRadius: '8px',
+            border: '2px solid #f39c12',
+            fontSize: '15px',
+            lineHeight: '2'
+          }}>
+            <strong>Original [0.6, 0.4, 1.0, 0.2]:</strong> Apple as a lonely dictionary word.
+            It has one big spike (1.0 in slot 3) but knows nothing about the sentence around it.<br/><br/>
+            <strong>New Z [0.618, 0.594, 0.597, 0.578]:</strong> Apple as a word that lived inside
+            the sentence "I bought apple to eat". The numbers are now more balanced because
+            context from "bought" and "eat" got mixed in through the three attention heads + W_O.<br/><br/>
+            <strong style={{color: '#9c27b0'}}>
+              Apple now "knows" it is a food item that was purchased for consumption —
+              not just an isolated word.
+            </strong>
+          </div>
+        </Container>
 
-          After multi-head attention, Z is much more <strong>balanced: [0.618, 0.594, 0.597, 0.578]</strong>.<br/><br/>
-
-          This balancing means information from neighboring words ("bought", "eat") has been
-          <strong> mixed into apple's representation</strong>:
-          <ul style={{ marginTop: '10px', marginLeft: '20px' }}>
-            <li>Dim 1 rose by +0.194 — syntactic awareness that it's a direct object</li>
-            <li>Dim 2 dropped by −0.403 — the raw spike was redistributed into context</li>
-            <li>Dim 3 rose by +0.378 — purpose information (it will be consumed) was absorbed</li>
-          </ul>
-          The model now knows apple is <strong>a food item that was purchased for consumption</strong> —
-          not just an isolated word.
-        </StudentNote>
-
-        <Container header={<Header variant="h3">🎓 The Complete Multi-Head Attention Pipeline</Header>}>
+        {/* ── PART 11: Full Pipeline ── */}
+        <Container header={<Header variant="h3">🎓 The Full Journey From Start to Finish</Header>}>
           <div style={{
             background: '#f8f9fa',
             padding: '20px',
             borderRadius: '8px',
-            fontFamily: 'monospace',
-            fontSize: '13px',
-            lineHeight: '2.2'
+            fontSize: '15px',
+            lineHeight: '2.5'
           }}>
-            <strong>Step 1:</strong> Start with Apple's embedding: [0.6, 0.4, 1.0, 0.2]<br/>
-            <strong>Step 2:</strong> Each head projects to Q, K, V using W_Q, W_K, W_V<br/>
-            <strong>Step 3:</strong> Compute attention scores: Q·Kᵀ / √d_k<br/>
-            <strong>Step 4:</strong> Apply softmax → attention weights<br/>
-            <strong>Step 5:</strong> Weighted sum of V vectors → Head outputs<br/>
-            &nbsp;&nbsp;&nbsp;Head 1: [0.636, 0.719, 0.528, 0.575]<br/>
-            &nbsp;&nbsp;&nbsp;Head 2: [0.652, 0.473, 0.489, 0.399]<br/>
-            &nbsp;&nbsp;&nbsp;Head 3: [0.698, 0.604, 0.548, 0.497]<br/>
-            <strong>Step 6:</strong> Concatenate → 12D vector<br/>
-            <strong style={{color: '#9c27b0'}}>Step 7:</strong> Multiply by W_O → <strong style={{color: '#9c27b0'}}>Z = [0.618, 0.594, 0.597, 0.578] ← Apple's new embedding!</strong>
+            <strong>Step 1.</strong> Apple starts as a 4-number vector: [0.6, 0.4, 1.0, 0.2]<br/>
+            <strong>Step 2.</strong> Head 1, 2, 3 each compute Q, K, V → attention scores → attention weights<br/>
+            <strong>Step 3.</strong> Each head produces its own 4-number report (weighted sum of V vectors)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp; Head 1 report: [0.636, 0.719, 0.528, 0.575]<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp; Head 2 report: [0.652, 0.473, 0.489, 0.399]<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp; Head 3 report: [0.698, 0.604, 0.548, 0.497]<br/>
+            <strong>Step 4.</strong> Glue the 3 reports into one 12-number row<br/>
+            <strong style={{color: '#9c27b0'}}>Step 5.</strong> Multiply by W_O → 4 recipes → 4 output numbers<br/>
+            <strong style={{color: '#9c27b0', fontSize: '17px'}}>
+              &nbsp;&nbsp;&nbsp;&nbsp; → Z = [0.618, 0.594, 0.597, 0.578] ← Apple's brand-new embedding!
+            </strong>
           </div>
         </Container>
 
-        <Alert type="success" header="🎉 Congratulations! You've Completed Multi-Head Attention!">
-          You've followed every calculation from raw word embedding to the final transformed vector Z.
-          You now understand how transformers use <strong>parallel attention heads + output projection</strong>
-          to create rich, context-aware word representations — the core of every modern LLM!
+        <Alert type="success" header="🎉 You Did It! Full Multi-Head Attention Completed!">
+          You followed Apple's complete journey — from a plain 4-number word vector, through three
+          attention heads, through a W_O projection, all the way to its final context-rich embedding Z.
+          This is exactly what every transformer (GPT, BERT, Gemini) does for every word in every sentence.
         </Alert>
+
       </SpaceBetween>
     </StepContainer>
   )
