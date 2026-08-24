@@ -380,7 +380,7 @@ export function HomePage() {
       const matchesSearch = !query ||
         t.title.toLowerCase().includes(query) ||
         t.description.toLowerCase().includes(query) ||
-        t.tags.some(tag => tag.toLowerCase().includes(query))
+        (t.tags || []).some(tag => tag.toLowerCase().includes(query))
       return matchesLevel && matchesSearch
     })
   }, [searchText, levelOption])

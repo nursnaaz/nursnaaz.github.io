@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import AppLayout from '@cloudscape-design/components/app-layout'
 import TopNavigation from '@cloudscape-design/components/top-navigation'
 import { Navigation } from './components/Navigation'
@@ -13,6 +13,7 @@ function App() {
 
   return (
     <>
+      <div id="h">
       <TopNavigation
         identity={{
           href: '/',
@@ -32,14 +33,19 @@ function App() {
           }
         ]}
       />
+      </div>
       
       <AppLayout
+        headerSelector="#h"
         navigation={<Navigation />}
         navigationOpen={navOpen}
         onNavigationChange={({ detail }) => setNavOpen(detail.open)}
         content={
+          <div style={{ minHeight: '70vh' }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/index.html" element={<Navigate to="/" replace />} />
+            <Route path="/index-react.html" element={<Navigate to="/" replace />} />
             {tutorials.map(tutorial => (
               <Route 
                 key={tutorial.id}
@@ -47,7 +53,9 @@ function App() {
                 element={<TutorialPage tutorial={tutorial} />}
               />
             ))}
+            <Route path="*" element={<HomePage />} />
           </Routes>
+          </div>
         }
         toolsHide
         navigationWidth={280}

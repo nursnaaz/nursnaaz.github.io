@@ -17,6 +17,22 @@ import { BertClassificationComplete } from '../components/tutorials/BertClassifi
 import { ProductionChallengesComplete } from '../components/tutorials/ProductionChallengesComplete'
 import { SecuredAgentsComplete } from '../components/tutorials/SecuredAgentsComplete'
 import { PositionalEncodingComplete } from '../components/tutorials/PositionalEncodingComplete'
+import { TokensAreMoney } from '../components/tutorials/TokensAreMoney'
+import { SamplingPlayground } from '../components/tutorials/SamplingPlayground'
+import { FirstLlmCall } from '../components/tutorials/FirstLlmCall'
+import { PromptAnatomy } from '../components/tutorials/PromptAnatomy'
+import { JsonOrBust } from '../components/tutorials/JsonOrBust'
+import { ChatbotsForget } from '../components/tutorials/ChatbotsForget'
+import { TinyRag } from '../components/tutorials/TinyRag'
+import { OneToolOneLoop } from '../components/tutorials/OneToolOneLoop'
+import { ChunkingIntuition } from '../components/tutorials/ChunkingIntuition'
+import { HybridSearchRrf } from '../components/tutorials/HybridSearchRrf'
+import { LocalVsCloud } from '../components/tutorials/LocalVsCloud'
+import { CitationsAndRefusals } from '../components/tutorials/CitationsAndRefusals'
+import { HumanInTheLoop } from '../components/tutorials/HumanInTheLoop'
+import { McpAsUsb } from '../components/tutorials/McpAsUsb'
+import { RagInjectionGuardrails } from '../components/tutorials/RagInjectionGuardrails'
+import { ContextWindowBudget } from '../components/tutorials/ContextWindowBudget'
 
 // Tutorial component mapping
 const tutorialComponents = {
@@ -28,16 +44,36 @@ const tutorialComponents = {
   'transformer-code': TransformerCodeComplete,
   'bert-classification': BertClassificationComplete,
   'production-challenges': ProductionChallengesComplete,
-  'secured-agents': SecuredAgentsComplete
+  'secured-agents': SecuredAgentsComplete,
+  'tokens-are-money': TokensAreMoney,
+  'sampling-temperature-topk-topp': SamplingPlayground,
+  'first-llm-call': FirstLlmCall,
+  'prompt-anatomy': PromptAnatomy,
+  'json-or-bust': JsonOrBust,
+  'chatbots-forget': ChatbotsForget,
+  'tiny-rag': TinyRag,
+  'one-tool-one-loop': OneToolOneLoop,
+  'chunking-intuition': ChunkingIntuition,
+  'hybrid-search-rrf': HybridSearchRrf,
+  'local-vs-cloud': LocalVsCloud,
+  'citations-and-refusals': CitationsAndRefusals,
+  'human-in-the-loop': HumanInTheLoop,
+  'mcp-as-usb': McpAsUsb,
+  'rag-injection-guardrails': RagInjectionGuardrails,
+  'context-window-budget': ContextWindowBudget,
 }
 
 export function TutorialPage({ tutorial }) {
   const navigate = useNavigate()
   const [currentStep, setCurrentStep] = useState(0)
-  const [totalSteps, setTotalSteps] = useState(9)
+  const [totalSteps, setTotalSteps] = useState(1)
 
   useEffect(() => {
-    // Trigger MathJax rendering when component mounts or updates
+    setCurrentStep(0)
+    setTotalSteps(1)
+  }, [tutorial.id])
+
+  useEffect(() => {
     if (window.MathJax) {
       window.MathJax.typesetPromise?.()
     }
@@ -94,9 +130,8 @@ export function TutorialPage({ tutorial }) {
             />
           </Box>
 
-          <Alert type="info" header="Interactive Learning">
-            This tutorial includes interactive exercises. Calculate the answers yourself
-            and verify your understanding at each step.
+          <Alert type="info" header="Work through each step">
+            Use the controls on the page, then check the quiz before you move on.
           </Alert>
 
           {/* Render tutorial component if available */}

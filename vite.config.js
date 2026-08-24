@@ -10,7 +10,7 @@ export default defineConfig({
     outDir: 'docs',
     emptyOutDir: true,
     rollupOptions: {
-      input: resolve(__dirname, 'index-react.html'),
+      input: resolve(__dirname, 'index.html'),
       output: {
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
@@ -20,6 +20,11 @@ export default defineConfig({
   },
   server: {
     port: 3000,
-    open: '/index-react.html'
+    open: '/',
+    strictPort: false
+  },
+  preview: {
+    port: 4174,
+    open: '/'
   }
 })
