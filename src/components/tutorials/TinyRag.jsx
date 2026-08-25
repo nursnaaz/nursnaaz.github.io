@@ -38,11 +38,27 @@ function bag(text) {
     .filter((w) => w.length > 2 && !STOP.has(w))
 }
 
+function stemLite(word) {
+  if (word.endsWith('ies') && word.length > 4) return word.slice(0, -3) + 'y'
+  if (word.endsWith('es') && word.length > 4) return word.slice(0, -2)
+  if (word.endsWith('ed') && word.length > 4) return word.slice(0, -2)
+  if (word.endsWith('s') && word.length > 3) return word.slice(0, -1)
+  return word
+}
+
+function wordHit(queryWord, docWords) {
+  const q = stemLite(queryWord)
+  return docWords.some((d) => {
+    const s = stemLite(d)
+    return d === queryWord || s === q || d.startsWith(q) || q.startsWith(s)
+  })
+}
+
 function score(query, doc) {
   const q = [...new Set(bag(query))]
   const d = bag(doc.text)
   if (!q.length) return { s: 0, hits: [] }
-  const hits = q.filter((w) => d.includes(w))
+  const hits = q.filter((w) => wordHit(w, d))
   return { s: hits.length / Math.sqrt(d.length || 1), hits, q, d }
 }
 
