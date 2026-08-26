@@ -8,6 +8,8 @@ import Alert from '@cloudscape-design/components/alert'
 import Box from '@cloudscape-design/components/box'
 import Badge from '@cloudscape-design/components/badge'
 import Breadcrumbs from '@cloudscape-design/components/breadcrumb-group'
+import Link from '@cloudscape-design/components/link'
+import { COURSE_REPO, courseUrl } from '../data/tutorials'
 import { CosineSimilarityMovieRecommender } from '../components/tutorials/CosineSimilarityMovieRecommender'
 import { HowSearchEnginesWork } from '../components/tutorials/HowSearchEnginesWork'
 import { SelfAttentionTutorialComplete } from '../components/tutorials/SelfAttentionTutorialComplete'
@@ -133,6 +135,25 @@ export function TutorialPage({ tutorial }) {
           <Alert type="info" header="Work through each step">
             Use the controls on the page, then check the quiz before you move on.
           </Alert>
+
+          {(tutorial.session || tutorial.medium) && (
+            <Alert type="success" header={tutorial.session ? `Pairs with ${tutorial.session}` : 'Goes with the course'}>
+              Open the matching notebooks in{' '}
+              <Link href={tutorial.course ? courseUrl(tutorial.course) : COURSE_REPO} external>
+                zero-to-genai-engineer
+              </Link>
+              {tutorial.course ? ` / ${tutorial.course}` : ''}.
+              {tutorial.medium && (
+                <>
+                  {' '}Write-up:{' '}
+                  <Link href={tutorial.medium.url} external>
+                    {tutorial.medium.title}
+                  </Link>
+                  .
+                </>
+              )}
+            </Alert>
+          )}
 
           {/* Render tutorial component if available */}
           {TutorialComponent ? (

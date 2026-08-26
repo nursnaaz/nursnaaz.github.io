@@ -26,6 +26,13 @@ function App() {
         utilities={[
           {
             type: 'button',
+            text: 'Course',
+            href: 'https://github.com/nursnaaz/zero-to-genai-engineer',
+            external: true,
+            externalIconAriaLabel: '(opens in new tab)'
+          },
+          {
+            type: 'button',
             text: 'GitHub',
             href: 'https://github.com/nursnaaz',
             external: true,

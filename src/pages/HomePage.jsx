@@ -409,8 +409,13 @@ export function HomePage() {
         <SpaceBetween size="m">
           <Box variant="p">
             Learn transformer architectures, attention mechanisms, BERT, and production deployment
-            of AI systems through hands-on, interactive tutorials. Each tutorial includes:
+            of AI systems through hands-on, interactive tutorials. These labs pair with the free{' '}
+            <Link href="https://github.com/nursnaaz/zero-to-genai-engineer" external>
+              zero-to-genai-engineer
+            </Link>{' '}
+            course. Write-ups of some labs live on Medium (linked on the card when one exists).
           </Box>
+          <Box variant="p">Each tutorial includes:</Box>
           <ul>
             <li>📊 Step-by-step calculations you can verify yourself</li>
             <li>🧮 Interactive exercises with instant feedback</li>
@@ -446,9 +451,16 @@ export function HomePage() {
             {
               id: 'action',
               content: item => (
-                <Button variant="primary" onClick={() => navigate(`/tutorial/${item.id}`)}>
-                  Start Tutorial
-                </Button>
+                <SpaceBetween size="xs">
+                  <Button variant="primary" onClick={() => navigate(`/tutorial/${item.id}`)}>
+                    Start Tutorial
+                  </Button>
+                  {item.medium && (
+                    <Link href={item.medium.url} external>
+                      Medium write-up
+                    </Link>
+                  )}
+                </SpaceBetween>
               ),
             },
           ],

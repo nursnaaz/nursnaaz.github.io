@@ -1756,7 +1756,7 @@ function Step9({ onUnlock, unlockedBadges, xp, onRestart }) {
             </div>
           </div>
           <a
-            href="https://github.com/nursnaaz/zero-to-genai-engineer/tree/main/00_search_engine"
+            href="https://github.com/nursnaaz/zero-to-genai-engineer/tree/main/00_How_Search_Engine_Works"
             target="_blank" rel="noopener noreferrer"
             style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 6,
               border: `1px solid ${C.border2}`, background: C.bg1,
@@ -1773,16 +1773,16 @@ function Step9({ onUnlock, unlockedBadges, xp, onRestart }) {
               title: 'Build the Search Engine',
               desc: 'Tokenisation → stop words → stemming → inverted index → TF-IDF ranking. Full pipeline from scratch.',
               time: '30 min',
-              colab: 'https://colab.research.google.com/github/nursnaaz/zero-to-genai-engineer/blob/main/00_search_engine/notebooks/01_search_engine.ipynb',
-              github: 'https://github.com/nursnaaz/zero-to-genai-engineer/blob/main/00_search_engine/notebooks/01_search_engine.ipynb',
+              colab: 'https://colab.research.google.com/github/nursnaaz/zero-to-genai-engineer/blob/main/00_How_Search_Engine_Works/notebooks/01_search_engine.ipynb',
+              github: 'https://github.com/nursnaaz/zero-to-genai-engineer/blob/main/00_How_Search_Engine_Works/notebooks/01_search_engine.ipynb',
             },
             {
               num: '02',
               title: 'TF-IDF Math Explained',
               desc: 'Step-by-step breakdown of the math: why naive counting fails and how TF × IDF combines to give relevance.',
               time: '45 min',
-              colab: 'https://colab.research.google.com/github/nursnaaz/zero-to-genai-engineer/blob/main/00_search_engine/notebooks/02_tfidf_explained.ipynb',
-              github: 'https://github.com/nursnaaz/zero-to-genai-engineer/blob/main/00_search_engine/notebooks/02_tfidf_explained.ipynb',
+              colab: 'https://colab.research.google.com/github/nursnaaz/zero-to-genai-engineer/blob/main/00_How_Search_Engine_Works/notebooks/02_tfidf_explained.ipynb',
+              github: 'https://github.com/nursnaaz/zero-to-genai-engineer/blob/main/00_How_Search_Engine_Works/notebooks/02_tfidf_explained.ipynb',
             },
           ].map(nb => (
             <div key={nb.num} style={{

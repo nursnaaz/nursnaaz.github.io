@@ -1202,15 +1202,15 @@ function Step7({ onUnlock, onNext }) {
       num: '01', title: 'Text to Numbers',
       desc: 'BoW → TF-IDF → Word2Vec → GloVe → FastText from scratch. Full implementations with cosine similarity.',
       time: '60 min',
-      colab: 'https://colab.research.google.com/github/nursnaaz/zero-to-genai-engineer/blob/main/01_text_to_numbers/notebooks/01_text_to_numbers.ipynb',
-      github: 'https://github.com/nursnaaz/zero-to-genai-engineer/blob/main/01_text_to_numbers/notebooks/01_text_to_numbers.ipynb',
+      colab: 'https://colab.research.google.com/github/nursnaaz/zero-to-genai-engineer/blob/main/01_Text_to_Numbers/notebooks/01_text_to_numbers.ipynb',
+      github: 'https://github.com/nursnaaz/zero-to-genai-engineer/blob/main/01_Text_to_Numbers/notebooks/01_text_to_numbers.ipynb',
     },
     {
       num: '02', title: 'Cosine Similarity',
       desc: 'Why cosine similarity works: geometric intuition, the length problem, and full implementation.',
       time: '30 min',
-      colab: 'https://colab.research.google.com/github/nursnaaz/zero-to-genai-engineer/blob/main/01_text_to_numbers/notebooks/02_cosine_similarity.ipynb',
-      github: 'https://github.com/nursnaaz/zero-to-genai-engineer/blob/main/01_text_to_numbers/notebooks/02_cosine_similarity.ipynb',
+      colab: 'https://colab.research.google.com/github/nursnaaz/zero-to-genai-engineer/blob/main/01_Text_to_Numbers/notebooks/02_cosine_similarity.ipynb',
+      github: 'https://github.com/nursnaaz/zero-to-genai-engineer/blob/main/01_Text_to_Numbers/notebooks/02_cosine_similarity.ipynb',
     },
   ]
 
@@ -1242,7 +1242,7 @@ function Step7({ onUnlock, onNext }) {
             <div style={{ color: C.text1, fontWeight: 700, fontSize: 14, marginBottom: 4 }}>Run the Full Movie Recommender in Python</div>
             <div style={{ color: C.text3, fontSize: 12 }}>FastAPI backend + React frontend with all 5 embedding methods and real IMDB data.</div>
           </div>
-          <a href="https://github.com/nursnaaz/zero-to-genai-engineer/tree/main/01_text_to_numbers"
+          <a href="https://github.com/nursnaaz/zero-to-genai-engineer/tree/main/01_Text_to_Numbers"
             target="_blank" rel="noopener noreferrer"
             style={{
               display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 6,
@@ -1329,7 +1329,7 @@ The interactive demo runs in your browser with no signup and no install.
 → ${TUTORIAL_URL}
 
 Full Python implementation (FastAPI + notebooks):
-→ https://github.com/nursnaaz/zero-to-genai-engineer/tree/main/01_text_to_numbers
+→ https://github.com/nursnaaz/zero-to-genai-engineer/tree/main/01_Text_to_Numbers
 
 What concept in AI surprised you most when you finally understood the math behind it?
 

@@ -1,3 +1,7 @@
+export const COURSE_REPO = 'https://github.com/nursnaaz/zero-to-genai-engineer'
+
+export const courseUrl = (folder) => `${COURSE_REPO}/tree/main/${folder}`
+
 export const tutorials = [
   {
     id: 'cosine-similarity-movie-recommender',
@@ -8,6 +12,12 @@ export const tutorials = [
     estimatedTime: '45 minutes',
     featured: true,
     series: 'search',
+    session: 'S01',
+    course: '01_Text_to_Numbers',
+    medium: {
+      title: "Words Don't Have Meaning. Sentences Do.",
+      url: 'https://medium.com/generative-ai/words-dont-have-meaning-sentences-do-ef5b7745eac2',
+    },
   },
   {
     id: 'how-search-engines-work',
@@ -18,6 +28,12 @@ export const tutorials = [
     estimatedTime: '45 minutes',
     featured: true,
     series: 'search',
+    session: 'S00',
+    course: '00_How_Search_Engine_Works',
+    medium: {
+      title: "How I Taught 100 Students to Build Google's Core Algorithm in 30 Minutes",
+      url: 'https://medium.com/learning-data/how-i-taught-100-students-to-build-googles-core-algorithm-in-30-minutes-3166e6cc8636',
+    },
   },
   {
     id: 'self-attention',
@@ -28,6 +44,12 @@ export const tutorials = [
     estimatedTime: '30 minutes',
     featured: true,
     series: 'transformers',
+    session: 'S02',
+    course: '02_Transformer_Architecture',
+    medium: {
+      title: 'I Computed Self-Attention by Hand. Every Single Number.',
+      url: 'https://medium.com/generative-ai/i-ran-the-math-that-powers-chatgpt-heres-what-i-found-2fc45eecec59',
+    },
   },
   {
     id: 'positional-encoding',
@@ -38,6 +60,8 @@ export const tutorials = [
     estimatedTime: '35 minutes',
     featured: true,
     series: 'transformers',
+    session: 'S02',
+    course: '02_Transformer_Architecture',
   },
   {
     id: 'multi-head-attention',
@@ -48,6 +72,8 @@ export const tutorials = [
     estimatedTime: '60 minutes',
     featured: true,
     series: 'transformers',
+    session: 'S02',
+    course: '02_Transformer_Architecture',
   },
   {
     id: 'transformer-code',
@@ -58,6 +84,8 @@ export const tutorials = [
     estimatedTime: '60 minutes',
     featured: false,
     series: 'transformers',
+    session: 'S02',
+    course: '02_Transformer_Architecture',
   },
   {
     id: 'bert-classification',
@@ -68,6 +96,8 @@ export const tutorials = [
     estimatedTime: '45 minutes',
     featured: true,
     series: 'transformers',
+    session: 'S03',
+    course: '03_GPT_Evolution_and_Alignment',
   },
   {
     id: 'production-challenges',
@@ -78,6 +108,8 @@ export const tutorials = [
     estimatedTime: '40 minutes',
     featured: false,
     series: 'production',
+    session: 'S10',
+    course: '10_RAG',
   },
   {
     id: 'secured-agents',
@@ -88,6 +120,8 @@ export const tutorials = [
     estimatedTime: '50 minutes',
     featured: false,
     series: 'agents',
+    session: 'S11',
+    course: '11_LangGraph',
   },
 
   {
@@ -99,6 +133,12 @@ export const tutorials = [
     estimatedTime: '40 minutes',
     featured: true,
     series: 'llms',
+    session: 'S04',
+    course: '04_BPE_Temperature_Top_K_Top_P',
+    medium: {
+      title: 'One Word. Two Tokens. Here Is How BPE Builds Them.',
+      url: 'https://medium.com/@nursnaaz/one-word-two-tokens-here-is-how-bpe-builds-them-031f23614e65',
+    },
   },
   {
     id: 'sampling-temperature-topk-topp',
@@ -109,6 +149,8 @@ export const tutorials = [
     estimatedTime: '40 minutes',
     featured: true,
     series: 'llms',
+    session: 'S04',
+    course: '04_BPE_Temperature_Top_K_Top_P',
   },
   {
     id: 'first-llm-call',
@@ -119,6 +161,8 @@ export const tutorials = [
     estimatedTime: '35 minutes',
     featured: true,
     series: 'llms',
+    session: 'S05',
+    course: '05_Local_LLMs_and_API_Providers',
   },
   {
     id: 'prompt-anatomy',
@@ -129,6 +173,8 @@ export const tutorials = [
     estimatedTime: '40 minutes',
     featured: true,
     series: 'llms',
+    session: 'S06',
+    course: '06_Prompt_Engineering_DSPY_GEPA_COT',
   },
   {
     id: 'json-or-bust',
@@ -139,6 +185,8 @@ export const tutorials = [
     estimatedTime: '35 minutes',
     featured: false,
     series: 'llms',
+    session: 'S06',
+    course: '06_Prompt_Engineering_DSPY_GEPA_COT',
   },
   {
     id: 'chatbots-forget',
@@ -149,6 +197,8 @@ export const tutorials = [
     estimatedTime: '35 minutes',
     featured: true,
     series: 'llms',
+    session: 'S07 / S10f',
+    course: '10_RAG',
   },
   {
     id: 'tiny-rag',
@@ -159,6 +209,12 @@ export const tutorials = [
     estimatedTime: '40 minutes',
     featured: true,
     series: 'rag',
+    session: 'S10',
+    course: '10_RAG',
+    medium: {
+      title: "I Asked ChatGPT About Our Gym's Refund Policy. It Invented One.",
+      url: 'https://medium.com/@nursnaaz/i-asked-chatgpt-about-our-gyms-refund-policy-it-invented-one-bbf28cdf7ecc',
+    },
   },
   {
     id: 'one-tool-one-loop',
@@ -169,6 +225,8 @@ export const tutorials = [
     estimatedTime: '35 minutes',
     featured: true,
     series: 'agents',
+    session: 'S09 / S11',
+    course: '11_LangGraph',
   },
 
   {
@@ -180,6 +238,8 @@ export const tutorials = [
     estimatedTime: '30 minutes',
     featured: false,
     series: 'rag',
+    session: 'S10',
+    course: '10_RAG',
   },
   {
     id: 'hybrid-search-rrf',
@@ -190,6 +250,8 @@ export const tutorials = [
     estimatedTime: '35 minutes',
     featured: false,
     series: 'rag',
+    session: 'S10',
+    course: '10_RAG',
   },
   {
     id: 'local-vs-cloud',
@@ -200,6 +262,8 @@ export const tutorials = [
     estimatedTime: '25 minutes',
     featured: false,
     series: 'llms',
+    session: 'S05',
+    course: '05_Local_LLMs_and_API_Providers',
   },
   {
     id: 'citations-and-refusals',
@@ -210,6 +274,8 @@ export const tutorials = [
     estimatedTime: '30 minutes',
     featured: false,
     series: 'rag',
+    session: 'S10',
+    course: '10_RAG',
   },
   {
     id: 'human-in-the-loop',
@@ -220,6 +286,8 @@ export const tutorials = [
     estimatedTime: '30 minutes',
     featured: false,
     series: 'agents',
+    session: 'S11',
+    course: '11_LangGraph',
   },
   {
     id: 'mcp-as-usb',
@@ -230,6 +298,8 @@ export const tutorials = [
     estimatedTime: '25 minutes',
     featured: false,
     series: 'agents',
+    session: 'S10 / S11',
+    course: '10_RAG',
   },
   {
     id: 'rag-injection-guardrails',
@@ -240,6 +310,8 @@ export const tutorials = [
     estimatedTime: '30 minutes',
     featured: false,
     series: 'rag',
+    session: 'S10',
+    course: '10_RAG',
   },
   {
     id: 'context-window-budget',
@@ -250,5 +322,7 @@ export const tutorials = [
     estimatedTime: '30 minutes',
     featured: false,
     series: 'llms',
+    session: 'S04',
+    course: '04_BPE_Temperature_Top_K_Top_P',
   },
 ]
