@@ -80,6 +80,7 @@ function answer(query, hits) {
 }
 
 const Q_REFUND = 'How long do I have to refund a class pack?'
+const Q_MONEY = 'When can I get my money back?'
 const TITLES = [
   'Why the model invents policies',
   'The six-stage pipeline',
@@ -116,6 +117,7 @@ function Steps({ step }) {
             <Button onClick={() => setQ(Q_REFUND)}>Refund pack</Button>
             <Button onClick={() => setQ('When is the sauna closed?')}>Sauna</Button>
             <Button onClick={() => setQ("What is the CEO's salary?")}>Unknown fact</Button>
+            <Button onClick={() => setQ(Q_MONEY)}>Money back</Button>
           </div>
           <HeatDocs
             query={q}
@@ -299,6 +301,7 @@ function Steps({ step }) {
           <Button onClick={() => setQ("What is the CEO's salary?")}>Unknown fact</Button>
           <Button onClick={() => setQ('I have knee pain, what medicine?')}>Medical</Button>
           <Button onClick={() => setQ(Q_REFUND)}>Refund pack</Button>
+          <Button onClick={() => setQ(Q_MONEY)}>Money back</Button>
         </SpaceBetween>
         <Box>{answer(q, retrieve(q)).text}</Box>
         <Box variant="small">Top score now: {retrieve(q)[0]?.s.toFixed(3)}</Box>
@@ -315,9 +318,10 @@ function Steps({ step }) {
     return (
       <SpaceBetween size="m">
         <Warn title="Keyword overlap is not meaning">
-          Query “money back period for unused packs” may miss D1 because D1 says “refunded”
-          and “14 days”, not “money back”. That is why the next tutorial exists: hybrid
-          search (BM25 + vectors) and RRF.
+          Keep unused in the question (“money back for unused sessions”) and D1 still
+          wins at 0.38. Type “When can I get my money back?” and D1 scores 0.00: the
+          14-day rule is sitting right there, the words do not overlap. That is why
+          the next tutorial exists: hybrid search (BM25 + vectors) and RRF.
         </Warn>
         <Table
           variant="embedded"

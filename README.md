@@ -2,7 +2,7 @@
 
 Interactive ML / GenAI tutorials. Live site: [https://nursnaaz.github.io/](https://nursnaaz.github.io/).
 
-GitHub Pages serves the `docs/` folder (Vite build). Deep links use `docs/404.html` so `/tutorial/<id>` loads the SPA.
+GitHub Pages serves the `docs/` folder (Vite build). After each build, `scripts/spa-fallback.mjs` copies the SPA shell to `docs/404.html` and to `docs/tutorial/<id>/index.html` so Medium deep links return HTTP 200.
 
 ## Pair with [zero-to-genai-engineer](https://github.com/nursnaaz/zero-to-genai-engineer)
 

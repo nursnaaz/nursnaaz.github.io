@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && npm run postbuild",
-    "postbuild": "cp docs/index.html docs/404.html && touch docs/.nojekyll",
+    "build": "vite build",
+    "postbuild": "node scripts/spa-fallback.mjs && touch docs/.nojekyll",
     "preview": "vite preview",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0"
   },
