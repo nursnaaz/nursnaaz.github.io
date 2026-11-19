@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mohamed Noordeen | Forward Deployed Applied AI Scientist</title>
+<meta name="description" content="Forward Deployed Applied AI Scientist at Amazon Web Services (AWS), Dubai. Author, open-source contributor and trainer in data science and generative AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@500&display=swap">
+<style>
+:root{color-scheme:light;--bg:#fff;--alt:#f4f7fc;--fg:#202124;--muted:#5f6368;--line:#dadce0;--blue:#1a56c4;--blue-d:#1449a3;--tint:#e8f0fe;--navy:#0b1f3a;--navy2:#12315c;--r:8px;--f:'Roboto',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.6 var(--f);-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4px}
+h1,h2,h3,p,ul{margin:0}ul{padding:0;list-style:none}
+.w{max-width:1120px;margin:0 auto;padding:0 24px}
+/* header */
+header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+header .w{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.brand{font-weight:500;font-size:18px;color:var(--fg);letter-spacing:-.01em}.brand:hover{text-decoration:none}
+nav{display:flex;gap:4px;flex-wrap:wrap}nav a{color:var(--muted);font-size:14px;font-weight:500;padding:8px 12px;border-radius:999px}nav a:hover{background:var(--alt);color:var(--fg);text-decoration:none}
+/* hero */
+.hero{padding:72px 0 64px;border-bottom:1px solid var(--line)}
+.hero .w{display:grid;grid-template-columns:1.35fr 1fr;gap:56px;align-items:center}
+.eyebrow{font:500 12px/1 'Roboto Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:16px}
+h1{font-size:clamp(36px,5vw,56px);line-height:1.1;font-weight:400;letter-spacing:-.02em;margin-bottom:12px}
+.role{font-size:20px;color:var(--fg);font-weight:500}.role span{display:block;font-weight:400;color:var(--muted);font-size:16px;margin-top:2px}
+.lead{margin:24px 0 32px;font-size:18px;color:var(--muted);max-width:56ch}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 24px;border-radius:999px;border:1px solid var(--line);font-weight:500;font-size:15px;color:var(--blue);background:#fff;cursor:pointer;font-family:var(--f)}
+.btn:hover{background:var(--tint);text-decoration:none}.btn.p{background:var(--blue);border-color:var(--blue);color:#fff}.btn.p:hover{background:var(--blue-d)}
+.facts{border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden}
+.facts div{display:flex;justify-content:space-between;gap:16px;padding:16px 20px;border-bottom:1px solid var(--line);font-size:15px}.facts div:last-child{border:0}
+.facts dt{color:var(--muted)}.facts dd{margin:0;font-weight:500;text-align:right}
+dl{margin:0}
+/* sections */
+section{padding:72px 0;border-bottom:1px solid var(--line)}section.alt{background:var(--alt)}
+h2{font-size:clamp(28px,3.4vw,36px);font-weight:400;letter-spacing:-.015em;line-height:1.2;margin-bottom:12px}
+.sub{color:var(--muted);font-size:18px;max-width:64ch;margin-bottom:40px}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.card h3{font-size:18px;font-weight:500;margin-bottom:6px}.card p{color:var(--muted);font-size:15px}
+.tag{display:inline-block;font:500 11px/1 'Roboto Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+/* list rows */
+.rows{border:1px solid var(--line);border-radius:var(--r);background:#fff;overflow:hidden}
+.row{display:grid;grid-template-columns:240px 1fr auto;gap:24px;align-items:baseline;padding:20px 24px;border-bottom:1px solid var(--line)}.row:last-child{border:0}
+.row b{font-weight:500}.row p{color:var(--muted);font-size:15px}.row .go{font-size:14px;font-weight:500;white-space:nowrap}
+.grp{font-size:16px;font-weight:500;margin:32px 0 12px}.grp:first-of-type{margin-top:0}.act{display:flex;gap:14px;align-items:baseline;justify-content:flex-end;flex-wrap:wrap}.st{font-style:normal;font:500 12px var(--f);padding:3px 10px;border-radius:999px;background:var(--alt);border:1px solid var(--line);color:var(--muted)}.st.m{background:#e6f4ea;border-color:#b7dfc1;color:#137333}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font-size:14px;color:var(--fg)}
+/* reviews */
+.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:32px}
+.sum .card b{display:block;font-size:36px;font-weight:400;letter-spacing:-.02em;color:var(--fg);line-height:1.1;margin-bottom:6px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:14px;justify-content:space-between}
+blockquote{margin:0;font-size:15px;line-height:1.6}
+figcaption{display:flex;justify-content:space-between;gap:12px;align-items:baseline;font-size:14px;border-top:1px solid var(--line);padding-top:12px}
+figcaption b{font-weight:500}figcaption a{font-weight:500;white-space:nowrap}
+.pager{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;margin-top:32px}
+.pager button{min-width:40px;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--fg);font:500 14px var(--f);cursor:pointer}
+.pager button:hover:not(:disabled){background:var(--alt)}.pager button[aria-current=page]{background:var(--blue);border-color:var(--blue);color:#fff}.pager button:disabled{opacity:.4;cursor:default}.pager span{color:var(--muted);padding:0 4px}
+.note{font-size:13px;color:var(--muted);margin-top:20px;text-align:center}
+/* contact */
+.contact{background:#fff}.mail{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.mail code{font:500 15px 'Roboto Mono',monospace;padding:10px 16px;border:1px solid var(--line);border-radius:var(--r);background:var(--alt)}
+#toast{min-height:22px;margin-top:12px;font-size:14px;color:var(--muted)}
+footer{padding:28px 0;font-size:13px;color:var(--muted)}
+
+header{box-shadow:0 1px 0 var(--line),0 4px 16px rgba(11,31,58,.04)}
+.brand{display:flex;align-items:center;gap:10px}.brand i{width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;font:500 12px/28px var(--f);text-align:center;font-style:normal;letter-spacing:.02em}
+nav a.cta{background:var(--navy);color:#fff;margin-left:8px}nav a.cta:hover{background:var(--navy2);color:#fff}
+.hero{background:linear-gradient(180deg,#eef4ff 0%,#fff 100%);position:relative}
+.hero::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(var(--blue),#4f8df0)}
+h1{font-weight:500;letter-spacing:-.025em;color:var(--navy)}
+.eyebrow{display:flex;align-items:center;gap:10px}.eyebrow::before{content:"";width:18px;height:2px;background:var(--blue)}
+h2{font-weight:500;color:var(--navy)}
+.facts{box-shadow:0 8px 28px rgba(11,31,58,.08);border-color:#cfd9ea}
+.facts .who{display:block;padding:16px 20px;background:var(--navy);color:#fff;border:0}
+.facts .who i{width:48px;height:48px;border-radius:50%;background:#fff;color:var(--navy);font:500 17px/48px var(--f);text-align:center;font-style:normal;flex:none}
+.facts .who b{font:500 12px var(--f);letter-spacing:.1em;text-transform:uppercase}.facts .who span{font-size:13px;opacity:.8}
+.facts dd{color:var(--navy)}
+.card{transition:border-color .15s,box-shadow .15s;border-top:3px solid var(--blue)}.card:hover{border-color:#b9c8e4;box-shadow:0 6px 20px rgba(11,31,58,.07)}
+.sum .card b{color:var(--blue)}
+.rows{box-shadow:0 1px 2px rgba(11,31,58,.04)}.row:hover{background:#fafcff}
+.row b{color:var(--navy)}
+figure{transition:border-color .15s}figure:hover{border-color:#b9c8e4}
+.contact{background:var(--navy);color:#fff;border-bottom:0}.contact h2{color:#fff}.contact .eyebrow{color:#8fb4ff}.contact .eyebrow::before{background:#8fb4ff}.contact .sub{color:#b8c6dd}
+.contact .mail code{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.25);color:#fff}
+.contact .btn{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}.contact .btn:hover{background:rgba(255,255,255,.1)}.contact .btn.p{background:#fff;color:var(--navy);border-color:#fff}.contact .btn.p:hover{background:#e8f0fe}
+#toast{color:#b8c6dd}
+footer{background:var(--navy);color:#8fa3c4;border-top:1px solid rgba(255,255,255,.1)}
+.sum{grid-template-columns:repeat(2,1fr)}
+@media(max-width:900px){.sum{grid-template-columns:1fr}.brand span{display:none}.brand{display:flex!important}nav a.cta{margin-left:0}}
+@media(max-width:900px){.hero .w{grid-template-columns:1fr;gap:40px}.cols,.sum,.grid{grid-template-columns:1fr}.row{grid-template-columns:1fr;gap:6px}nav a{padding:6px 8px;font-size:13px}}
+@media(min-width:901px) and (max-width:1060px){.grid{grid-template-columns:repeat(2,1fr)}}
+
+.split{display:grid;grid-template-columns:300px 1fr;gap:64px;align-items:start}
+.side{position:sticky;top:96px}.side h2{max-width:none}.side .sub{font-size:16px;margin-bottom:0}
+.body .cols{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.body .row{grid-template-columns:190px 1fr}.body .row .act{grid-column:2;justify-content:flex-start}.body .row>span:empty{display:none}
+.body .grid{grid-template-columns:repeat(2,1fr)}.body .sum{grid-template-columns:repeat(2,1fr)}
+.body .grp:first-child{margin-top:0}
+.prog{position:absolute;left:0;bottom:-1px;height:3px;width:100%;background:linear-gradient(90deg,var(--blue),#4f8df0);transform-origin:left;transform:scaleX(0)}
+nav a.on{color:var(--blue);background:var(--tint)}
+.js .rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}.js .rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+@media(max-width:900px){.split{grid-template-columns:1fr;gap:28px}.side{position:static}.body .grid,.body .sum{grid-template-columns:1fr}.body .row{grid-template-columns:1fr}.body .row .act{grid-column:1}}
+@media(min-width:901px) and (max-width:1060px){.body .grid{grid-template-columns:1fr}}
+</style></head><body>
+<script>document.documentElement.classList.add("js")</script>
+<header><div class="prog" id="prog"></div><div class="w"><a class="brand" href="#top"><i>MN</i><span>Mohamed Noordeen</span></a>
+<nav aria-label="Sections"><a href="#experience">Experience</a><a href="#recognition">Awards</a><a href="#teaching">Teaching</a><a href="#open-source">Open source</a><a href="#reviews">Reviews</a><a class="cta" href="#contact">Contact</a></nav></div></header>
+
+<main id="top">
+<div class="hero"><div class="w">
+  <div>
+    <p class="eyebrow">Applied AI, author, trainer</p>
+    <h1>Mohamed Noordeen</h1>
+    <p class="role">Forward Deployed Applied AI Scientist<span>Amazon Web Services (AWS), Dubai</span></p>
+    <p class="lead">Over 15 years in data science and AI. I build generative AI systems for enterprise customers and teach data science and AI to working professionals.</p>
+    <div class="btns"><a class="btn p" href="#contact">Get in touch</a><a class="btn" href="#reviews">Read learner reviews</a></div>
+  </div>
+  <dl class="facts">
+    <div class="who"><b>At a glance</b></div>
+    <div><dt>Experience</dt><dd>15+ years</dd></div>
+    <div><dt>Teaching since</dt><dd>2016</dd></div>
+    <div><dt>Learners mentored</dt><dd>1,000+</dd></div>
+    <div><dt>Author</dt><dd>Data Science with Python</dd></div>
+    <div><dt>Google reviews naming me</dt><dd>130</dd></div>
+  </dl>
+</div></div>
+
+<section id="experience"><div class="w split"><div class="side"><p class="eyebrow">Experience</p><h2>Industry work behind the teaching</h2>
+  <p class="sub">Production generative AI for enterprise customers across healthcare, real estate, financial services, telecommunications and food delivery.</p></div><div class="body"><div class="rows">
+    <div class="row"><b>Amazon Web Services (AWS)</b><p>Forward Deployed Applied AI Scientist, Dubai. Designs, prototypes and deploys production-ready generative AI solutions for enterprise customers.</p><span></span></div>
+    <div class="row"><b>Earlier roles</b><p>Salesforce, Logitech and Tiger Analytics.</p><span></span></div>
+  </div></div></div></section>
+
+<section id="recognition" class="alt"><div class="w split"><div class="side"><p class="eyebrow">Awards and publication</p><h2>Recognition</h2>
+  <p class="sub">Two awards in 2024 and a published book.</p></div><div class="body"><div class="cols">
+    <div class="card"><span class="tag">Award, 2024</span><h3>Times Power Icons</h3><p>Emerging Global Leader in Generative AI.</p></div>
+    <div class="card"><span class="tag">Award, 2024</span><h3>Internet 2.0 Conference</h3><p>Outstanding Leadership Award.</p></div>
+    <div class="card"><span class="tag">Book, 2019</span><h3>Data Science with Python</h3><p>Packt Publishing, co-authored with Rohan Chopra and Aaron England.</p><p style="margin-top:12px"><a href="https://www.packtpub.com/en-GB/product/data-science-with-python-9781838552169" target="_blank" rel="noopener">View the book</a></p></div>
+  </div></div></div></section>
+
+<section id="teaching"><div class="w split"><div class="side"><p class="eyebrow">Teaching</p><h2>Training for people who already have a job</h2>
+  <p class="sub">Most of my learners are working professionals moving into data science and AI. Classes run at weekends, so nobody has to leave work to learn.</p></div><div class="body"><div class="cols">
+    <div class="card"><h3>Year-long weekend batches</h3><p>Around 80 learners per batch, taught since 2016 from a curriculum I wrote myself.</p></div>
+    <div class="card"><h3>Code and content on GitHub</h3><p>Notebooks, slides and tutorials stay open, so learners can revisit anything after class.</p><p style="margin-top:12px"><a href="https://nursnaaz.github.io/" target="_blank" rel="noopener">Interactive labs</a> &nbsp;·&nbsp; <a href="https://github.com/nursnaaz/zero-to-genai-engineer" target="_blank" rel="noopener">Course notebooks</a></p></div>
+    <div class="card"><h3>Career changers</h3><p>Many learners have moved into data science roles under my mentoring. I also run workshops for data science aspirants.</p></div>
+  </div>
+  <div class="chips" aria-label="Topics taught"><span class="chip">Python</span><span class="chip">Machine learning</span><span class="chip">Deep learning and NLP</span><span class="chip">Generative AI</span><span class="chip">RAG</span><span class="chip">AI agents</span><span class="chip">AWS</span></div></div></div></section>
+
+<section id="open-source" class="alt"><div class="w split"><div class="side"><p class="eyebrow">Open source</p><h2>Open-source contributions</h2>
+  <p class="sub">Pull requests to AWS open-source projects on GitHub, and my own public repositories. Four pull requests are merged and more are open for review, as of 19 November 2026.</p></div><div class="body"><h3 class="grp">Merged pull requests</h3>
+  <div class="rows">
+    <div class="row"><b>awslabs/stickler</b><p>Fixed number comparison so the NumericComparator reads non-ASCII digits (#560).</p><span class="act"><i class="st m">Merged</i><a class="go" href="https://github.com/awslabs/stickler/pull/560" target="_blank" rel="noopener">View pull request</a></span></div>
+    <div class="row"><b>Intelligent document processing accelerator</b><p>Allowed comments in prompt templates (#1813), and boxed a value inside a longer OCR line to its own words (#1810).</p><span class="act"><i class="st m">2 merged</i><a class="go" href="https://github.com/aws-solutions-library-samples/accelerated-intelligent-document-processing-on-aws/pull/1813" target="_blank" rel="noopener">#1813</a><a class="go" href="https://github.com/aws-solutions-library-samples/accelerated-intelligent-document-processing-on-aws/pull/1810" target="_blank" rel="noopener">#1810</a></span></div>
+    <div class="row"><b>amazon-transcribe-live-meeting-assistant</b><p>Added DOCX export and raised the LLM chat history limit (#183).</p><span class="act"><i class="st m">Merged</i><a class="go" href="https://github.com/aws-samples/amazon-transcribe-live-meeting-assistant/pull/183" target="_blank" rel="noopener">View pull request</a></span></div>
+  </div>
+  <h3 class="grp">Open for review</h3>
+  <div class="rows">
+    <div class="row"><b>strands-labs/strands-decider</b><p>Example showing OCR grouping with the decision model (#142).</p><span class="act"><i class="st">Open</i><a class="go" href="https://github.com/strands-labs/strands-decider/pull/142" target="_blank" rel="noopener">View pull request</a></span></div>
+    <div class="row"><b>awslabs/stickler</b><p>Tests that pin comparator scores on Arabic and Persian text (#597).</p><span class="act"><i class="st">Open</i><a class="go" href="https://github.com/awslabs/stickler/pull/597" target="_blank" rel="noopener">View pull request</a></span></div>
+    <div class="row"><b>awslabs/social-messaging-agent-runtime-toolkit</b><p>Four fixes: expired items treated as absent, and phone numbers and exception text masked in logs and handlers (#204, #205, #213, #214).</p><span class="act"><i class="st">Open</i><a class="go" href="https://github.com/awslabs/social-messaging-agent-runtime-toolkit/pull/204" target="_blank" rel="noopener">#204</a><a class="go" href="https://github.com/awslabs/social-messaging-agent-runtime-toolkit/pull/205" target="_blank" rel="noopener">#205</a><a class="go" href="https://github.com/awslabs/social-messaging-agent-runtime-toolkit/pull/213" target="_blank" rel="noopener">#213</a><a class="go" href="https://github.com/awslabs/social-messaging-agent-runtime-toolkit/pull/214" target="_blank" rel="noopener">#214</a></span></div>
+    <div class="row"><b>aws/nova-prompt-optimizer</b><p>Multimodal image support (#46).</p><span class="act"><i class="st">Open</i><a class="go" href="https://github.com/aws/nova-prompt-optimizer/pull/46" target="_blank" rel="noopener">View pull request</a></span></div>
+  </div>
+  <h3 class="grp">My own repositories</h3>
+  <div class="rows">
+    <div class="row"><b>zero-to-genai-engineer</b><p>Notebooks, slides, papers and browser tutorials from my classes, from search engines to agents on AWS.</p><span class="act"><a class="go" href="https://github.com/nursnaaz/zero-to-genai-engineer" target="_blank" rel="noopener">Open on GitHub</a></span></div>
+    <div class="row"><b>FutureDataScienceLegends</b><p>Material from the Inceptez data science programme: Python, statistics, machine learning, MLOps, cloud, deep learning, computer vision, NLP and generative AI.</p><span class="act"><a class="go" href="https://github.com/nursnaaz/FutureDataScienceLegends" target="_blank" rel="noopener">Open on GitHub</a></span></div>
+  </div>
+  <p class="note" style="text-align:left">Over 140 public repositories in total at <a href="https://github.com/nursnaaz" target="_blank" rel="noopener">github.com/nursnaaz</a>.</p></div></div></section>
+
+<section id="reviews"><div class="w split"><div class="side"><p class="eyebrow">Learner reviews</p><h2>What learners say</h2>
+  <p class="sub">Public Google reviews of Inceptez Technologies, where I teach. Every review that names me is listed here, each linked to the original on Google.</p></div><div class="body"><div class="sum">
+    <div class="card"><b>4.9 / 5</b><p>Average rating across 1,364 Google reviews of Inceptez</p></div>
+    <div class="card"><b>130</b><p>Reviews that name me as their trainer</p></div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <nav class="pager" id="pager" aria-label="Review pages"></nav>
+  <p class="note">Excerpts are trimmed from public Google reviews, which belong to their authors. Names are shown as posted.</p></div></div></section>
+
+<section id="contact" class="contact"><div class="w">
+  <p class="eyebrow">Contact</p><h2>Need a trainer, mentor or workshop?</h2>
+  <p class="sub" style="margin-bottom:24px">Tell me what your team or cohort needs to learn.</p>
+  <div class="mail"><code id="addr">nursnaaz@gmail.com</code><button class="btn p" id="copy" type="button">Copy address</button><a class="btn" href="https://www.linkedin.com/in/nursnaaz" target="_blank" rel="noopener">LinkedIn</a><a class="btn" href="https://github.com/nursnaaz" target="_blank" rel="noopener">GitHub</a></div>
+  <p id="toast" role="status" aria-live="polite"></p>
+</div></section>
+</main>
+<footer><div class="w">Views here are my own. No employer or customer material appears on this site.</div></footer>
+
+<script>
+var D=[
+["Rajeswari S","I would like to express my sincere gratitude to Noor Sir and the entire Inceptez team for providing such a wonderful learning experience."],
+["kannabian G","Thank you to the entire Inceptez team (Noor & Lakshmi) for providing such a valuable learning experience."],
+["karthik prakasham","Noordeen, taught us all the AI/ML concepts with exceptional patience and sincerity. He often began sessions with stories that highlighted why learning matters and how…"],
+["Lakshimi Barathy","Firstly I Thank Noor the amount effort of work put in constructing the course. I had a awesome learning with Inceptez’s GenAI course…"],
+["Prasanna Murali","Noor Sir has excellent subject knowledge and explains the concepts clearly. He also takes the time to address the questions raised during the sessions…"],
+["Devi Narayanan","We were fortunate to have wonderful mentors, Noor Sir and Lakshmi Sir, who shared their knowledge and expertise with us in the best possible way."],
+["Damu Daran","Noor handled the ML and AI sessions. He is an excellent trainer with a great ability to simplify even complex AI/ML concepts."],
+["Ramprasad MG","Noor (Noordeen) for his outstanding teaching, dedication, and unwavering commitment. What sets him apart is the extra effort he puts into ensuring that every student…"],
+["Divya Dharshini","What I really liked about Noor’s approach was that we didn’t just jump into tools and frameworks."],
+["syed dawood","Special thanks to my mentors Noor and Lakshmi for their excellent guidance and support, and to Basith and Zia for their continuous motivation and encouragement."],
+["Vishaul Vinayag","Noor has demonstrated good subject knowledge and used practical examples and live demonstrations to explain real-world applications."],
+["Madhu Mitha","The tallent,dedication and patience of the trainer's especially Noor is outstanding. No second thought needed if our interest lies in learning latest things in ai…"],
+["Pon Ezhil Selvan S","Noor is a passionate tutor, who answers all our questions or doubts —even basic ones— and will make sure understood the topic before he moves on to the next topic."],
+["Akash Balmiki","Personal thanks to NOOR sir for guidance and teaching. Entire inceptez team is rock solid Lakshmi, Basith, Zia they all worked very hard for us."],
+["sabari nathan","Thanks to Noor and Lakshmi . Sure this will be my life changing learning."],
+["Rajkannu R","This is my second course ML and Gen AI after Big Data by Irfan, and Noor is my second Tutor."],
+["basha Tech","Noor Sir!Great trainer, Explained complex Gen AI concepts clearly with practical examples."],
+["Dinesh Balaraman","I would highly recommend GenAI/ML training from Noor. It’s worth a degree."],
+["Muniappan Mohanraj","Trainers Noor and Lakshmi explained each concept clearly and reinforced it with hands-on exercises, so I gained practical, job-relevant skills rather than theory alone."],
+["venkatesan p","Noor is One of the BEST trainers I have come across in my professional journey. What truly differentiates Noor is not just his knowledge of GenAI, but the depth,…"],
+["Balaji Narasimhan","Special thanks to Noor for the mentorship and for explaining complex topics topics so clearly and simply, and to Basith for handling the coordination so smoothly."],
+["Mohamed Arsh","A special mention to Noordeen Sir, who is an exceptional tutor. He has a great way of simplifying complex concepts in Machine Learning and Gen AI and making them easy…"],
+["Devi C","Heartfelt Thanks to Noor for an Excellent Generative AI Learning Experience. It has been an outstanding learning experience that not only deepened my understanding of…"],
+["Santosh kumar Ravikanti","Trainer Noor is absolutely amazing – not only extremely knowledgeable but also super patient."],
+["Balamurugan K","Once again, it’s been a truly wonderful journey with INCEPTEZ, one of my longest and most rewarding guided learning experiences under my mentor Noor."],
+["Jakeer Hussain S","Trainer Noor ,you are the best when it's comes to AI/ML and especially Gen AI topics. They are not money minded, goes extra mile in their teaching to help the aspirants."],
+["Aditya Ravichandar","I would like to tell that I learnt a lot of new softwares and new projects from Mr Noordeen since I am new to this stream."],
+["ds learning","Special shoutout to the instructor, Noor, who’s super knowledgeable, pushes us to think big-picture, and is so humble and passionate about sharing their wisdom."],
+["Kavyashree Dandu","Amazing experience of learning GEN AI course from Noor sir. I gained a lot of hands on experience with real time examples."],
+["Suchita Singh","Noor explained all key concepts in such detail, making sure everyone understands and grasps it!"],
+["Bhanu","Trainer Noor has depth knowledge, he explains theory along with white papers/ research info when required which gives us ways and confidence to explore by ourself."],
+["ZAHIR HUSSAIN SIKKANDAR KASIM","I have joined Gen AI course, really nice and instructor Noor is very deep knowledge in the field."],
+["Kalaiarasan Kirubanandam","My mentor, Noor, was exceptional in addressing my doubts and explaining concepts in simple terms."],
+["Dhanasekar Jai","Thanks Noor for the classes on GenAI. Your knowledge and depth of understanding of concepts is very admirable."],
+["Venkatesh Pattu","Mohamed Noordeen Alaudeen), Organizer (Mr. Basith) for the exceptional data science training I received."],
+["Thanga Sami","Noor demonstrated a deep understanding of the subject matter and effectively communicated key concepts."],
+["deepa athimoolam","Noor sir spent enormous time and efforts to share theory knowledge, practical knowledge. Very happy to be part of this learning and would like to recommend this course."],
+["Narmadha Rayaru","Noor who took the entire 3 months course has indepth knowledge on Gen AI. He puts lots of effort to teach us the conceptual behind sceen of each AI content which…"],
+["Rajesh Govindan","Same way Noor from data science very humble and neat explanation about each and every topic."],
+["lskiranch3 ch","Last year, I have feeling that I am out of track with the respect to AI and ML area before learning, But Noordeen made me from novice to advanced level in ML, DL, NLP…"],
+["Divya Narayana","Thanks to Noor"],
+["Dhaya Srinivasan","The way of teaching is good.The trainer is teaching from basic with explanation with examples especially Noor ."],
+["padmasree kuppaala","Thanks to Inceptez, Noor, Imran and Basith."],
+["Sanath Reddy","Kudos to Basith, Noor and Team."],
+["Gowthaman D","Professionals including Lakshmi, Noor, Irfan are very good in teaching"],
+["Ganesh N","Those who are planning to join the Data science course should have some patience to learn them because in most cases, classes might get extend for extra hour than the…"],
+["Rajkumar Rajendran","Noor is a great teacher ,mentor & motivator, he has very depth knowledge in ML, DL & NLP and the way he makes us understand the concepts are awesome."],
+["prabhu loganathan","Thanks Noor for your excellent guidance and effort put in each class! Also, Noor is kind enough to continue our relationship even after class got over."],
+["Bhagyalakshmi jayaperumal","I am very proud to say that am a lucky student of great teachers Irfan (Big Data) and Noor (Data Science)."],
+["Aravind Ramachandran","The tutors(especially Sheik and Noor) are very friendly and shared their valuable experience and challenges along with course contents."],
+["Kumar CT","Excellent and dedicated Mentors (Lakshmi, Noor & Raju) teach concepts with practical domain use cases and ensure everyone in the classroom understands."],
+["Mohan Suresh","Noor is one awesome mentor who has excellent clarity of thoughts and knows what needs to be delivered when."],
+["lokeshwaran gopal","Noordeen one of the leading datascientist, his mentoring, course material, practical implementation have helped me a lot to understand the course The…"],
+["Mohan Krishna","Noordeen) changed with my view, vision and thoughts about Datascience. Now, I can say with confidence that I can work as a data scientist."],
+["krishnadevi N","Perfect place for learning data science and machine learning.Noordeen(trainer) is highly skilled and technically very strong."],
+["Ramesh K","Trainer Noor is a Hard worker and prepares lot for the class....a lot of hands on are involved..."],
+["Balamurugan Muthu","Excellent sessions by Noor in the area of Machine learning and Deep learning. Enjoyed the sessions a lot."],
+["Durai Murugan","The trainers(Noor- one among the best tutor) are experienced and very friendly and will make us to be attentive in classes and also following up with us to complete…"],
+["Sangeetha Niranjan","I attended Data science course which was taken by Noor. He is very knowledgeable and a good mentor."],
+["Vino Vincent","Irfan an architect himself, and Mr Noor, was so dedicated and didn't mind the extra hours needed to make sure each and every one in the class understood the details."],
+["shalini m","Special Thanks to Noor and Sharique for their great mentoring. Thanks to Basith, Beski for their support and communication."],
+["Prakash Saravanana","Instructor Noor, Lakshmi , Raj coming from strong technical expertise and with their industry background shared whole lot of info."],
+["LakshimiBarathy M","Thanks much Noor . Now Its a stepping stone entering modernized IT world."],
+["Sivakumar Rajendran","Noor, trainer as well as my Data Science mentor has in-depth knowledge on subject and vast experience on this domain."],
+["Mahesh k","Personally I wanted to thanks the Trainer Noor , Sharik, he will give the confidence to bioost my knowledge and technically and fundamentally."],
+["Hema Peri","The trainers (Noor sir and Sharik sir) were very detailed and meticulous in their teaching."],
+["vijayarajan p","Generative AI can be a very complex and overwhelming subject, but my trainer, Noor, made all the difference."],
+["Ravi kumar","I would especially like to appreciate our mentor Mohamed Noordeen, for his excellent teaching and continuous support throughout the course."],
+["santhosh Periasamy","Mohamed Imran and Mr. Mohamed Noordeen for their exceptional dedication and in-depth teaching."],
+["balakrishnan r","I would like to thank Mohamed Noordeen Alaudeen and Zia for their excellent teaching and guidance."],
+["manikandan chellappan","Mohamed Noordeen Alaudeen, deserves special recognition. He addressed all my doubts, explaining concepts in the simplest terms."],
+["Samir Ahamed","@Mohamed Noordeen Alaudeen - You have been exceptional in sharing knowledge, insights on topics and to put it in simple means with immense knowledge and expertise you…"],
+["Alex Palanisamy","My DS trainer Mohamed Noordeen is a rare kind of person you will ever come across in the Data Science field."],
+["Raj Rai","We are almost at the end of our 3rd batch of GenAI, and I really want to share how incredible our trainer, Mohamed Noordeen Alaudeen, has been throughout this 5-month weekend program."],
+["GANESH SREEKUMAR","Mohamed Noordeen (our Trainer) was patient, explained things clearly, and connected it to real interview questions and real projects."],
+["Sunitha Ramu","This is what six months with Noor Sir actually felt like. The first few weeks were humbling."],
+["Nataraj J N","A big thanks to Noordeen Sir, who has helped me demystify complex technical concepts and, more importantly, overcome career-related self-doubts."],
+["Swathi Peddhoju","I attended Noorden Sir’s GenAI classes and had a great learning experience. He explains concepts in a simple, clear, and practical way, starting from the basics…"],
+["Raja Rajeshwari S","Without any reference, and no clg placements i joined as Machine Learning engineer, this all because of Mr Mohammed Noordeen sir, Mr Zia sir."],
+["Vignesh Munuswamy","I'm thankful to have had Noorudeen Sir as my data science trainer. He explains complex concepts in a way that's easy to understand, using analogies that help us remember."],
+["Sreedhar Kikkuru","I have attended Data Science training with Noordeen sir. He is excellent with his up-to-date knowledge in Data Science and answering all the questions without any hesitation."],
+["Manikandan KD","The mentors like Noorden, LakshmiNarayen, RajaGuru... have immense knowledge in the core subject, i can vouch for it."],
+["Kavitha Seenivasan","Noordeen sir is the good trainer and mentor, who teaches all basic to advance concepts in Machine learning, deep learning and NLP."],
+["arjun shriram","Laxminaryyanan sir class excellent. Noorji Softness excelent."],
+["Naushin 06","A special mention to our trainer, Noordeen. I genuinely feel grateful to have had him as my trainer."],
+["shobana samyayyah","Noordeen, my trainer, is exceptional at explaining complex concepts in a simple and understandable manner."],
+["Vinoth Kumar","Trainer Noordeen explains every concept clearly and keeps the sessions practical and hands-on."],
+["Sriram Subramanian","I had a really good learning experience with Inceptez and our trainer Mr.Noordeen. Noordeen is one of the best tutors I have come across."],
+["Sunil Kumar","Our trainer, Noordeen, is excellent. He teaches from the absolute basics, explaining the evolution of the AI/ML in a clear, patient…"],
+["Hariprasaad S","Trainer Noordeen is a wonderful person,not only machine learning you will learn many good things from him."],
+["Jayachandran Perumal","Trainer Noorden did a fantastic job. The efforts from his end are second to none."],
+["Gowtham Lakshmanan","I need to specially mention my Trainer Noordeen for this sincere efforts and dedication in teaching us ML."],
+["Kalaivani R","Trainer Noordeen is a wonderful and more intellectual with experienced for data science"],
+["Perumalsamy M","Trainer Noordeen has sound knowledge and has explained the concepts are very easy and class is a very interactive session and easily understand the concepts."],
+["Jack Arokiason","Noordeen, and it has been a great learning experience. Before joining this course, I had very little knowledge about GenAI and did not have a clear roadmap for preparing for a career in…"],
+["Sheriba Ts","But for those who are looking for a true coach with real experience and a genuine commitment to every learner, you should definitely attend Noordeen’s sessions."],
+["Gopalakrishna KV","Noor: When Technology Meets Passion, Complexity Becomes Simplicity."],
+["Shanmuga Priyan","Special thanks to Noordeen, my mentor, for his guidance, support and patience throughout the learning journey."],
+["Rishi Kumar","I would like to express my great gratitude to my mentor, Noordeen, and Inceptez. I recently joined the GENAI course, which was taught by Noordeen."],
+["Nimoshiga Sukumaran","Thanks to Mentor(Noorudeen) for your dedicated training given to us :)"],
+["Harish Kumar","\"Kudos\" to Mohammed noordheen who is the best mentor in teaching the Data Science. To learn data science I strongly recommend to join inceptez."],
+["Latif Sharjil","Recently, I also got an opportunity to learn GenAI technologies and the latest AI tech stack from Noordeen, and the experience was amazing."],
+["Sundar B","Excellent GenAI Learning Experience with Noordeen And Inceptez. I recently completed my GenAI course with Noordeen, and it has been an excellent learning experience."],
+["Suresh S","The instructor Noordeen has a great knowledge. He shared deeper insights on Gen AI."],
+["Muhammad Siraj","Much of that comes down to the trainer, Noordeen."],
+["Muthuraman Kannan","I had a good learning experience with the Full Stack AI course at Inceptez under Noordeen's guidance."],
+["Prem Kumar","Noordeen, who handled AI/ML were outstanding instructors. His teaching approach, subject knowledge, patience, and dedication made a huge difference throughout the course."],
+["Shabbir J","The instructors (Noordin) were knowledgeable and supportive throughout the training. I gained valuable skills and a much better understanding of AI technologies…"],
+["Sudha Devi","Artificial intelligence with Noorden - He explains each and every concept deeply and the handson and hackathon was very helpful to get a deep knowledge."],
+["danda babu","I learned every topic in depth, and I would especially like to thank Noordeen. He is an excellent faculty member who made sure everyone stayed on the same page, and he genuinely cared…"],
+["Shan Ananth","I got a chance to gain knowledge from the industry experts - Irfan, Noor, Laxmi and Imran."],
+["Kumudha Ramanathan","Special thanks to Mr.Nooruddin , Mr.Jiauddin, and Mr.Laxminarayen for making the sessions so interactive and engaging."],
+["pradeep sridharan","Noordeen. His well-structured and organized training was instrumental in advancing my career."],
+["jiyaudeen Meerasa","I want to commend Muhammed Noordeen for his excellent teaching skills. His clear explanations and engaging approach made complex concepts easy to understand."],
+["Venkatesan Prahalanathan","Special mention to Tutors like Sheik, Noor( Data science)"],
+["mohamed suhaib","I have take up Data Science course in Inceptez, my instructor is Noorudeen. He has lot of experience in data science platforms like Machine Learning, Deep Learning, NLP, Python and…"],
+["sunil kumar","I did my Data Science Course with Inceptez, It was a great 10 months, learned everything in depth and Specially all the Faculty Noordeen (NLP ,Deep Learning and Machine Learning),…"],
+["RAJASEKAR R","Noorudeen, Data Scientist. He is a person with bundle of Talent."],
+["rajesh kannan","Thanks to Noordeen and Laxmi. Positive Communication, Quality, Professionalism, Value"],
+["rajguru raju","The trainers are excellent especially Mr.Noordeen and Mr.Lakshmi Narayen. They take classes on in-depth mathematical intuition for all Algorithms, which most institutes don't give."],
+["GUNASEKARAN VEERAKUMAR","Proud to be a student of Noordeen in inceptez."],
+["Rajkumar R","Noordheen is excellent Trainer and session sequence is good..."],
+["Nirmal","It's a Very Good institute to learn .Especially Mohammed Noordeen is excellent in delivery his knowledge to students."],
+["logesh kumar","LakshmiNarayen for Statistics and Noordeen for Machine Learning and Deep Learning. They both are having good knowledge in their respective area of teaching."],
+["ram karthic","Trainers Mohammad Noordeen alaudeen and lakshmi are just awesome . Please utilise them to the fullest"],
+["Mukesh Selvan","Specially my trainer Noordeen, he makes things quiet easy to understand."],
+["praveen kumar","I would thank Noordeen for making the hard topics really simple where people can understand easily."],
+["Robin Raj","Very good knowledgeable mentors(Nurdeen for data science, Sai for Spark,hive etc). Course contents was covered fully."],
+["Muraleetharan Selvan","Thanks to Mr.Noordeen(Data Scientist Trainer) and Inceptez Technologies for the amazing training."],
+["Manoj Ps","I joined the GenAI course at Inceptez, taught by Noordeen. He is one of the best tutors you could ask for. He goes deep into every concept, explains things in a way that’s easy to follow, and consistently delivers more than he promises."]
+];
+var L={"Muthuraman Kannan":"ZPLCy1dYhfnf53Ap9","Vinoth Kumar":"wuJ8Vx7VmZ994NPBA","Suresh S":"3ZBnGm5hEhNrvHr4A","Prem Kumar":"vKZwKxrBQyaVoXyY6","Gopalakrishna KV":"E7PM4wXsdnaFUrMZ8","karthik prakasham":"qcquGobwVohTmoZ86","Madhu Mitha":"PFpwEQ1kiS8FxbUx8","Sunil Kumar":"xYJG5FBfbcrfpAzy9","Dinesh Balaraman":"KMVCgqrKtKGGUpkP8","Shabbir J":"99Lzu3PSU9wKqSUQ7","Muhammad Siraj":"FAREJ2oRXikLBZcG7","Sudha Devi":"eBnY3QYYZ738eqTA6","Naushin 06":"eg1F2kiB2DGuNiHS9","vijayarajan p":"cSkhVypCqFujf1Mz6","Prasanna Murali":"ez86qv92Q2Mw1XA96","Pon Ezhil Selvan S":"beo3TCbc3eGmW48WA","Nataraj J N":"mhqhLLjhbNkHXDQw6","danda babu":"2PT8QsZm4CuUJDot7","Shanmuga Priyan":"TJNn9mzv7YdqZKfFA","Rajkannu R":"CiW4UGxDW6xwTcw9A","shobana samyayyah":"3KVq6767wf18iQUs7","Sunitha Ramu":"CFkF2f33cAbxD58J7","Ramprasad MG":"E38t9FfyB4pV6DYw6","Vishaul Vinayag":"ykUJgD1zffVs4r39A","Rajeswari S":"eoVFYiTVqreucwf36","Latif Sharjil":"vAFa1Gu23PsSqsMZ7","sabari nathan":"2F3h9wHMuWM7v2nK6","syed dawood":"RHb7C8HChWXrWcbm8","Damu Daran":"vd3DzE2zv6CagWfQA","Sheriba Ts":"XL6M7QDoJHwUs4pW8","Swathi Peddhoju":"FoqQSEqYPiHU9xse9","Ravi kumar":"7vzByCe2Ep15Bfu16","Sriram Subramanian":"p9ZrEVR7kw1ob5hs7","venkatesan p":"dPm5Pyudt1sXas4r7","Raj Rai":"d8VuoXKSjX6XMQ917","Sundar B":"C8YMYyBftC82utXx6","Jack Arokiason":"2rjXnbXQ7wYHEM4u9","Lakshimi Barathy":"ZGtLKDQ3Kafw8JEf9","Devi Narayanan":"sa2ru9eyqwo93sLx8","Divya Dharshini":"9x8uc7nfF9dbq3c1A","GANESH SREEKUMAR":"EdRVPPM3dG18KYr99","Muniappan Mohanraj":"gzquCvPK3Rh5Ni7f6","basha Tech":"35WCJHunF53gG9VY9","kannabian G":"i7YJwxhnUK6Z9PA48","Balaji Narasimhan":"1Axr7CTFiU7nYhDV8","Akash Balmiki":"vt8KSeMbyvredd2AA","Mohamed Arsh":"VVUxASUnHoNPfCAU8","Shan Ananth":"hL7gTEBbdUcqKTPq5","balakrishnan r":"ZGbUG52qiAxXqZgw9","Bhanu":"y2vgqPqBBS5NK3bt9","Jakeer Hussain S":"cC6wTs53N4SHP9P89","Devi C":"j1qXfnS3p1nfnjNk6","santhosh Periasamy":"WJvj8ZGonXZVE2Y59","Kumudha Ramanathan":"2jKXxUyqWPi53xd77","ZAHIR HUSSAIN SIKKANDAR KASIM":"Yxz5pNZUkBvpHyu27","Balamurugan K":"GpfnxToqcww9miCTA","ds learning":"X5SKaqSm5sZFvUpH6","Santosh kumar Ravikanti":"pm29EnHgY8cZ4DPq8","Kavyashree Dandu":"g3hfLV2VTnUuT81v8","Raja Rajeshwari S":"8NoCwQEMAPrt371f6","Suchita Singh":"Vt28eBVRi2FqWQJr9","Aditya Ravichandar":"ptKUoLcqT3PuKV5R8","Kalaiarasan Kirubanandam":"LQZQ8ZbhMmJSqpPE9","Narmadha Rayaru":"2P34GWjLArp4FVp4A","manikandan chellappan":"kdzF3E9jCPFdzFhAA","pradeep sridharan":"NYU9UBHstP7Qc4d7A","jiyaudeen Meerasa":"Bzr8SYx3NP3QXZdp7","Venkatesh Pattu":"fFjdMDfcoEpjy8dN8","Vignesh Munuswamy":"Wbz5tF9xfuu4ZViv6","Thanga Sami":"gkcxMaxhYq6utJfb8","Rishi Kumar":"rvY9jXUwywKoJuRv8","deepa athimoolam":"AJtC5x8JixouMHfg8","Sreedhar Kikkuru":"Cmr5hq6xa6XVFpUt8","Dhanasekar Jai":"SzebahbyYoYLEo799","Manikandan KD":"UixXPAP7e1H7fe8m7","Gowthaman D":"ArHXit9RSeYEyWmC7","Dhaya Srinivasan":"8nyZ2KiFKbs2zrE16","padmasree kuppaala":"Yji3HJVeDj8BWdbe6","Rajesh Govindan":"daNgU6KaykGrt4ec9","Sanath Reddy":"k6NeHfpyhdYwTD6S8","Divya Narayana":"vmhWGKR3ftoJ4BFK6","lskiranch3 ch":"gxMw7Dgaq9wtZXBw5","Venkatesan Prahalanathan":"Sm5wovAhi5XPihYPA","Kavitha Seenivasan":"eyh3EaocK4AGiHC18","mohamed suhaib":"NzD6sjKt3ofzXhFF7","Samir Ahamed":"xTf3pZCvehxEwhwt7","Rajkumar Rajendran":"rKwzKnmjNKS4R3ui6","Ganesh N":"987WTPT618F7fVQ56","prabhu loganathan":"NQcX321yXEsm1rWC8","Kumar CT":"DwF5NKRTDBpg237y5","Mohan Suresh":"zuuNWpcu9x29EAsVA","sunil kumar":"Vx2YJjERjsr1cMK87","RAJASEKAR R":"Z1uxfuoGgWxmPRFv5","Nimoshiga Sukumaran":"DKJyYM1qugi2oD1W7","rajesh kannan":"KJMBVDLuH53P1HSc6","arjun shriram":"r2SmoNikbXotPcZk7","rajguru raju":"dfBA4XWKGADYbWwY7","Bhagyalakshmi jayaperumal":"PWmMaKzn8HVuNZAb8","Aravind Ramachandran":"fvwSdKB1VDFpmyrE6","lokeshwaran gopal":"TGmwE2BxxCZohXTQ9","krishnadevi N":"Nc4PvYcFdfgtztB47","GUNASEKARAN VEERAKUMAR":"q8DQV9SSLX7otk6t5","Mohan Krishna":"EjEAg8BceuRJNkf6A","Rajkumar R":"V2edFJ463pkQw6py8","Nirmal":"rV5NUt1VhykGQERA8","Harish Kumar":"oRJcXZjbQLVaBxRp6","logesh kumar":"LzU9iWw38rfa8meA6","Gowtham Lakshmanan":"DxkuPknrZB5edJUU6","Ramesh K":"RJnrZ4r9zRiycirW8","Jayachandran Perumal":"WfNz25kWEexRXm3d7","ram karthic":"5q1cntauurVxncB37","Mukesh Selvan":"7V8bg8ke58KcD1ov9","Balamurugan Muthu":"ETVQDG7WafWD4JDfA","Alex Palanisamy":"EerfdmyFdiW15YT16","Prakash Saravanana":"pVGgX6HgPHV47hxL7","LakshimiBarathy M":"Dq9PgK3zG8bFnyBn9","Sangeetha Niranjan":"SE7BeHKKX7mHvevD7","Durai Murugan":"sFrpuAq44DDU9pWt6","praveen kumar":"mzaPv483VF1qWNRn6","shalini m":"uBk98vVbi3RBhXRC7","Perumalsamy M":"BsyjgTMBHjHYQ6v5A","Vino Vincent":"G9hFh27Xk24EYZhL9","Kalaivani R":"pt7RNYJWMikmqc9L8","Robin Raj":"ApQSGNvpZVZpG78cA","Mahesh k":"mGWGvfM3Vtu2qynCA","Hariprasaad S":"cDnrmAdFugEe7x4v8","Hema Peri":"omRpuF9rr99vzXpm9","Sivakumar Rajendran":"1wxHECt9jk9yWH3B7","Muraleetharan Selvan":"wr6r8GRChRbboV5o7","Manoj Ps":"fhNC3XN6N3ZjCXX67"};
+
+var ALL=D.map(function(r){return {name:r[0],text:r[1],url:'https://maps.app.goo.gl/'+L[r[0]]};});
+(function(){
+  var g=document.getElementById('grid'),pg=document.getElementById('pager'),PER=12,pages=Math.ceil(ALL.length/PER);
+  function show(n,sc){
+    g.innerHTML='';
+    ALL.slice((n-1)*PER,n*PER).forEach(function(r){
+      var f=document.createElement('figure'),b=document.createElement('blockquote'),c=document.createElement('figcaption'),nm=document.createElement('b'),a=document.createElement('a');
+      b.textContent='“'+r.text+'”';nm.textContent=r.name;a.href=r.url;a.target='_blank';a.rel='noopener';a.textContent='View on Google';
+      c.appendChild(nm);c.appendChild(a);f.appendChild(b);f.appendChild(c);g.appendChild(f);
+    });
+    pg.innerHTML='';
+    function btn(l,to,dis,cur){var k=document.createElement('button');k.type='button';k.textContent=l;k.disabled=dis;if(cur)k.setAttribute('aria-current','page');k.setAttribute('aria-label',isNaN(l)?l+' page':'Page '+l);k.onclick=function(){show(to,true)};pg.appendChild(k)}
+    btn('Previous',n-1,n===1);
+    for(var i=1;i<=pages;i++){
+      if(i===1||i===pages||Math.abs(i-n)<=1)btn(String(i),i,false,i===n);
+      else if((i===2&&n>3)||(i===pages-1&&n<pages-2)){var s=document.createElement('span');s.textContent='…';pg.appendChild(s)}
+    }
+    btn('Next',n+1,n===pages);
+    if(sc)document.getElementById('reviews').scrollIntoView();
+  }
+  show(1,false);
+
+  (function(){
+    var pr=document.getElementById('prog'),links=[].slice.call(document.querySelectorAll('nav a[href^="#"]')),secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))});
+    var tick=false;
+    function upd(){
+      var h=document.documentElement.scrollHeight-innerHeight;pr.style.transform='scaleX('+(h>0?Math.min(1,scrollY/h):0)+')';
+      var cur=-1;secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<innerHeight*.35)cur=i});
+      links.forEach(function(a,i){a.classList.toggle('on',i===cur&&!a.classList.contains('cta'))});tick=false;
+    }
+    addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(upd)}},{passive:true});upd();
+    var els=[].slice.call(document.querySelectorAll('.card,.rows,.facts,.chips,.sum,.pager,.hero .w>div:first-child'));
+    els.forEach(function(e){e.classList.add('rv')});
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.08});
+      els.forEach(function(e){io.observe(e)});
+    }else els.forEach(function(e){e.classList.add('in')});
+  })();
+  var t=document.getElementById('toast'),ad=document.getElementById('addr');
+  document.getElementById('copy').onclick=function(){
+    function sel(){var r=document.createRange();r.selectNodeContents(ad);var s=getSelection();s.removeAllRanges();s.addRange(r);t.textContent='Selected. Press copy on your keyboard.'}
+    try{navigator.clipboard.writeText(ad.textContent).then(function(){t.textContent='Address copied.'},sel)}catch(e){sel()}
+  };
+})();
+</script>
+</body></html>
